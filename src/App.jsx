@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 
 import '@/styles/reset.scss'
 
-import MainLayout from '@/layouts/mainLayout'
+import MainLayout from '@/layouts/MainLayout'
 import Home from '@/pages/Home/Home'
 import AboutUs from '@/pages/AboutUs/AboutUs'
 import Events from '@/pages/Event/Events'
