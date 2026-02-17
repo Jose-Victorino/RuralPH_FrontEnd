@@ -1,0 +1,33 @@
+@use '@/styles/base' as base;
+
+.content{
+  display: flex;
+  gap: 30px;
+  max-width: 1100px;
+  width: calc(100% - 30px);
+}
+
+.contacts{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  
+  li{
+    display: flex;
+    gap: 10px;
+  }
+  svg{
+    height: 1.5em;
+    width: 1.5em;
+  }
+}
+
+.form{
+  background: base.$gs-w-80;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 40px;
+  border-radius: 12px;
+}

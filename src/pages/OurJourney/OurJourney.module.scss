@@ -1,0 +1,10 @@
+@use '@/styles/base' as base;
+
+.header{
+  background: base.$gs-w-80;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 15px;
+}

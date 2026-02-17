@@ -1,0 +1,187 @@
+@use '@/styles/base' as base;
+
+:root{
+  --container-width: 1350px;
+}
+
+
+.textGreen{
+  color: base.$primary-color;
+}
+.textGreen-dark{
+  color: base.$primary-dark;
+}
+.textGreen-light{
+  color: base.$primary-light;
+}
+.textYellow{
+  color: base.$secondary-color;
+}
+.textYellow-dark{
+  color: base.$secondary-dark;
+}
+.textYellow-light{
+  color: base.$secondary-light;
+}
+
+
+.container{
+  width: var(--container-width);
+  margin-inline: auto;
+  height: 100%;
+}
+
+.pos-r{
+  position: relative;
+}
+.pos-a{
+  position: absolute;
+  z-index: 10;
+}
+
+.flex{
+  display: flex;
+  
+  &-col{ @extend .flex;
+    flex-direction: column;
+
+    &-reverse{ @extend .flex;
+      flex-direction: column-reverse;
+    }
+  }
+  &-row{ @extend .flex;
+    flex-direction: row;
+
+    &-reverse{ @extend .flex;
+      flex-direction: row-reverse;
+    }
+  }
+  &-wrap{ @extend .flex;
+    flex-wrap: wrap;
+  }
+  &-wrap-reverse{ @extend .flex;
+    flex-wrap: wrap-reverse;
+  }
+
+}
+.j-start{ justify-content: flex-start; }
+.j-center{ justify-content: center; }
+.j-end{ justify-content: flex-end; }
+.j-space-around{ justify-content: space-around; }
+.j-space-between{ justify-content: space-between; }
+.j-space-evenly{ justify-content: space-evenly; }
+.a-start{ align-items: flex-start; }
+.a-center{ align-items: center; }
+.a-end{ align-items: flex-end; }
+.a-stretch{ align-items: stretch; }
+.a-baseline{ align-items: baseline; }
+
+.res-flex-row{
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+
+  & > *{
+    width: 50%;
+  }
+  
+  @media(max-width: 780px){  
+    flex-direction: column;
+    gap: 20px;
+  
+    & > *{
+      width: 100%;
+    }
+  }
+}
+
+
+.list-disc{
+  list-style-type: disc;
+  padding-left: 15px;
+}
+
+.lh-1{
+  line-height: 1;
+}
+
+.baseLink{
+  color: base.$link-color;
+  text-decoration: underline;
+}
+
+.text-center{
+  text-align: center;
+}
+
+@for $i from 1 through 10{
+  $val_i: $i * 10;
+
+  .w-#{$val_i}{
+    width: $val_i * 1%;
+  }
+}
+
+@for $i from 1 through 30{
+  $val_i: $i * 5;
+   
+  .gap-#{$val_i}{
+    gap: #{$val_i}px;
+  }
+
+  @for $j from 1 through 30{
+    $val_j: $j * 5;
+    .gap-#{$val_i}-#{$val_j}{
+      gap: #{$val_i}px #{$val_j}px;
+    }
+  }
+  
+  .mb-#{$val_i}{
+    margin-bottom: #{$val_i}px;
+  }
+
+  .pad-#{$val_i}{
+    padding: #{$val_i}px;
+  }
+  .pad-block-#{$val_i}{
+    padding-block: #{$val_i}px;
+  }
+  .pad-inline-#{$val_i}{
+    padding-inline: #{$val_i}px;
+  }
+
+  .w-#{$val_i}{
+    width: $val_i * 1%;
+  }
+}
+
+
+@media(max-width: 1400px){
+  :root{
+    --container-width: 1140px;
+  }
+}
+
+@media(max-width: 1200px){
+  :root{
+    --container-width: 940px;
+  }
+}
+
+@media(max-width: 980px){
+  :root{
+    --container-width: 720px;
+  }
+}
+
+@media(max-width: 780px){
+  :root{
+    --container-width: 540px;
+  }
+}
+
+@media(max-width: 560px){
+  :root{
+    --container-width: calc(100% - 30px);
+  }
+}

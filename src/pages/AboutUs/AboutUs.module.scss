@@ -1,0 +1,35 @@
+@use '@/styles/base' as base;
+
+.statsList{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 15px;
+  width: fit-content;
+
+  h5, p{
+    text-align: center;
+    white-space: nowrap;
+  }
+}
+.left{
+  display: flex;
+  gap: 30px;
+}
+.mediaCont{
+  background: base.$temp-color-fill; //temp-tag
+  height: 100%;
+  min-height: 300px;
+  flex-grow: 1;
+}
+
+@media(max-width: 1200px){
+  .left{
+    flex-direction: column;
+  }
+  .statsList{
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}

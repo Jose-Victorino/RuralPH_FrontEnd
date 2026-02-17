@@ -1,0 +1,19 @@
+@use '@/styles/base' as base;
+
+.whatsNew{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  grid-template-rows: max-content 1fr max-content;
+  gap: 15px 25px;
+  
+  .videoContainer{
+    background: base.$temp-color-fill; //temp-tag
+    aspect-ratio: 1.75;
+  }
+
+  li{
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 3;
+  }
+}

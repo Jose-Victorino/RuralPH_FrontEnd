@@ -1,0 +1,217 @@
+@use '@/styles/base' as base;
+
+.navigation{
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  box-shadow: 0px 0px 20px hsla(0, 0%, 0%, 0.2);
+
+  &.atTop{
+    box-shadow: none;
+    
+    .top, .bottom{
+      background: none;
+    }
+    // a, .navItem{
+    //   color: black;
+    // }
+    // svg {
+    //   fill: black;
+    // }
+  }
+  &.isRouted{
+    position: sticky;
+  }
+  
+  a, .navItem{
+    color: base.$gs-w-100;
+    display: flex;
+
+    &:hover{
+      color: base.$secondary-color;
+    }
+  }
+}
+
+.top{
+  background: base.$primary-color;
+
+  a{
+    padding-block: 0.5em;
+  }
+}
+.bottom{
+  background: base.$primary-dark;
+}
+
+.logoWrap{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+.logo{
+  height: 70px;
+  pointer-events: auto;
+}
+
+.socmed{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.25em;
+
+  li{
+    display: flex;
+  }
+  a{
+    display: flex;
+  }
+  svg{
+    height: 1.25em;
+    fill: base.$gs-w-100;
+
+    &:hover{
+      fill: base.$secondary-color;
+    }
+  }
+}
+
+.navLinks{
+  display: flex;
+  gap: 1.25em;
+
+  li{
+    display: flex;
+  }
+  a{
+    display: flex;
+    padding-block: 1em;
+  }
+  svg{
+    height: 1.25em;
+    fill: base.$gs-w-100;
+  }
+  
+  .navItem{
+    position: relative;
+    display: flex;
+    gap: 3px;
+    align-items: center;
+    padding-block: 1em;
+
+    svg{
+      height: 1em;
+    }
+  }
+}
+
+.hasSubnav{
+  position: relative;
+
+  .subNav.open{
+    display: flex;
+  }
+}
+
+.subNav{
+  background: base.$primary-light;
+  position: absolute;
+  top: 100%;
+  z-index: 1;
+  display: none;
+  flex-direction: column;
+
+  li:not(:last-child){
+    border-bottom: 1px solid base.$gs-w-100;
+  }
+
+  a{
+    white-space: nowrap;
+    padding: 0.75em 1.25em;
+    width: 100%;
+  }
+}
+
+.burger{
+  display: none;
+  background: none;
+  border: none;
+
+  svg{
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.mobileNav{
+  background: base.$primary-light;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  display: none;
+  grid-template-rows: max-content 1fr max-content;
+  // gap: 25px;
+  height: 100vh;
+  height: 100dvh;
+  max-width: 80vw;
+  width: clamp(200px, 35%, 240px);
+  box-shadow: -8px 0 24px rgba(0, 0, 0, 0.2);
+  transform: translateX(-100%);
+  transition: transform 0.4s;
+
+  .closeCont{
+    display: flex;
+    justify-content: end;
+    padding: 20px;
+
+    button{ display: flex; }
+    svg{
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .mobileNavLinks{
+    display: flex;
+    flex-direction: column;
+
+    li{ display: block; }
+    a{
+      display: flex;
+      color: white;
+      font-size: 1em;
+      padding: 0.75em 1.5em;
+      width: 100%;
+
+      &.active{
+        color: base.$secondary-color;
+      }
+    }
+  }
+}
+
+@media (max-width: 780px){
+  .top, .socmed, .navLinks{ display: none; }
+  .bottom > div{ position: relative; }
+  
+  .logoWrap a{ align-self: end; }
+  .logo{ height: 50px; }
+
+  .burger{
+    display: flex;
+    margin-block: 25px;
+  }
+
+  .mobileNav{
+    display: grid;
+    
+    &.open{
+      transform: translateX(0%);
+    }
+  }
+}

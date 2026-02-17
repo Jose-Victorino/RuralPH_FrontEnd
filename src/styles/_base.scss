@@ -1,0 +1,121 @@
+@use 'sass:color';
+@use "sass:list";
+
+$font1: 'Lato', sans-serif;
+$font2: 'lucida grande', tahoma, verdana, arial, sans-serif;
+$font3: 'Poppins', 'Roboto', 'Open Sans', sans-serif;
+//geist
+
+// Size Clamps (560px - 720px)
+$sz-48-64: clamp(48px, -0.5rem + 10vw, 64px);
+$sz-32-48: clamp(32px, -1.5rem + 10vw, 48px);
+$sz-28-32: clamp(28px, 0.875rem + 2.5vw, 32px);
+$sz-24-28: clamp(24px, 0.625rem + 2.5vw, 28px);
+$sz-20-24: clamp(20px, 0.375rem + 2.5vw, 24px);
+$sz-16-20: clamp(16px, 0.125rem + 2.5vw, 20px);
+$sz-14-16: clamp(14px, 0.4375rem + 1.25vw, 16px);
+$sz-12-16: clamp(12px, -0.25rem + 2.8571vw, 16px);
+$sz-12-14: clamp(12px, 0.3125rem + 1.25vw, 14px);
+$sz-10-12: clamp(10px, 0.1875rem + 1.25vw, 12px);
+
+// grayscale palette
+$gs-w-100: hsl(214, 15%, 98%);
+$gs-w-90:  hsl(214, 12%, 95%);
+$gs-w-80:  hsl(214, 12%, 92%);
+$gs-w-70:  hsl(214, 9%, 87%);
+$gs-w-60:  hsl(214, 7%, 76%);
+$gs-w-50:  hsl(214, 6%, 63%);
+$gs-w-40:  hsl(214, 5%, 52%);
+$gs-b-40:  hsl(214, 5%, 39%);
+$gs-b-50:  hsl(214, 6%, 25%);
+$gs-b-60:  hsl(214, 6%, 19%);
+$gs-b-70:  hsl(214, 6%, 17%);
+$gs-b-80:  hsl(214, 6%, 13%);
+$gs-b-90:  hsl(214, 8%, 10%);
+$gs-b-100: hsl(214, 15%, 6%);
+
+$temp-color-fill: linear-gradient(120deg, $gs-w-70 30%, $gs-w-80 100%);
+
+// solid colors
+$primary-color: hsl(133, 50%, 35%);
+$secondary-color: hsl(38, 95%, 52%);
+
+$primary-light: color.adjust($primary-color, $lightness: 10%);
+$primary-dark: color.adjust($primary-color, $lightness: -5%);
+$primary-darker: color.adjust($primary-color, $lightness: -15%);
+$secondary-light: color.adjust($secondary-color, $lightness: 10%);
+$secondary-dark: color.adjust($secondary-color, $lightness: -5%);
+
+$success-color: hsl(120, 52%, 56%);
+$warning-color: hsl(50, 87%, 56%);
+$error-color: hsl(0, 52%, 56%);
+$link-color: hsl(211, 100%, 50%);
+
+@mixin pos-absolute-y-center(){
+  position: absolute;
+  bottom: 50%;
+  transform: translateY(50%);
+}
+
+@mixin pos-absolute-x-center() {
+  position: absolute;
+  right: 50%;
+  transform: translateX(50%);
+}
+
+@mixin box-shadow($top, $left, $blur, $color) {
+  box-shadow: $left $top $blur $color;
+}
+
+@mixin drop-shadow($top, $left, $blur, $color) {
+  filter: drop-shadow($left $top $blur $color);
+}
+
+@mixin inline-vertical() {
+  display: inline-block;
+}
+
+@mixin single-line() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-height: 1em;
+}
+
+@mixin card-design() {
+  background-color: #fff;
+  border: 1px solid #e7e7e7;
+  border-radius: 6px;
+}
+
+@mixin dim-clamp($dim, $min, $default, $max) {
+  @if not list.index(width height, $dim) {
+    @error "dim must be height or width";
+  }
+  
+  #{$dim}: $default;
+  min-#{$dim}: $min;
+  max-#{$dim}: $max;
+}
+
+@mixin input(){
+  background: $gs-w-100;
+  padding: 0.5em 0.75em;
+  border: 1px solid $gs-w-70;
+  border-radius: 6px;
+
+  &:focus-visible{
+    border-color: $gs-b-80;
+  }
+}
+
+@mixin input-hide-spinner(){
+  &[type="number"]{
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+

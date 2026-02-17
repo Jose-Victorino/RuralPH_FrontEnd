@@ -1,0 +1,119 @@
+@use '@/styles/base' as base;
+@use "sass:color";
+@use "sass:map";
+
+$fontColorLight: base.$gs-w-100;
+$fontColorDark: base.$gs-b-100;
+$fontColorDisabled: color.scale($fontColorLight, $lightness: -11%);
+$toggleBg: base.$gs-w-80;
+
+$colors: (
+  "blue": hsl(211, 100%, 45%),
+  "green": base.$primary-color,
+  "yellow": base.$secondary-color,
+  "red": hsl(0, 52%, 56%),
+  "light": hsl(214, 6%, 13%),
+  "dark": hsl(214, 12%, 92%),
+);
+
+$size: (
+  "sm": clamp(0.625em, 0.1875rem + 1.25vw, 0.75em),
+  "md": clamp(0.75em, -0.25rem + 2.8571vw, 1em),
+  "lg": clamp(1em, 0.125rem + 2.5vw, 1.25em),
+);
+
+@each $name, $value in $colors{
+  .color-#{$name} {
+    --primary-color: #{$value};
+    --primary-hover: #{color.scale($value, $lightness: -8%)};
+  }
+}
+
+@each $name, $value in $size{
+  .sz-#{$name} {
+    --btn-size: #{$value};
+  }
+}
+
+@mixin setColor($value){
+  p{ color: $value; }
+  svg{ fill: $value; }
+}
+
+@mixin btn-base{
+  font-size: var(--btn-size);
+  padding: 0.5em 1em;
+  gap: 4px;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+  p{
+    font-size: inherit;
+    line-height: 1.5;
+  }
+  svg{
+    height: var(--btn-size);
+    width: var(--btn-size);
+  }
+}
+
+// solid
+.btn-primary{
+  @include btn-base;
+  @include setColor($fontColorLight);
+  background-color: var(--primary-color);
+  // border: 1px solid var(--primary-color);
+
+  &:disabled{
+    @include setColor($fontColorDisabled);
+    opacity: 0.8;
+  }
+  &:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+  &.color-dark{
+    @include setColor($fontColorDark);
+  }
+}
+// outline
+.btn-secondary{
+  @include btn-base;
+  @include setColor($fontColorDark);
+  border: 1px solid var(--primary-color);
+  
+  &:disabled{
+    @include setColor($fontColorDisabled);
+    opacity: 0.7;
+  }
+  &:hover:not(:disabled) {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    @include setColor($fontColorLight);
+
+    &.color-dark{
+      @include setColor($fontColorDark);
+    }
+  }
+  &.color-dark{
+    @include setColor($fontColorLight);
+  }
+}
+// link
+.btn-tertiary{
+  @include btn-base;
+  color: base.$link-color;
+  padding: 0;
+  border: 1px solid transparent;
+  
+  &:disabled{
+    @include setColor($fontColorDisabled);
+  }
+  &:hover:not(:disabled) p{
+    text-decoration: underline;
+  }
+  &.color-dark{
+    @include setColor($fontColorLight);
+  }
+}

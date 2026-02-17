@@ -1,0 +1,47 @@
+@use '@/styles/base' as base;
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-auto-rows: max-content;
+  gap: 30px;
+
+  & > :first-child{
+    grid-row: span 3;
+  }
+
+  @media(max-width: 560px){
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.qnaBlock{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 5px 5px 0;
+  border-top: 3px solid base.$primary-color;
+  border-radius: 6px;
+}
+
+.socmed{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em 1.25em;
+
+  li{
+    display: flex;
+  }
+  a{
+    display: flex;
+  }
+  svg{
+    height: 1.25em;
+    fill: black;
+
+    &:hover{
+      fill: base.$secondary-color;
+    }
+  }
+}

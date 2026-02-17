@@ -1,0 +1,39 @@
+@use '@/styles/base' as base;
+
+.footer{
+  background: base.$gs-w-80;
+}
+
+.top{
+  padding-block: 30px;
+  display: flex;
+  justify-content: center;
+
+  .content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    text-align: center;
+    width: 400px;
+  }
+  img{
+    height: 120px;
+  }
+}
+
+.bottom{
+  padding-block: 15px;
+  display: flex;
+  justify-content: space-between;
+
+  a:hover{
+    text-decoration: underline;
+  }
+}
+
+@media(max-width: 560px){
+  .top img{
+    height: 90px;
+  }
+}

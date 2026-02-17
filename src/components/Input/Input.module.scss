@@ -1,0 +1,24 @@
+@use '@/styles/base' as base;
+
+.inputCont{
+  flex-grow: 1;
+
+  label{
+    font-size: base.$sz-12-14;
+    line-height: 1;
+  }
+  input, select, textarea{
+    @include base.input();
+    @include base.input-hide-spinner();
+  }
+}
+
+.inputRequired{
+  color: red;
+  line-height: 1;
+}
+
+.errorMsg{
+  color: hsl(0, 65%, 51%);
+  font-size: 0.85rem;
+}

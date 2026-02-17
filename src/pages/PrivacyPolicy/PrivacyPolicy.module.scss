@@ -1,0 +1,7 @@
+@use '@/styles/base' as base;
+
+.top{
+  padding: 15px;
+  border: 2px solid base.$primary-light;
+  border-radius: 15px;
+}
