@@ -139,6 +139,9 @@ function Navigation() {
                   <NavLink to='https://ruriclub.com/'>Shop</NavLink>
                 </li>
                 <li>
+                  <NavLink to='/location'>Location</NavLink>
+                </li>
+                <li>
                   <NavLink to='/contact-us'>Contact us</NavLink>
                 </li>
               </ul>
@@ -178,6 +181,9 @@ function Navigation() {
             </li>
             <li>
               <NavLink onClick={() => closeMenu()} to='https://ruriclub.com/'>Shop</NavLink>
+            </li>
+            <li>
+              <NavLink to='/location'>Location</NavLink>
             </li>
             <li>
               <NavLink onClick={() => closeMenu()} to='/contact-us'>Contact us</NavLink>

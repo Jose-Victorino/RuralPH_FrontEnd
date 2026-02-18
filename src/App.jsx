@@ -9,6 +9,7 @@ import Events from '@/pages/Event/Events'
 import Faq from '@/pages/Faq/Faq'
 import News from '@/pages/News/News'
 import OurJourney from '@/pages/OurJourney/OurJourney'
+import StoreLocations from '@/pages/StoreLocations/StoreLocations'
 import ContactUs from '@/pages/ContactUs/ContactUs'
 import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy'
 import TermsAndConditions from '@/pages/TermsAndConditions/TermsAndConditions'
@@ -21,9 +22,11 @@ function App() {
         <Route index element={<Home />}/>
         <Route path='about-us' element={<AboutUs />}/>
         <Route path='our-journey' element={<OurJourney />}/>
+        {/* <Route path='our-journey/c/:categoryName' element={<Category />}/> */}
         <Route path='faqs' element={<Faq />}/>
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>
+        <Route path='location' element={<StoreLocations />}/>
         <Route path='contact-us' element={<ContactUs />}/>
         <Route path='privacy-policy' element={<PrivacyPolicy />}/>
         <Route path='terms-and-conditions' element={<TermsAndConditions />}/>

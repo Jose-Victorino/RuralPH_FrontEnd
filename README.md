@@ -9,6 +9,7 @@ Our journey					|	On-going		| Media required
 FAQs 								| `Done` 			| 
 In The News					| Not Started	| Media required; Video player modal integration
 Events 							| Not Started | 
+Locations						| On-going		| Location selection and display logic
 Contact Us 					| `Done` 			| Media required; Pending email endpoint
 Privacy Policy 			| `Done` 			| 
 Terms & Conditions	| `Done` 			| 

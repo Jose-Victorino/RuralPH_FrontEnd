@@ -17,3 +17,9 @@
     grid-row: span 3;
   }
 }
+
+@media(max-width: 560px){
+  .whatsNew{
+    grid-template-columns: 1fr;
+  }
+}
