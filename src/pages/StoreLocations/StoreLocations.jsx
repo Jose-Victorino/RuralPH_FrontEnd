@@ -81,7 +81,7 @@ function StoreLocations() {
     <section className={s.locationContainer}>
       <div className="container">
         <div className={s.top}>
-          <p>Search for the closest pick up hub.</p>
+          <p>See the closest Rural Rising store to you.</p>
           <div className='flex-col flex-wrap j-space-between gap-15'>
             <div className={s.inputCont}>
               <input className={s.input} name='user_location' placeholder='Enter Location' type="text" />

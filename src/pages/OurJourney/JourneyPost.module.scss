@@ -1,0 +1,22 @@
+@use '@/styles/base' as base;
+
+.header{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.imageCont{
+  background: base.$temp-color-fill; //temp-tag
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 1.75;
+  align-self: center;
+}
+
+.postList{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}

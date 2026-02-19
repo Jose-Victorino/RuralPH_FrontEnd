@@ -25,14 +25,12 @@
 .bottom{
   padding-block: 15px;
   display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
   justify-content: space-between;
 
   a:hover{
     text-decoration: underline;
-  }
-
-  span{
-    font-size: base.$sz-14-16;
   }
 }
 

@@ -3,12 +3,16 @@ import { Routes, Route } from 'react-router-dom'
 import '@/styles/reset.scss'
 
 import MainLayout from '@/layouts/MainLayout'
+
 import Home from '@/pages/Home/Home'
 import AboutUs from '@/pages/AboutUs/AboutUs'
-import Events from '@/pages/Event/Events'
 import Faq from '@/pages/Faq/Faq'
 import News from '@/pages/News/News'
 import OurJourney from '@/pages/OurJourney/OurJourney'
+import JourneyPost from '@/pages/OurJourney/JourneyPost'
+import JourneyCategory from '@/pages/OurJourney/JourneyCategory'
+import Events from '@/pages/Event/Events'
+import Stories from '@/pages/Stories/Stories'
 import StoreLocations from '@/pages/StoreLocations/StoreLocations'
 import ContactUs from '@/pages/ContactUs/ContactUs'
 import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy'
@@ -22,10 +26,12 @@ function App() {
         <Route index element={<Home />}/>
         <Route path='about-us' element={<AboutUs />}/>
         <Route path='our-journey' element={<OurJourney />}/>
-        {/* <Route path='our-journey/c/:categoryName' element={<Category />}/> */}
+        <Route path='our-journey/p/:postId' element={<JourneyPost />}/>
+        <Route path='our-journey/c/:categoryName' element={<JourneyCategory />}/>
         <Route path='faqs' element={<Faq />}/>
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>
+        <Route path='stories' element={<Stories />}/>
         <Route path='location' element={<StoreLocations />}/>
         <Route path='contact-us' element={<ContactUs />}/>
         <Route path='privacy-policy' element={<PrivacyPolicy />}/>

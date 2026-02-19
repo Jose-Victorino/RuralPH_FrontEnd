@@ -78,6 +78,10 @@ button{
 // list
 ol, ul{ list-style: none; }
 
+hr{
+  border: 1px solid base.$gs-b-50;
+}
+
 // table
 table{
   border-collapse: collapse;

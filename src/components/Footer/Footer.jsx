@@ -33,7 +33,7 @@ function Footer() {
               <NavLink to='/terms-and-conditions' onClick={() => window.scrollTo(0, 0)}>Terms and Conditions</NavLink>
             </li>
           </ul>
-          <span>© Rural Rising PH, All rights reserved.</span>
+          <p>© Rural Rising PH, All rights reserved.</p>
         </div>
       </div>
     </footer>

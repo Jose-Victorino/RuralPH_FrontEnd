@@ -1,1 +1,59 @@
 @use '@/styles/base' as base;
+
+.imageCont{
+  background: base.$temp-color-fill; //temp-tag
+  width: 100%;
+  aspect-ratio: 1.75;
+}
+
+.recentPosts{
+  display: flex;
+  width: 100%;
+  gap: 20px;
+}
+.mainPost{
+  width: 100%;
+}
+
+.postList{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+}
+
+.postItem{
+  a{
+    display: flex;
+    gap: 15px;
+  }
+  
+  .imageCont{
+    width: 250px;
+  }
+}
+
+.mainPost, .postItem{
+  p, h5{
+    white-space: nowrap;
+  }
+  h5{
+    color: base.$primary-color;
+  }
+}
+
+@media(max-width: 1200px){
+  .recentPosts, .postItem a{
+    flex-direction: column;
+  }
+  .postList{
+    flex-direction: row;
+  }
+  .postItem{
+    width: 100%;
+
+    .imageCont{
+      width: 100%;
+    }
+  }
+}

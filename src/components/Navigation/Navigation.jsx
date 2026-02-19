@@ -133,6 +133,9 @@ function Navigation() {
                     <li>
                       <NavLink to='/events' onClick={closeSubnav}>Events</NavLink>
                     </li>
+                    <li>
+                      <NavLink to='/stories' onClick={closeSubnav}>Stories</NavLink>
+                    </li>
                   </ul>
                 </li>
                 <li>
@@ -175,6 +178,12 @@ function Navigation() {
             </li>
             <li>
               <NavLink onClick={() => closeMenu()} to='/in-the-news'>In The News</NavLink>
+            </li>
+            <li>
+              <NavLink onClick={() => closeMenu()} to='/events'>Events</NavLink>
+            </li>
+            <li>
+              <NavLink onClick={() => closeMenu()} to='/stories'>Stories</NavLink>
             </li>
             <li>
               <NavLink onClick={() => closeMenu()} to='/events'>Events</NavLink>

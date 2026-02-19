@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
@@ -8,6 +8,7 @@ import WhatsNew from '@/features/WhatsNew/WhatsNew'
 import s from './Home.module.scss'
 
 function Home() {
+  const navigate = useNavigate()
   document.title = `Rural Rising PH`
 
   return (
@@ -123,6 +124,7 @@ function Home() {
               color='yellow'
               span
               role='link'
+              onClick={() => navigate('https://campmingan.com/')}
             />
           </div>
         </div>

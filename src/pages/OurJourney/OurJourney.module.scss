@@ -1,10 +1,18 @@
 @use '@/styles/base' as base;
 
-.header{
-  background: base.$gs-w-80;
+.movement{
+  background: base.$temp-color-fill; //temp-tag
+  position: relative;
+}
+.content{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  padding: 15px;
+  flex-direction: column;
+  max-width: 600px;
+  gap: 5px;
+  text-align: center;
+}
+
+.imgCont{
+  background: base.$temp-color-fill; //temp-tag
+  aspect-ratio: 1.75;
 }

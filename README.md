@@ -13,8 +13,9 @@ Locations						| On-going		| Location selection and display logic
 Contact Us 					| `Done` 			| Media required; Pending email endpoint
 Privacy Policy 			| `Done` 			| 
 Terms & Conditions	| `Done` 			| 
-**Stories**					| Not Started | 
+Stories							| Not Started | 
 
+temp-tag
 **Components**
 - Video player modal
 - What's new

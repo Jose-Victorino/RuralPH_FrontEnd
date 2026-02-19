@@ -1,0 +1,32 @@
+@use '@/styles/base' as base;
+
+.imageCont{
+  background: base.$temp-color-fill; //temp-tag
+  width: 100%;
+  aspect-ratio: 1.75;
+}
+
+.postList{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.postItem{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  
+  p, h5{
+    white-space: nowrap;
+  }
+  h5{
+    color: base.$primary-color;
+  }
+}
+
+@media(max-width: 560px){
+  .postList{
+    grid-template-columns: 1fr;
+  }
+}
