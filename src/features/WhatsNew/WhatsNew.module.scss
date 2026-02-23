@@ -2,9 +2,9 @@
 
 .whatsNew{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
   grid-template-rows: max-content 1fr max-content;
-  gap: 15px 25px;
+  gap: 20px;
   
   .videoContainer{
     background: base.$temp-color-fill; //temp-tag
@@ -15,6 +15,7 @@
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 3;
+    gap: 10px;
   }
 }
 

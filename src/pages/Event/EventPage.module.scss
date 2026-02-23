@@ -1,0 +1,31 @@
+@use '@/styles/base' as base;
+@use 'sass:color';
+
+.backBtn{
+  width: fit-content;
+
+  &:hover{
+    color: base.$secondary-color;
+    text-decoration: underline;
+  }
+}
+
+.icon{
+  height: base.$sz-20-24;
+  width: base.$sz-20-24;
+}
+
+.info{
+  background: color.change(base.$primary-color, $alpha: 0.9);
+  color: base.$gs-w-100;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+
+  h3{
+    line-height: 1;
+  }
+}

@@ -13,9 +13,10 @@ function AboutUs() {
   return (
     <>
       <section className='pad-block-100'>
-        <div className={cn("container flex-col gap-30")}>
-          <div className='res-flex-row'>
+        <div className="container flex-col gap-30">
+          <div className='flex-col gap-20'>
             <div className={s.left}>
+              <div className={s.mediaCont}></div>
               <ul className={s.statsList}>
                 <li>
                   <h5>5+</h5>
@@ -38,10 +39,9 @@ function AboutUs() {
                   <p>Active Members</p>
                 </li>
               </ul>
-              <div className={s.mediaCont}></div>
             </div>
-            <div className='flex-col gap-15'>
-              <h5>Achieving <span className='textGreen'>Rural Prosperity</span></h5>
+            <div className='flex-col gap-10'>
+              <h4>Achieving <span className='textGreen'>Rural Prosperity</span></h4>
               <p>Rural Rising Philippines (RuRi) is a collective, non-profit grassroots effort to help distressed Filipino farmers get back on their feet and feed the nation with pride. It aims to do this by doing “Rescue Buys” in areas where there is an over-production of fruits and vegetables, and by paying the farmers above-farm gate prices. RuRi then distributes the rescued produce to its members at below-bagsakan prices. The farmers win and so do the consumers. All fruits and vegetables that are not claimed within 48 hours are automatically donated to hungry communities in the NCR and to various community pantries. No produce goes to waste.</p>
               <p>We believe that when farmers are paid the right price, they have a chance at achieving rural prosperity; that by giving members access to fresh and cheap produce, they would share what they cannot consume to the needy or perhaps create a profitable reseller business; that by channeling all unclaimed or unsold produce to residents in economically depressed communities, their lives are sustained, their souls given hope.</p>
               <p>We do weekly Rescue Buys in towns and cities all over the country. RuRi operates a Vegetable Rescue Center in Baguio City, and three distribution hubs in the NCR. These are RuRi North at Congressional Avenue., Quezon City and RuRi South at the Alabang Town Center, Muntinlupa, and at Avida Towers Centera in Mandaluyong.</p>
@@ -74,7 +74,7 @@ function AboutUs() {
               role='link'
               span
               text='Become a Member'
-              onClick={() => navigate('https://ruriclub.com/membership/')}
+              onClick={() => navigate('https://ruriclub.com/pages/membership')}
             />
             <Button
               color='yellow'

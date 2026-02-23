@@ -1,0 +1,33 @@
+@use '@/styles/base' as base;
+
+.dateBanner{
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  border: 1px solid base.$gs-w-80;
+  border-radius: 6px;
+  overflow: hidden;
+  width: fit-content;
+  color: black;
+  
+  .month{
+    background: base.$gs-w-80;
+    padding: 0.5em 1em;
+    font-size: base.$sz-10-12;
+    
+    p{
+      font-size: base.$sz-10-12;
+      line-height: 1;
+    }
+  }
+  .day{
+    background: white;
+    display: flex;
+    justify-content: center;
+    padding-block: 0.5em;
+
+    p{
+      line-height: 1;
+    }
+  }
+}

@@ -27,7 +27,7 @@ function Home() {
               size='lg'
               span
               role='link'
-              onClick={() => navigate('https://ruriclub.com/membership/')}
+              onClick={() => navigate('https://ruriclub.com/pages/membership')}
             />
           </div>
         </div>
@@ -130,7 +130,7 @@ function Home() {
         </div>
       </section>
       <section className='pad-block-100'>
-        <div className={cn("container flex-col gap-30")}>
+        <div className="container flex-col gap-15">
           <h2 className='text-center'>Approaches to Rural Sustainability</h2>
           <div>
             <ul className={s.approachesList}>

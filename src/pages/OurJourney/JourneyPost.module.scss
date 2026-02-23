@@ -1,5 +1,11 @@
 @use '@/styles/base' as base;
 
+.goBack:hover{
+  text-decoration: underline;
+  color: base.$secondary-color;
+  width: fit-content;
+}
+
 .header{
   display: flex;
   flex-wrap: wrap;

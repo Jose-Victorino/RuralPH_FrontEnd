@@ -7,8 +7,8 @@ Home 								| On-going 		| Media required; Video player modal integration
 About Us 						| On-going 		| Media required
 Our journey					|	On-going		| Media required
 FAQs 								| `Done` 			| 
-In The News					| Not Started	| Media required; Video player modal integration
-Events 							| Not Started | 
+In The News					| On-going		| Media required; Video player modal integration
+Events 							| On-going		| Data required
 Locations						| On-going		| Location selection and display logic
 Contact Us 					| `Done` 			| Media required; Pending email endpoint
 Privacy Policy 			| `Done` 			| 

@@ -14,18 +14,21 @@
 }
 .left{
   display: flex;
-  gap: 30px;
+  gap: 15px 30px;
 }
 .mediaCont{
   background: base.$temp-color-fill; //temp-tag
-  height: 100%;
-  min-height: 300px;
+  width: 100%;
   flex-grow: 1;
 }
 
 @media(max-width: 1200px){
   .left{
     flex-direction: column;
+  }
+  .mediaCont{
+    height: 100%;
+    min-height: 300px;
   }
   .statsList{
     flex-direction: row;

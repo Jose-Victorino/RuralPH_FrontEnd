@@ -21,8 +21,8 @@ function OurJourney() {
       <RecentPost />
       <section>
         <div className="container flex-col gap-15 pad-block-50" style={{textAlign: 'center'}}>
-          <h2 className='textGreen'>Growing Together for a Sustainable Future</h2>
-          <h3>Mission, history, farmer spotlights, and BTS.</h3>
+          <h3 className='textGreen'>Growing Together for a Sustainable Future</h3>
+          <h5>Mission, history, farmer spotlights, and BTS.</h5>
           <p>Learn & Explore <br /> Tips, Recipes, and Resources</p>
         </div>
       </section>
@@ -38,7 +38,7 @@ function OurJourney() {
             size='lg'
             span
             role='link'
-            onClick={() => navigate('https://ruriclub.com/membership/')}
+            onClick={() => navigate('https://ruriclub.com/pages/membership')}
           />
         </div>
       </section>

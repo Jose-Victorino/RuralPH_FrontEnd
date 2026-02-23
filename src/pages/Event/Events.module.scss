@@ -1,11 +1,7 @@
 @use '@/styles/base' as base;
 
 .header{
-  background: base.$gs-w-80;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  
+  background: base.$gs-w-80;  
   justify-content: space-between;
   align-items: center;
   gap: 20px;

@@ -12,6 +12,7 @@ import OurJourney from '@/pages/OurJourney/OurJourney'
 import JourneyPost from '@/pages/OurJourney/JourneyPost'
 import JourneyCategory from '@/pages/OurJourney/JourneyCategory'
 import Events from '@/pages/Event/Events'
+import EventPage from '@/pages/Event/EventPage'
 import Stories from '@/pages/Stories/Stories'
 import StoreLocations from '@/pages/StoreLocations/StoreLocations'
 import ContactUs from '@/pages/ContactUs/ContactUs'
@@ -31,6 +32,7 @@ function App() {
         <Route path='faqs' element={<Faq />}/>
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>
+        <Route path='events/:eventName' element={<EventPage />}/>
         <Route path='stories' element={<Stories />}/>
         <Route path='location' element={<StoreLocations />}/>
         <Route path='contact-us' element={<ContactUs />}/>

@@ -1,0 +1,23 @@
+@use '@/styles/base' as base;
+
+.eventCard{
+  a{
+    display: flex;
+    gap: 15px;
+    width: fit-content;
+  }
+
+  &:hover{
+    cursor: pointer;
+
+    h6{
+      color: base.$primary-color;
+      text-decoration: underline;
+    }
+  }
+}
+
+.icon{
+  height: base.$sz-16-20;
+  width: base.$sz-16-20;
+}

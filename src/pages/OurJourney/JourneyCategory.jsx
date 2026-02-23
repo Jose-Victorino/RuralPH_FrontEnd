@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from'react-router-dom'
 
 import Top from './Top'
 
@@ -12,22 +13,22 @@ function JourneyCategory() {
         <div className="container">
           <ul className={s.postList}>
             <li className={s.postItem}>
-              <a href="/our-journey/p/1">
+              <Link to="/our-journey/p/1">
                 <div className={s.imageCont}></div>
                 <div>
                   <h5>Title</h5>
                   <p>Feb 12, 2026</p>
                 </div>
-              </a>
+              </Link>
             </li>
             <li className={s.postItem}>
-              <a href="/our-journey/p/1">
+              <Link to="/our-journey/p/1">
                 <div className={s.imageCont}></div>
                 <div>
                   <h5>Title</h5>
                   <p>Feb 12, 2026</p>
                 </div>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

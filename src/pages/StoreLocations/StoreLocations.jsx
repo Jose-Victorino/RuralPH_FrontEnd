@@ -60,8 +60,10 @@ const MODE_TYPES = [
   },
 ]
 
+const PAGE_NAME = 'Locations'
+
 function StoreLocations() {
-  document.title = "RURI CLUB | Store Locations"
+  document.title = `${PAGE_NAME} | Rural Rising PH`
 
   const [distance, setDistance] = useState(1)
   const [mode, setMode] = useState({})
@@ -85,10 +87,6 @@ function StoreLocations() {
           <div className='flex-col flex-wrap j-space-between gap-15'>
             <div className={s.inputCont}>
               <input className={s.input} name='user_location' placeholder='Enter Location' type="text" />
-              <div className='flex a-center gap-15'>
-                <input className={s.rangePicker} type="range" name='distance' min={1} max={100} defaultValue={distance} onChange={(e) => setDistance(e.target.value)}/>
-                <div className={s.distanceVal}>{distance}km</div>
-              </div>
             </div>
             <Button
               text='Search'
