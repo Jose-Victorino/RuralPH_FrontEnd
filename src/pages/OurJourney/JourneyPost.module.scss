@@ -22,7 +22,6 @@
 }
 
 .postList{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  @include base.grid-repeat-column(auto-fill, 300px);
   gap: 20px;
 }

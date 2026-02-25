@@ -1,5 +1,6 @@
 @use 'sass:color';
 @use "sass:list";
+@use "sass:meta";
 
 $font1: 'Lato', sans-serif;
 $font2: 'lucida grande', tahoma, verdana, arial, sans-serif;
@@ -119,3 +120,15 @@ $link-color: hsl(211, 100%, 50%);
   }
 }
 
+@mixin grid-repeat-column($repeat, $width) {    
+  @if not(meta.type-of($repeat) == number or $repeat == auto-fit or $repeat == auto-fill){
+    @error "Invalid value for $repeat. Use a number, auto-fit, or auto-fill.";
+  }
+
+  display: grid;
+  grid-template-columns: repeat(#{$repeat}, minmax($width, 1fr));
+
+  @media(max-width: 560px){
+    grid-template-columns: 1fr;
+  }
+}

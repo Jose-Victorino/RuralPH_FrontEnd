@@ -1,9 +1,8 @@
 @use '@/styles/base' as base;
 
 .gridList{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 30px;
+  @include base.grid-repeat-column(auto-fill, 360px);
+  gap: 20px;
 }
 
 .listItem{
@@ -21,10 +20,4 @@
   background: base.$temp-color-fill; //temp-tag
   width: 100%;
   aspect-ratio: 1.75;
-}
-
-@media(max-width: 560px){
-  .gridList{
-    grid-template-columns: 1fr;
-  }
 }

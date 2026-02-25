@@ -14,7 +14,7 @@ function News() {
   return (
     <>
       <section className='pad-block-50'>
-        <div className='container flex-col gap-30'>
+        <div className='container flex-col gap-10'>
           <h3>Watch Our Latest Videos</h3>
           <ul className={s.gridList}>
             <li className={s.listItem}>

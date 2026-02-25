@@ -1,8 +1,7 @@
 @use '@/styles/base' as base;
 
 .grid{
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  @include base.grid-repeat-column(auto-fill, 285px);
   grid-auto-rows: max-content;
   gap: 30px;
 

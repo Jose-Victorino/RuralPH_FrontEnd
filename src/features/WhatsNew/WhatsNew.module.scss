@@ -1,8 +1,7 @@
 @use '@/styles/base' as base;
 
 .whatsNew{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+  @include base.grid-repeat-column(auto-fill, 360px);
   grid-template-rows: max-content 1fr max-content;
   gap: 20px;
   
@@ -16,11 +15,5 @@
     grid-template-rows: subgrid;
     grid-row: span 3;
     gap: 10px;
-  }
-}
-
-@media(max-width: 560px){
-  .whatsNew{
-    grid-template-columns: 1fr;
   }
 }
