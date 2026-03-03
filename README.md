@@ -13,7 +13,7 @@ Locations						| On-going		| Location selection and display logic
 Contact Us 					| `Done` 			| Media required; Pending email endpoint
 Privacy Policy 			| `Done` 			| 
 Terms & Conditions	| `Done` 			| 
-Stories							| Not Started | 
+Stories							| On-going		| 
 
 temp-tag
 **Components**
@@ -91,13 +91,3 @@ npm run lint
 
 ## Deployment
 The project is a static frontend. After `npm run build`, serve the `dist/` output with any static host (Netlify, Vercel, GitHub Pages, or a simple static file server).
-
-## Contributing
-Open an issue or submit a PR. Keep changes focused and update styles or components with corresponding module files.
-
-## License
-MIT (add LICENSE file to repository)
-
----
-
-Questions? Check the source code or open an issue.

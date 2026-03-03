@@ -153,7 +153,7 @@ function Navigation() {
           </div>
         </section>
       </header>
-      <div className={cn(s.mobileNav, { [s.open]: menuVisible })} role="dialog" inert={!menuVisible} ref={mobileNavRef}>
+      <div className={cn(s.mobileNav, { [s.open]: menuVisible })} role="dialog" inert={menuVisible ? 'true' : 'false'} ref={mobileNavRef}>
         <div className={cn(s.closeCont)}>
           <button onClick={(e) => {
             e.stopPropagation()
