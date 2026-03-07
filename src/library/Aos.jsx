@@ -1,6 +1,9 @@
 import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 
 function RosAnimation() {
+  const location = useLocation()
+
   useEffect(() => {
     const ros = document.querySelectorAll("[data-ros]")
     const rosDuration = document.querySelectorAll("[data-ros-duration]")
@@ -34,7 +37,7 @@ function RosAnimation() {
     return () => {
       window.removeEventListener("scroll", rosCall)
     }
-  }, [])
+  }, [location.pathname])
 
   return null
 }
