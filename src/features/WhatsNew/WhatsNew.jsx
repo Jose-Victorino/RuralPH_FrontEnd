@@ -5,11 +5,10 @@ import Button from '@/components/Button/Button'
 import s from './WhatsNew.module.scss'
 
 function WhatsNew() {
-
   
   return (
     <section className='pad-block-100'>
-      <div className={cn("container flex-col gap-30")}>
+      <div data-ros='fade-down' className={cn("container flex-col gap-30")}>
         <h2 className='text-center'>What's New at <span className='textGreen'>Rural Rising</span></h2>
         <ul className={s.whatsNew}>
           <li>

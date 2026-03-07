@@ -24,6 +24,62 @@
   color: base.$secondary-light;
 }
 
+.bgGreen{
+  background-color: base.$primary-color;
+}
+.bgGreen-dark{
+  background-color: base.$primary-dark;
+}
+.bg-light{
+  background-color: base.$primary-light;
+}
+.bgYellow{
+  background-color: base.$secondary-color;
+}
+.bgYellow-dark{
+  background-color: base.$secondary-dark;
+}
+.bg-light{
+  background-color: base.$secondary-light;
+}
+
+[data-ros^=fade],
+[data-ros^=flip],
+[data-ros^=zoom]{
+  opacity: 0;
+  transition: 0.7s;
+  /* transition-timing-function: cubic-bezier(0.15, 0.4, 0.2, 1.3); */
+}
+[data-ros].rosActive{ opacity: 1; }
+/* fade */
+[data-ros=fade-up]{ transform: translate(0, 50px); }
+[data-ros=fade-down]{ transform: translate(0, -50px); }
+[data-ros=fade-left]{ transform: translate(50px, 0); }
+[data-ros=fade-right]{ transform: translate(-50px, 0); }
+[data-ros=fade-up-left]{ transform: translate(50px, 50px); }
+[data-ros=fade-up-right]{ transform: translate(-50px, 50px); }
+[data-ros=fade-down-left]{ transform: translate(50px, -50px); }
+[data-ros=fade-down-right]{ transform: translate(-50px, -50px); }
+[data-ros^=fade].rosActive{ transform: translate(0); }
+/* flip */
+[data-ros^=flip]{ backface-visibility: hidden; }
+[data-ros=flip-up]{ transform: rotateX(-90deg); }
+[data-ros=flip-down]{ transform: rotateX(90deg); }
+[data-ros=flip-left]{ transform: rotateY(90deg); }
+[data-ros=flip-right]{ transform: rotateY(-90deg); }
+[data-ros^=flip].rosActive{ transform: rotate(0); }
+/* zoom */
+[data-ros=zoom-in]{ transform: scale(0.9); }
+[data-ros=zoom-in-up]{ transform: scale(0.9) translate(0, 50px); }
+[data-ros=zoom-in-down]{ transform: scale(0.9) translate(0, -50px); }
+[data-ros=zoom-in-left]{ transform: scale(0.9) translate(50px, 0); }
+[data-ros=zoom-in-right]{ transform: scale(0.9) translate(-50px, 0); }
+[data-ros=zoom-out]{ transform: scale(1.1); }
+[data-ros=zoom-out-up]{ transform: scale(1.1) translate(0, 50px); }
+[data-ros=zoom-out-down]{ transform: scale(1.1) translate(0, -50px); }
+[data-ros=zoom-out-left]{ transform: scale(1.1) translate(50px, 0); }
+[data-ros=zoom-out-right]{ transform: scale(1.1) translate(-50px, 0); }
+[data-ros^=zoom].rosActive{ transform: scale(1); }
 
 .container{
   width: var(--container-width);

@@ -65,9 +65,9 @@ function AboutUs() {
           </div>
         </div>
       </section>
-      <section className='pad-block-100'>
+      <section className='pad-block-100 bgGreen'>
         <div className={cn("container flex-col a-center gap-30")}>
-          <h2>Important Resources</h2>
+          <h2 style={{color: 'white'}}>Important Resources</h2>
           <div className='flex-wrap gap-15'>
             <Button
               color='yellow'
