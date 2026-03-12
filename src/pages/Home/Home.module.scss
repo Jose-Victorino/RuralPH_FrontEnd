@@ -1,16 +1,28 @@
 @use '@/styles/base' as base;
 
 .hero{
-  background: base.$temp-color-fill; //temp-tag
+  background-color: hsla(0, 0%, 0%, 0.4);
   position: relative;
   height: 100vh;
   height: 100dvh;
+  overflow: hidden;
+  
+  .headerVideo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-height: 100%;
+    min-width: 100%;
+    z-index: -1;
+  }
 }
+
 .content{
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-bottom: 50px;
+  color: base.$gs-w-100;
 
   & > div{
     max-width: 630px;

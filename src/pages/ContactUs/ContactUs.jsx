@@ -18,7 +18,7 @@ function ContactUs() {
 
   return (
     <>
-      <section className='flex j-center pad-block-60'>
+      <section className={cn('flex j-center pad-block-60', s.contactSection)}>
         <div className={cn('res-flex-row', s.content)}>
           <ul className={s.contacts}>
             <li>

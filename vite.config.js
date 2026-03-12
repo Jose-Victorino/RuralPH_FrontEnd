@@ -8,6 +8,7 @@ export default defineConfig({
     alias: {
       "@": '/src',
       "svg": '/src/assets/svg',
+      "uploads": '/src/assets/uploads',
     }
   },
 })

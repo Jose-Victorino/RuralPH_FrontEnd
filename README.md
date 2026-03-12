@@ -91,3 +91,43 @@ npm run lint
 
 ## Deployment
 The project is a static frontend. After `npm run build`, serve the `dist/` output with any static host (Netlify, Vercel, GitHub Pages, or a simple static file server).
+
+<!-- Table: qna
+qnaId: PK
+question: textarea
+answer: textarea -->
+
+Table: users
+id: PK
+email: String
+password: String
+created_at: timestamp
+
+Table: news
+id: PK
+title: String
+description: textarea
+video_vimeo_id: String
+video_embed_url: String
+created_at: timestamp
+
+Table: Events
+id: PK
+title: String
+description: textarea
+date: date
+timeStart: String
+timeEnd: String
+location: String
+created_at: timestamp
+
+Table: Story
+id: PK
+title: String
+description: textarea
+created_at: timestamp
+
+Table: StoryMedia
+id: PK
+story_id: FK
+media_path: String

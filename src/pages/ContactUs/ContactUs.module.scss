@@ -1,5 +1,9 @@
 @use '@/styles/base' as base;
 
+.contactSection{
+  background-image: url('uploads/contact-bg.png');
+}
+
 .content{
   display: flex;
   gap: 30px;

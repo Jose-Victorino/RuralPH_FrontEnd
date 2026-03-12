@@ -1,4 +1,4 @@
-import React from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import cn from 'classnames'
 
@@ -7,14 +7,46 @@ import WhatsNew from '@/features/WhatsNew/WhatsNew'
 
 import s from './Home.module.scss'
 
+import headerVideo from 'uploads/video-banner.mp4'
+
+import { supabase } from '@/supabase-client'
+
 function Home() {
   const navigate = useNavigate()
+  const [users, setUsers] = useState([])
+
   document.title = `Rural Rising PH`
 
+  const fetchUsers = async () => {
+    const { err, data } = await supabase.from('users').select("*")
+
+    if(err){
+      console.error("Error getting task: ", err.message)
+      return
+    }
+
+    setUsers(data)
+  }
+  console.log(users);
+  
+  
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+  
   return (
     <>
       <section className={s.hero}>
         <div className='container flex a-center'>
+          <video
+            className={s.headerVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+          >
+            <source src={headerVideo}/>
+          </video>
           <div className={s.content}>
             <div className='flex-col gap-10'>
               <h1>Growing Together</h1>

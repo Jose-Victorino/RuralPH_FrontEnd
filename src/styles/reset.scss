@@ -47,7 +47,7 @@ h2, h3, h4, h5, h6, p, a, li, input, textarea, select, option, label{ line-heigh
 a{
   font-family: inherit;
   text-decoration: none;
-  color: base.$gs-b-100;
+  color: inherit;
   cursor: pointer;
 }
 code, pre, kbd, samp{

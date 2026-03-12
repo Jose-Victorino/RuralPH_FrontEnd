@@ -1,7 +1,12 @@
 @use '@/styles/base' as base;
-
+@use 'sass:color';
 .footer{
-  background: base.$gs-w-80;
+  background:
+    linear-gradient(140deg,
+      color.scale(base.$primary-color, $lightness: -32%) 30%,
+      color.scale(base.$primary-color, $lightness: -27%) 100%
+    );
+  color: white;
 }
 
 .top{

@@ -20,6 +20,7 @@ function Footer() {
                 text='Become a Member'
                 span
                 role='link'
+                color='yellow'
                 onClick={() => navigate('https://ruriclub.com/pages/membership')}
               />
           </div>
