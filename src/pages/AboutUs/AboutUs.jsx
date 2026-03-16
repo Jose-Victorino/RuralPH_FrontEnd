@@ -1,9 +1,13 @@
+import { Link } from 'react-router-dom'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
 import WhatsNew from '@/features/WhatsNew/WhatsNew'
 
 import s from './AboutUs.module.scss'
+
+import spousesImg from 'uploads/rural-philippines-e1682368256444.png'
+import mainAboutImg from 'uploads/angel-locsin.jpg'
 
 const PAGE_NAME = 'About Us'
 
@@ -16,8 +20,8 @@ function AboutUs() {
         <div className="container flex-col gap-30">
           <div className='flex-col gap-20'>
             <div className={s.left}>
-              <div className={s.mediaCont}></div>
-              <ul className={s.statsList}>
+              <img data-ros='fade-right' className={s.img} src={mainAboutImg} height='400' loading="lazy" alt='img'/>
+              <ul data-ros='fade-left' className={s.statsList}>
                 <li>
                   <h5>5+</h5>
                   <p>Years</p>
@@ -40,7 +44,7 @@ function AboutUs() {
                 </li>
               </ul>
             </div>
-            <div className='flex-col gap-10'>
+            <div data-ros='fade-down' className='flex-col gap-10'>
               <h4>Achieving <span className='textGreen'>Rural Prosperity</span></h4>
               <p>Rural Rising Philippines (RuRi) is a collective, non-profit grassroots effort to help distressed Filipino farmers get back on their feet and feed the nation with pride. It aims to do this by doing “Rescue Buys” in areas where there is an over-production of fruits and vegetables, and by paying the farmers above-farm gate prices. RuRi then distributes the rescued produce to its members at below-bagsakan prices. The farmers win and so do the consumers. All fruits and vegetables that are not claimed within 48 hours are automatically donated to hungry communities in the NCR and to various community pantries. No produce goes to waste.</p>
               <p>We believe that when farmers are paid the right price, they have a chance at achieving rural prosperity; that by giving members access to fresh and cheap produce, they would share what they cannot consume to the needy or perhaps create a profitable reseller business; that by channeling all unclaimed or unsold produce to residents in economically depressed communities, their lives are sustained, their souls given hope.</p>
@@ -52,7 +56,7 @@ function AboutUs() {
       <section className='pad-block-100'>
         <div className={cn("container flex-col gap-30")}>
           <div className='res-flex-row'>
-            <div className='flex-col gap-15'>
+            <div data-ros='fade-right' className='flex-col gap-15'>
               <p>The conversations at RuRi are led by spouses Ace and Andie Estrada of Baguio City.</p>
               <ul className='list-disc'>
                 <li>+40k Members</li>
@@ -61,12 +65,12 @@ function AboutUs() {
               <p>You can send inquiries to <a href="mailto:info@ruralrisingph.com">info@ruralrisingph.com</a></p>
               <p>RuRi is working to erect vegetable tramlines in Benguet, create a water and forest conservation project in Nueva Ecija, and establish community libraries in various farmer communities. It is also working to establish a processing and packaging facility for rescued produce, and the country’s first Rescue Kitchen. We welcome offers of help in whatever form it comes if it would help the farmers and create small but impactful change in the countryside.</p>
             </div>
-            <div className={s.mediaCont}></div>
+            <img data-ros='fade-left' className={s.img} loading="lazy" src={spousesImg} alt='img'/>
           </div>
         </div>
       </section>
       <section className='pad-block-100 bgGreen'>
-        <div className={cn("container flex-col a-center gap-30")}>
+        <div data-ros='fade-down' className={cn("container flex-col a-center gap-30")}>
           <h2 style={{color: 'white'}}>Important Resources</h2>
           <div className='flex-wrap gap-15'>
             <Button
@@ -74,28 +78,28 @@ function AboutUs() {
               role='link'
               span
               text='Become a Member'
-              onClick={() => navigate('https://ruriclub.com/pages/membership')}
+              to='https://ruriclub.com/pages/membership'
             />
             <Button
               color='yellow'
               role='link'
               span
               text='Join our FB Group'
-              onClick={() => navigate('https://facebook.com/groups/RuRiPh')}
+              to='https://facebook.com/groups/RuRiPh'
             />
             <Button
               color='yellow'
               role='link'
               span
               text='Watch us on Youtube'
-              onClick={() => navigate('https://www.youtube.com/@ruralrisingphilippines1993')}
+              to='https://www.youtube.com/@ruralrisingphilippines1993'
             />
             <Button
               color='yellow'
               role='link'
               span
               text='Shop for Products'
-              onClick={() => navigate('https://ruriclub.com/')}
+              to='https://ruriclub.com/'
             />
           </div>
         </div>

@@ -1,5 +1,10 @@
 @use '@/styles/base' as base;
 
+.img{
+  object-fit: cover;
+  border-radius: 10px;
+}
+
 .statsList{
   display: flex;
   flex-direction: column;
@@ -12,10 +17,13 @@
     white-space: nowrap;
   }
 }
+
 .left{
   display: flex;
+  justify-content: center;
   gap: 15px 30px;
 }
+
 .mediaCont{
   background: base.$temp-color-fill; //temp-tag
   width: 100%;

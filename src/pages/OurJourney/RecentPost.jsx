@@ -9,9 +9,9 @@ function RecentPost() {
   return (
     <section>
       <div className='container'>
-        <h5 className='mb-10'>Recent Posts</h5>
+        <h5 data-ros='fade-right' className='mb-10'>Recent Posts</h5>
         <div className={cn(s.recentPosts)}>
-          <div className={s.mainPost}>
+          <div data-ros='fade-right' className={s.mainPost}>
             <Link to="/our-journey/p/1a">
               <div className={s.imageCont}></div>
               <div>
@@ -20,7 +20,7 @@ function RecentPost() {
               </div>
             </Link>
           </div>
-          <ul className={s.postList}>
+          <ul data-ros='fade-left' className={s.postList}>
             <li className={s.postItem}>
               <Link to="/our-journey/p/1b">
                 <div className={s.imageCont}></div>

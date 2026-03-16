@@ -22,7 +22,7 @@ function Event() {
     <>
       <section>
         <div className="container pad-block-20">
-          <div className={s.header}>
+          <div data-ros='fade-down' className={s.header}>
             <Formik
               initialValues={{
                 searchBar: ''
@@ -36,7 +36,7 @@ function Event() {
           </div>
         </div>
       </section>
-      <section className='flex-col gap-50 mb-50'>
+      <section data-ros='fade-right' className='flex-col gap-50 mb-50'>
         <div className='container flex-col gap-20'>
           <h3>Upcoming Events</h3>
             <ul className='flex-col gap-30'>

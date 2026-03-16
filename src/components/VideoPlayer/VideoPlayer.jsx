@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom'
 
 import s from './VideoPlayer.module.scss'
 
-function VideoPlayer({onClose}) {
+function VideoPlayer({onClose, videoLink}) {
   const startedInside = useRef(false);
 
   useEffect(() => {

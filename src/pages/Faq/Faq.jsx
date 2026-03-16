@@ -18,7 +18,7 @@ function Faq() {
   return (
     <>
       <section className='pad-block-100'>
-        <div className={cn('container', s.grid)}>
+        <div data-ros='fade-down' className={cn('container', s.grid)}>
           <div className={s.qnaBlock}>
             <h5>What is Rural Rising's role in establishing economic sustainability between farmers and consumers?</h5>
             <p>Rural Rising is a social enterprise dedicated to spurring the rural economy and harnessing the potential of the countryside. It works to bridge the gap between farmers and consumers by providing access to locally grown produce, creating impactful change in rural communities, and investing in agricultural opportunities.</p>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
@@ -8,11 +8,15 @@ import WhatsNew from '@/features/WhatsNew/WhatsNew'
 import s from './Home.module.scss'
 
 import headerVideo from 'uploads/video-banner.mp4'
+import campMingan from 'uploads/campmingan.jpg'
+import Marketplace from 'uploads/Marketplace.jpg'
+import resources from 'uploads/resources.jpg'
+import capacityBuilding from 'uploads/capacity-building.jpg'
+import tourism from 'uploads/Tourism.jpg'
 
 import { supabase } from '@/supabase-client'
 
 function Home() {
-  const navigate = useNavigate()
   const [users, setUsers] = useState([])
 
   document.title = `Rural Rising PH`
@@ -47,7 +51,7 @@ function Home() {
           >
             <source src={headerVideo}/>
           </video>
-          <div className={s.content}>
+          <div data-ros='fade-right' className={s.content}>
             <div className='flex-col gap-10'>
               <h1>Growing Together</h1>
               <h2>Fresh, Local Produce That Supports Filipino Farmers</h2>
@@ -59,7 +63,7 @@ function Home() {
               size='lg'
               span
               role='link'
-              onClick={() => navigate('https://ruriclub.com/pages/membership')}
+              to='https://ruriclub.com/pages/membership'
             />
           </div>
         </div>
@@ -139,14 +143,15 @@ function Home() {
               span
               role='link'
               style={{alignSelf: 'center'}}
-              onClick={() => navigate('https://cafa.iphiview.com/cafa/AccountInformation/tabid/495/dispatch/accountselection_id$450980_hash$424008be42b633899ebd723198fc60651f28573a/Default.aspx')}
+              to='https://cafa.iphiview.com/cafa/AccountInformation/tabid/495/dispatch/accountselection_id$450980_hash$424008be42b633899ebd723198fc60651f28573a/Default.aspx'
             />
           </div>
         </div>
       </section>
       <section className={cn(s.section2, 'pad-block-120')}>
         <div className='container res-flex-row'>
-          <div data-ros='fade-right' className={s.imgCont}></div>
+          <img data-ros='fade-right' className={s.img} src={campMingan} alt="Camp Mingan" />
+          {/* <div data-ros='fade-right' className={s.imgCont}></div> */}
           <div data-ros='fade-left' className='flex-col gap-15'>
             <h2 className='lh-1'><span className='textYellow'>Discover Camp Mingan:</span> Where Nature and Community Thrive</h2>
             <p>A conservation park that’s transforming rural communities through sustainable practices, environmental stewardship, and collaborative action.</p>
@@ -156,7 +161,7 @@ function Home() {
               color='yellow'
               span
               role='link'
-              onClick={() => navigate('https://campmingan.com/')}
+              to='https://campmingan.com/'
             />
           </div>
         </div>
@@ -167,29 +172,33 @@ function Home() {
           <div>
             <ul className={s.approachesList}>
               <li data-ros='flip-left'>
-                <div className={s.bgContainer}></div>
-                <div className='pad-20'>
+                <div className={s.overlay} />
+                <img className={s.img} src={Marketplace} alt='Marketplace'/>
+                <div className={s.approachesInner}>
                   <h5>Marketplace</h5>
                   <Link to='https://ruriclub.com/'>Learn More</Link>
                 </div>
               </li>
               <li data-ros='flip-left'>
-                <div className={s.bgContainer}></div>
-                <div className='pad-20'>
+                <div className={s.overlay} />
+                <img className={s.img} src={resources} alt='Resources'/>
+                <div className={s.approachesInner}>
                   <h5>Resources</h5>
                   <Link to='/about-us'>Learn More</Link>
                 </div>
               </li>
               <li data-ros='flip-left'>
-                <div className={s.bgContainer}></div>
-                <div className='pad-20'>
+                <div className={s.overlay} />
+                <img className={s.img} src={capacityBuilding} alt='Capacity Building'/>
+                <div className={s.approachesInner}>
                   <h5>Capacity Building</h5>
                   <Link to='/our-journey'>Learn More</Link>
                 </div>
               </li>
               <li data-ros='flip-left'>
-                <div className={s.bgContainer}></div>
-                <div className='pad-20'>
+                <div className={s.overlay} />
+                <img className={s.img} src={tourism} alt='Tourism'/>
+                <div className={s.approachesInner}>
                   <h5>Tourism</h5>
                   <Link to='/our-journey'>Learn More</Link>
                 </div>

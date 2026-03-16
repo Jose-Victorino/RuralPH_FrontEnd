@@ -1,4 +1,5 @@
 import React from 'react'
+import cn from 'classnames'
 
 import s from './Stories.module.scss'
 
@@ -12,7 +13,7 @@ function Stories() {
   return (
     <>
       <section className={s.stories}>
-        <div className='container flex-col gap-30'>
+        <div className={cn(s.container, 'flex-col gap-30')}>
           <ul className={s.storyList}>
             <li className={s.storyItem}>
               <div className='flex-col gap-10'>

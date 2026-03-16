@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import Button from '@/components/Button/Button'
 
@@ -7,7 +7,6 @@ import s from './Footer.module.scss'
 import logoPng from '/logo.png'
 
 function Footer() {
-  const navigate = useNavigate()
   
   return (
     <footer className={s.footer}>
@@ -21,7 +20,7 @@ function Footer() {
                 span
                 role='link'
                 color='yellow'
-                onClick={() => navigate('https://ruriclub.com/pages/membership')}
+                to='https://ruriclub.com/pages/membership'
               />
           </div>
         </div>

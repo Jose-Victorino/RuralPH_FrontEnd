@@ -13,7 +13,7 @@ function Header() {
   return (
     <section>
       <div className="container pad-block-20">
-        <div className={s.header}>
+        <div data-ros='fade-down' className={s.header}>
           <div>
             <input type="text" placeholder='Search...'/>
           </div>

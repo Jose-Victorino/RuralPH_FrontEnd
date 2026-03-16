@@ -111,7 +111,7 @@ video_vimeo_id: String
 video_embed_url: String
 created_at: timestamp
 
-Table: Events
+Table: events
 id: PK
 title: String
 description: textarea

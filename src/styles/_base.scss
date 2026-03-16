@@ -64,6 +64,13 @@ $link-color: hsl(211, 100%, 50%);
   transform: translateX(50%);
 }
 
+@mixin pos-absolute-center() {
+  position: absolute;
+  bottom: 50%;
+  right: 50%;
+  transform: translate(50%, 50%);
+}
+
 @mixin box-shadow($top, $left, $blur, $color) {
   box-shadow: $left $top $blur $color;
 }

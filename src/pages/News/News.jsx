@@ -7,6 +7,72 @@ import s from './News.module.scss'
 
 const PAGE_NAME = 'In The News'
 
+const POSTS = [
+  {
+    postId: 1,
+    title: 'Sagip-Saka: Rescuer of Distressed Farmers',
+    description: 'Get the scoop on the Sagip Saka Act and find out how it’s helping farmers and fishermen increase their income, reach their full potential, and live a better life.',
+    thumbnail: '',
+    videoId: 'https://vimeo.com/752542075',
+  },
+  {
+    postId: 2,
+    title: 'Farming is a social class',
+    description: 'Discover how Rural Rising is reshaping the view of farming in society and giving farmers the recognition they deserve. Learn more about their efforts to transform rural areas into thriving communities.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 3,
+    title: 'How RuRi Began',
+    description: 'Learn how RuRi came to be, what inspired its founders, and how they’re working to create a more sustainable future for farmers and consumers alike.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 4,
+    title: 'We receive a recognition',
+    description: 'Find out how our pioneering work got recognized and awarded at the Ginebra Ako Year 4 Awards. Learn more about what this means for Rural Rising and all farmers across the country.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 5,
+    title: 'Farmers are pandemic front-liners',
+    description: 'Learn how our farmers continue to be at the front lines of the pandemic and how we are supporting them at Rural Rising. Find out what else you can do to help Filipino farmers during this difficult time.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 6,
+    title: 'An Angel visits the farmers of Licab',
+    description: 'Follow Rural Rising’s inspiring story of how they joined forces with Angel Locsin to bring aid and hope to the farmers of Licab. See how you can get involved and make a difference now.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 7,
+    title: 'Preserving amazing earth and vital water:',
+    description: 'Learn how Rural Rising works with the local government and other key stakeholders to help farmers and their communities in Mt. Mingan preserve their vital water source and protect the environment.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 8,
+    title: 'How it all began',
+    description: 'Discover the story behind Rural Rising and how its mission of connecting farmers to markets, services, and technologies began. Find out how you can join the movement and contribute to sustainable, inclusive development in the Philippines.',
+    thumbnail: '',
+    videoId: '',
+  },
+  {
+    postId: 9,
+    title: 'Why we call the truck Teddy',
+    description: 'Learn how our truck “Teddy” is bringing fresh, locally sourced products from farms to your community. Discover why we chose this unique name and what it means for farmers everywhere!',
+    thumbnail: '',
+    videoId: '',
+  },
+]
+
 function News() {
   const [open, setOpen] = useState(false)
   document.title = `${PAGE_NAME} | Rural Rising PH`
@@ -17,40 +83,20 @@ function News() {
         <div className='container flex-col gap-10'>
           <h3>Watch Our Latest Videos</h3>
           <ul className={s.gridList}>
-            <li className={s.listItem}>
-              <div className={s.thumbnailCont} onClick={() => setOpen(true)}></div>
-              <h5>Title</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </li>
-            <li className={s.listItem}>
-              <div className={s.thumbnailCont}></div>
-              <h5>Title</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere odio incidunt natus quod sapiente aliquam quisquam consequuntur architecto cum suscipit?</p>
-            </li>
-            <li className={s.listItem}>
-              <div className={s.thumbnailCont}></div>
-              <h5>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium, illo?</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere odio incidunt natus quod sapiente aliquam quisquam consequuntur architecto cum suscipit?</p>
-            </li>
-            <li className={s.listItem}>
-              <div className={s.thumbnailCont}></div>
-              <h5>Title</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-            </li>
-            <li className={s.listItem}>
-              <div className={s.thumbnailCont}></div>
-              <h5>Title</h5>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. quisquam consequuntur architecto cum suscipit?</p>
-            </li>
-            <li className={s.listItem}>
-              <div className={s.thumbnailCont}></div>
-              <h5>Lorem ipsum, dolor sit amet consectetur</h5>
-              <p>Lorem ipsum dolor sit amet quod sapiente aliquam quisquam consequuntur architecto cum suscipit?</p>
-            </li>
+            {POSTS.map((post) => {
+
+              return (
+                <li key={post.postId} className={s.listItem}>
+                  <div className={s.thumbnailCont} onClick={() => setOpen(true)}></div>
+                  <h5>{post.title}</h5>
+                  <p>{post.description}</p>
+                </li>
+              )
+            })}
           </ul>
         </div>
       </section>
-      {open && <VideoPlayer onClose={() => setOpen(false)}/>}
+      {open && <VideoPlayer onClose={() => setOpen(false)} videoLink='https://vimeo.com/752542075' />}
     </>
   )
 }

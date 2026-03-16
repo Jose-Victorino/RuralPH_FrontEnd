@@ -36,7 +36,7 @@ function WhatsNew() {
           span
           role='link'
           style={{alignSelf: 'center'}}
-          onClick={() => navigate('/in-the-news')}
+          to='/in-the-news'
         />
       </div>
     </section>

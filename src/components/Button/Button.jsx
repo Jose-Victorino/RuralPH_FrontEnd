@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { Link } from 'react-router-dom';
 
 import s from './Button.module.scss'
 
@@ -15,6 +16,7 @@ const Button = ({
   disabled = false,
   span = false,
   role = 'button',
+  to,
   classNames = {},
   style={},
   onClick = () => {},
@@ -29,9 +31,12 @@ const Button = ({
     throw new Error("iconPos must only be: 'left', 'right'");
   if(!['curved', 'sharp', 'rounded'].includes(corners.toLowerCase()))
     throw new Error("corners must only be: 'curved', 'sharp', 'rounded'");
+
+  const isLink = role === 'link'
+  const Component = isLink ? Link : 'button'
   
   return (
-    <button
+    <Component
       className={cn(
         s[`btn-${btnType.toLowerCase()}`],
         s[`sz-${size.toLowerCase()}`],
@@ -56,10 +61,11 @@ const Button = ({
       aria-label={title || text}
       aria-disabled={disabled}
       role={role}
+      to={isLink ? to : ''}
     >
       {icon}
       {!["", null, undefined].includes(text) && <p>{text}</p>}
-    </button>
+    </Component>
   );
 }
 

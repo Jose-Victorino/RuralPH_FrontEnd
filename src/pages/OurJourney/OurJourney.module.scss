@@ -1,9 +1,15 @@
 @use '@/styles/base' as base;
 
-.movement{
-  background: base.$temp-color-fill; //temp-tag
-  position: relative;
+.img{
+  object-fit: cover;
+  border-radius: 10px;
 }
+
+.movement{
+  background-image: linear-gradient(60deg, base.$primary-light 30%, base.$primary-dark 100%);
+  color: base.$gs-w-90;
+}
+
 .content{
   display: flex;
   flex-direction: column;
