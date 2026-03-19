@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '@/supabase-client'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
@@ -14,29 +15,7 @@ import resources from 'uploads/resources.jpg'
 import capacityBuilding from 'uploads/capacity-building.jpg'
 import tourism from 'uploads/Tourism.jpg'
 
-import { supabase } from '@/supabase-client'
-
 function Home() {
-  const [users, setUsers] = useState([])
-
-  document.title = `Rural Rising PH`
-
-  const fetchUsers = async () => {
-    const { err, data } = await supabase.from('users').select("*")
-
-    if(err){
-      console.error("Error getting task: ", err.message)
-      return
-    }
-
-    setUsers(data)
-  }
-  console.log(users);
-  
-  
-  useEffect(() => {
-    fetchUsers()
-  }, [])
   
   return (
     <>

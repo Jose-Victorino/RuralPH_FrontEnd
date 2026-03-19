@@ -1,12 +1,12 @@
 import cn from 'classnames'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
 import s from './Button.module.scss'
 
 const Button = ({
   btnType = 'primary',  // 'primary', 'secondary', 'tertiary'
   size = 'md',       // 'sm', 'md', 'lg'
-  text = 'no input',
+  text = '',
   type = 'button',      // 'button', 'submit', 'reset'
   icon = null,
   iconPos = 'left',     // 'left', 'right'
@@ -22,15 +22,15 @@ const Button = ({
   onClick = () => {},
 }) => {
   if(!['primary', 'secondary', 'tertiary'].includes(btnType.toLowerCase()))
-    throw new Error("btnType must only be: 'primary', 'secondary', 'tertiary'");
+    throw new Error("btnType must only be: 'primary', 'secondary', 'tertiary'")
   if(!['sm', 'md', 'lg'].includes(size.toLowerCase()))
-    throw new Error("btnType must only be: 'sm', 'md', 'lg'");
+    throw new Error("btnType must only be: 'sm', 'md', 'lg'")
   if(!['button', 'submit', 'reset'].includes(type))
-    throw new Error("type must only be: 'button', 'submit', 'reset'");
+    throw new Error("type must only be: 'button', 'submit', 'reset'")
   if(!['left', 'right'].includes(iconPos.toLowerCase()))
-    throw new Error("iconPos must only be: 'left', 'right'");
+    throw new Error("iconPos must only be: 'left', 'right'")
   if(!['curved', 'sharp', 'rounded'].includes(corners.toLowerCase()))
-    throw new Error("corners must only be: 'curved', 'sharp', 'rounded'");
+    throw new Error("corners must only be: 'curved', 'sharp', 'rounded'")
 
   const isLink = role === 'link'
   const Component = isLink ? Link : 'button'
@@ -66,7 +66,7 @@ const Button = ({
       {icon}
       {!["", null, undefined].includes(text) && <p>{text}</p>}
     </Component>
-  );
+  )
 }
 
 export default Button

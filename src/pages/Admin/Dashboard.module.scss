@@ -1,0 +1,42 @@
+@use '@/styles/base' as base;
+@use './generalStyles' as c;
+
+.container{
+  @include c.container;
+}
+
+.moduleLinkList{
+  @include base.grid-repeat-column(auto-fill, 150px);
+  gap: 15px;
+}
+
+.linkItem{
+  aspect-ratio: 5 / 4;
+  border: 1px solid base.$gs-b-50;
+  border-radius: 6px;
+
+  &:hover{
+    color: white;
+    background: base.$primary-light;
+    border-color: base.$primary-light;
+
+    svg{
+      fill: white;
+    }
+  }
+}
+
+.moduleLink{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
+
+  svg{
+    height: base.$sz-24-28;
+    width: base.$sz-24-28;
+  }
+}

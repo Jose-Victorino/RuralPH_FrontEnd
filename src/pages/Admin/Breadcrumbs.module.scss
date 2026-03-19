@@ -1,0 +1,15 @@
+@use '@/styles/base' as base;
+
+.breadcrumbs{
+  width: fit-content;
+
+  a{
+    &:hover, &.active{
+      color: base.$secondary-light;
+    }
+  }
+  
+  .divider{
+    margin-inline: 6px;
+  }
+}

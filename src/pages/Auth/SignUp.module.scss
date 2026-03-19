@@ -1,0 +1,40 @@
+@use '@/styles/base' as base;
+
+.form{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+
+  h4{
+    text-align: center;
+  }
+
+  .txtField{
+    @include base.input();
+    width: 100%;
+  }
+  input{
+    @include base.input-hide-spinner();
+  }
+
+  .showPass{
+    position: absolute;
+    top: 50%;
+    right: 0.5em;
+    transform: translateY(-50%);
+    display: flex;
+
+    img{
+      height: 1em;
+      width: 1em;
+    }
+  }
+  select, option{
+    text-transform: capitalize;
+  }
+}
+
+.alt a{
+  color: base.$link-color;
+}

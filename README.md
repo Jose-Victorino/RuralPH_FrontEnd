@@ -14,6 +14,10 @@ Contact Us 					| `Done` 			| Media required; Pending email endpoint
 Privacy Policy 			| `Done` 			| 
 Terms & Conditions	| `Done` 			| 
 Stories							| On-going		| 
+Admin Page					| On-going		|
+Events (admin)			| On-going		| 
+In The News (admin)	| Not Started	| 
+Stories (admin)			| Not Started	| 
 
 temp-tag
 **Components**
@@ -91,35 +95,6 @@ npm run lint
 
 ## Deployment
 The project is a static frontend. After `npm run build`, serve the `dist/` output with any static host (Netlify, Vercel, GitHub Pages, or a simple static file server).
-
-<!-- Table: qna
-qnaId: PK
-question: textarea
-answer: textarea -->
-
-Table: users
-id: PK
-email: String
-password: String
-created_at: timestamp
-
-Table: news
-id: PK
-title: String
-description: textarea
-video_vimeo_id: String
-video_embed_url: String
-created_at: timestamp
-
-Table: events
-id: PK
-title: String
-description: textarea
-date: date
-timeStart: String
-timeEnd: String
-location: String
-created_at: timestamp
 
 Table: Story
 id: PK

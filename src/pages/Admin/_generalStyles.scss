@@ -1,0 +1,43 @@
+@use '@/styles/base' as base;
+
+@mixin container{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 1180px;
+  max-width: calc(100% - 30px);
+  margin-inline: auto;
+  padding: 20px 0 0;
+}
+
+@mixin table{
+  width: 100%;
+
+  th, td{
+    padding: 6px 10px;
+  }
+  tr{
+    border-bottom: 1px solid base.$gs-w-60;
+
+    &:hover{
+      background: base.$gs-w-90;
+    }
+  }
+  thead tr th{
+    text-align: start;
+
+    &:last-child{
+      text-align: end;
+      width: 120px;
+    }
+  }
+
+  .deleteBtn, .editBtn{
+
+    svg{
+      fill: base.$gs-b-70;
+      height: 16px;
+      width: 16px;
+    }
+  }
+}

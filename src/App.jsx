@@ -18,6 +18,15 @@ import StoreLocations from '@/pages/StoreLocations/StoreLocations'
 import ContactUs from '@/pages/ContactUs/ContactUs'
 import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy'
 import TermsAndConditions from '@/pages/TermsAndConditions/TermsAndConditions'
+import AuthLayout from '@/pages/Auth/AuthLayout'
+import Login from '@/pages/Auth/Login'
+import ForgotPassword from '@/pages/Auth/ForgotPassword'
+import SignUp from '@/pages/Auth/SignUp'
+import Dashboard from '@/pages/Admin/Dashboard'
+import AdminLayout from '@/pages/Admin/AdminLayout' 
+import AdminEvent from '@/pages/Admin/AdminEvent' 
+import AdminStory from '@/pages/Admin/AdminStory' 
+import AdminNews from '@/pages/Admin/AdminNews' 
 
 function App() {
 
@@ -38,6 +47,18 @@ function App() {
         <Route path='contact-us' element={<ContactUs />}/>
         <Route path='privacy-policy' element={<PrivacyPolicy />}/>
         <Route path='terms-and-conditions' element={<TermsAndConditions />}/>
+      </Route>
+      <Route path='/auth' element={<AuthLayout />}>
+        <Route index element={<Navigate to='/auth/login' />} />
+        <Route path='login' element={<Login />}/>
+        <Route path='forgot-password' element={<ForgotPassword />}/>
+        <Route path='sign-up' element={<SignUp />}/>
+      </Route>
+      <Route path='/admin' element={<AdminLayout />}>
+        <Route index element={<Dashboard />}/>
+        <Route path='event' element={<AdminEvent />}/>
+        <Route path='story' element={<AdminStory />}/>
+        <Route path='news' element={<AdminNews />}/>
       </Route>
     </Routes>
   )

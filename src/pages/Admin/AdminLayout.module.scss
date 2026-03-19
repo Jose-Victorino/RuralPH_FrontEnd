@@ -1,0 +1,40 @@
+@use '@/styles/base' as base;
+
+.nav{
+  background: base.$gs-w-80;
+  height: 50px;
+
+  svg{
+    height: 24px;
+    width: 24px;
+    fill: base.$gs-b-60;
+  }
+
+  .userButton{
+    height: 100%;
+  }
+
+  .options{
+    position: absolute;
+    top: 0;
+  }
+
+  [popover]{
+    inset: unset;
+    top: anchor(bottom);
+    right: anchor(right);
+    background: base.$gs-w-90;
+    // padding: 8px 0;
+    border: none;
+
+    button{
+      padding: 1em 1.25em;
+      width: 100%;
+
+      &:hover{
+        background: base.$secondary-light;
+        color: white;
+      }
+    }
+  }
+}

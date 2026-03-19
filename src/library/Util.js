@@ -1,7 +1,4 @@
-import { useEffect } from "react"
-import { useLocation } from "react-router-dom"
-
-export function wordCap(str) {
+export function wordCap(str){
   str = str.toLowerCase()
 
   const words = str.split(' ')
@@ -11,4 +8,27 @@ export function wordCap(str) {
   )
 
   return capitalizedWords.join(' ')
+}
+
+export function formatDate(str){
+  const [y, m, d] = str.split("-")
+
+  return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  })
+}
+
+export function formatTime(str){
+  const date = new Date()
+  const [h, m, s] = str.split(":")
+
+  date.setHours(h, m, s)
+
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  })
 }

@@ -43,7 +43,7 @@ h6, p, a, b, li, th, td, button,
 input, textarea, select, option, label{
   font-size: base.$sz-14-16;
 }
-h2, h3, h4, h5, h6, p, a, li, input, textarea, select, option, label{ line-height: 1.5; }
+h2, h3, h4, h5, h6, p, a, li, th, td, input, textarea, select, option, label{ line-height: 1.5; }
 a{
   font-family: inherit;
   text-decoration: none;
@@ -86,10 +86,6 @@ hr{
 table{
   border-collapse: collapse;
   border-spacing: 0;
-}
-td, th{
-  padding: 4px;
-  border: 1px solid black;
 }
 
 // form tags

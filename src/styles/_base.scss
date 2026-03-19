@@ -2,9 +2,9 @@
 @use "sass:list";
 @use "sass:meta";
 
-$font1: 'Lato', sans-serif;
-$font2: 'lucida grande', tahoma, verdana, arial, sans-serif;
-$font3: 'Poppins', 'Roboto', 'Open Sans', sans-serif;
+$font1: 'lucida grande', sans-serif;
+$font2: 'Lato', sans-serif;
+$font3: 'Poppins', sans-serif;
 //geist
 
 // Size Clamps (560px - 720px)
@@ -69,31 +69,6 @@ $link-color: hsl(211, 100%, 50%);
   bottom: 50%;
   right: 50%;
   transform: translate(50%, 50%);
-}
-
-@mixin box-shadow($top, $left, $blur, $color) {
-  box-shadow: $left $top $blur $color;
-}
-
-@mixin drop-shadow($top, $left, $blur, $color) {
-  filter: drop-shadow($left $top $blur $color);
-}
-
-@mixin inline-vertical() {
-  display: inline-block;
-}
-
-@mixin single-line() {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-height: 1em;
-}
-
-@mixin card-design() {
-  background-color: #fff;
-  border: 1px solid #e7e7e7;
-  border-radius: 6px;
 }
 
 @mixin dim-clamp($dim, $min, $default, $max) {
