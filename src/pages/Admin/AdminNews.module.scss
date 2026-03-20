@@ -1,10 +1,35 @@
 @use '@/styles/base' as base;
 @use './generalStyles' as c;
 
+.thumbnailCont{
+  @include base.thumbnailCont;
+}
+
+.img{
+  @include base.img;
+  width: 100%;
+}
+
 .container{
   @include c.container;
 }
 
+.form{
+  @include c.form;
+}
+
 .dataTable{
   @include c.table;
+  
+  th:nth-child(3){
+    text-align: center;
+  }
+  td:nth-child(3){
+    text-align: center;
+    svg{
+      fill: base.$gs-b-70;
+      height: 24px;
+      width: 24px;
+    }
+  }
 }

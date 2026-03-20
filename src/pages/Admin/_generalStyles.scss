@@ -7,7 +7,21 @@
   width: 1180px;
   max-width: calc(100% - 30px);
   margin-inline: auto;
-  padding: 20px 0 0;
+  padding: 20px 0 60px;
+}
+
+@mixin form{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 15px;
+  height: 100%;
+
+  & > div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 
 @mixin table{
@@ -28,12 +42,21 @@
 
     &:last-child{
       text-align: end;
-      width: 120px;
+      width: 100px;
     }
   }
-
+  tbody{
+    tr:last-child{
+      border-width: 0;
+    }
+    td:last-child div{
+      display: flex;
+      justify-content: end;
+      gap: 10px;
+    }
+  }
+  
   .deleteBtn, .editBtn{
-
     svg{
       fill: base.$gs-b-70;
       height: 16px;

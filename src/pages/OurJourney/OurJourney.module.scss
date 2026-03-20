@@ -1,8 +1,7 @@
 @use '@/styles/base' as base;
 
 .img{
-  object-fit: cover;
-  border-radius: 10px;
+  @include base.img;
 }
 
 .movement{

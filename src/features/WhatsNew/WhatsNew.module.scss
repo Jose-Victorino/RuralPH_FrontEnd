@@ -1,16 +1,15 @@
 @use '@/styles/base' as base;
 
+.thumbnailCont{
+  @include base.thumbnailCont;
+}
+
 .whatsNew{
   @include base.grid-repeat-column(auto-fill, 360px);
   grid-template-rows: max-content 1fr max-content;
   gap: 20px;
   
-  .thumbnailCont{
-    display: flex;
-    background: base.$temp-color-fill;
-    aspect-ratio: 1.75;
-    cursor: pointer;
-  }
+
   img{
     object-fit: cover;
     aspect-ratio: 1.75;

@@ -3,27 +3,31 @@
 ### Development
 Page | Status | Notes
 -|-|-
-Home 								| `Done`	 		| Media required
+Home 								| `Done`	 		|
 About Us 						| `Done` 			|
 Our journey					|	On-going		| Media required
-FAQs 								| `Done` 			| 
-In The News					| On-going		| Media required
-Events 							| `Done`			| 
+FAQs 								| `Done` 			|
+In The News					| `Done`			|
+Events 							| On-going		| Search functionality
 Locations						| On-going		| Location selection and display logic
-Contact Us 					| `Done` 			| Pending email endpoint
-Privacy Policy 			| `Done` 			| 
-Terms & Conditions	| `Done` 			| 
-Stories							| On-going		| 
+Contact Us 					| On-going		| Pending email endpoint
+Privacy Policy 			| `Done` 			|
+Terms & Conditions	| `Done` 			|
+Stories							| On-going		|
 Admin Page					| On-going		|
-Events (admin)			| On-going		| 
-In The News (admin)	| Not Started	| 
-Our journey (admin)	| Not Started	| 
-Stories (admin)			| Not Started	| 
+Events (admin)			| `Done`			|
+In The News (admin)	| `Done`			|
+Our journey (admin)	| Not Started	|
+Stories (admin)			| Not Started	|
 
 temp-tag
 **Components**
 - Video player modal
 - What's new
+
+Notes:
+- Content revision in Our Journey 'Growing Together for a Sustainable Future'
+- Find the "Farmers are pandemic front-liners" from In the News
 
 ---
 ---

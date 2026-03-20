@@ -1,15 +1,11 @@
 @use '@/styles/base' as base;
 
 .img{
-  object-fit: cover;
-  border-radius: 12px;
+  @include base.img;
 }
 
 .thumbnailCont{
-  display: flex;
-  background: base.$temp-color-fill;
-  aspect-ratio: 1.75;
-  cursor: pointer;
+  @include base.thumbnailCont;
 }
 
 .hero{

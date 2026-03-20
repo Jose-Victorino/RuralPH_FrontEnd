@@ -1,5 +1,14 @@
 @use '@/styles/base' as base;
 
+.thumbnailCont{
+  @include base.thumbnailCont;
+}
+
+.img{
+  @include base.img;
+  width: 100%;
+}
+
 .gridList{
   @include base.grid-repeat-column(auto-fill, 360px);
   gap: 20px;
@@ -14,11 +23,4 @@
   h5{
     line-height: 1;
   }
-}
-
-.thumbnailCont{
-  display: flex;
-  background: base.$temp-color-fill;
-  aspect-ratio: 1.75;
-  cursor: pointer;
 }

@@ -29,7 +29,7 @@
     color: base.$gs-w-100;
     display: flex;
 
-    &:hover{
+    &:hover, &.active{
       color: base.$secondary-color;
     }
   }

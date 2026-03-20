@@ -110,7 +110,7 @@ function Navigation() {
             <nav className='flex'>
               <ul className={s.navLinks}>
                 <li>
-                  <NavLink to='/'>Home</NavLink>
+                  <NavLink to='/' className={({ isActive }) => cn({ [s.active]: isActive })}>Home</NavLink>
                 </li>
                 <li className={s.hasSubnav} onMouseEnter={openSubnav} onMouseLeave={closeSubnav}>
                   <div className={s.navItem}>
@@ -119,22 +119,22 @@ function Navigation() {
                   </div>
                   <ul className={cn(s.subNav, { [s.open]: subnavOpen })}>
                     <li>
-                      <NavLink to='/about-us' onClick={closeSubnav}>About us</NavLink>
+                      <NavLink to='/about-us' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>About us</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/our-journey' onClick={closeSubnav}>Our Journey</NavLink>
+                      <NavLink to='/our-journey' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>Our Journey</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/faqs' onClick={closeSubnav}>FAQs</NavLink>
+                      <NavLink to='/faqs' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>FAQs</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/in-the-news' onClick={closeSubnav}>In The News</NavLink>
+                      <NavLink to='/in-the-news' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>In The News</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/events' onClick={closeSubnav}>Events</NavLink>
+                      <NavLink to='/events' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>Events</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/stories' onClick={closeSubnav}>Stories</NavLink>
+                      <NavLink to='/stories' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>Stories</NavLink>
                     </li>
                   </ul>
                 </li>
@@ -142,10 +142,10 @@ function Navigation() {
                   <NavLink to='https://ruriclub.com/'>Shop</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/location'>Location</NavLink>
+                  <NavLink to='/location' className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/contact-us'>Contact us</NavLink>
+                  <NavLink to='/contact-us' className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>
                 </li>
               </ul>
             </nav>
@@ -165,37 +165,37 @@ function Navigation() {
         <nav>
           <ul className={s.mobileNavLinks}>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/'>Home</NavLink>
+              <NavLink to='/' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Home</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/about-us'>About us</NavLink>
+              <NavLink to='/about-us' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>About us</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/our-journey'>Our Journey</NavLink>
+              <NavLink to='/our-journey' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/faqs'>FAQs</NavLink>
+              <NavLink to='/faqs' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>FAQs</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/in-the-news'>In The News</NavLink>
+              <NavLink to='/in-the-news' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>In The News</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/events'>Events</NavLink>
+              <NavLink to='/events' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/stories'>Stories</NavLink>
+              <NavLink to='/stories' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Stories</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/events'>Events</NavLink>
+              <NavLink to='/events' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='https://ruriclub.com/'>Shop</NavLink>
+              <NavLink to='https://ruriclub.com/' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Shop</NavLink>
             </li>
             <li>
-              <NavLink to='/location'>Location</NavLink>
+              <NavLink to='/location' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
             </li>
             <li>
-              <NavLink onClick={() => closeMenu()} to='/contact-us'>Contact us</NavLink>
+              <NavLink to='/contact-us' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>
             </li>
           </ul>
         </nav>

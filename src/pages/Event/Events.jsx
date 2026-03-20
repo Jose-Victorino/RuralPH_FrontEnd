@@ -11,15 +11,15 @@ const PAGE_NAME = 'Events'
 const eventService = createCRUD('event')
 
 function Event() {
-  const [eventsData, setEventsData] = useState([])
+  const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
 
   document.title = `${PAGE_NAME} | Rural Rising PH`
 
-  const fetchEvents = async () => await eventService.getAll(setLoading, setEventsData)
+  const fetchData = async () => await eventService.getAll(setLoading, setData)
   
   useEffect(() => {
-    fetchEvents()
+    fetchData()
   }, [])
 
   const handleSearch = ({searchBar}) => {
@@ -30,8 +30,8 @@ function Event() {
   
   const now = new Date()
   
-  const upcomingEvents = eventsData.filter(event => new Date(event.date) >= now)
-  const pastEvents = eventsData.filter(event => new Date(event.date) < now)
+  const upcomingEvents = data.filter(event => new Date(event.date) >= now)
+  const pastEvents = data.filter(event => new Date(event.date) < now)
 
   return (
     <>

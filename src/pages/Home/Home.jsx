@@ -19,6 +19,8 @@ import tourism from 'uploads/Tourism.jpg'
 function Home() {
   const [open, setOpen] = useState(false)
   
+  document.title = `Rural Rising PH`
+  
   return (
     <>
       {open !== false && <VideoPlayer onClose={() => setOpen(false)} videoId={open} />}

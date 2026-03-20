@@ -12,11 +12,14 @@ import Breadcrumbs from './Breadcrumbs'
 
 import s from './AdminEvent.module.scss'
 
+const today = new Date()
+today.setHours(0, 0, 0, 0)
+
 const schema = Yup.object({
   title: Yup.string().required('Title is required'),
   description: Yup.string(),
   location: Yup.string().required('Location is required'),
-  date: Yup.date().required('Date is required'),
+  date: Yup.date().min(today, 'Date must be today or onwards').required('Date is required'),
   time_start: Yup.string().required('Start time is required'),
   time_end: Yup.string(),
 })
@@ -32,18 +35,60 @@ const emptyFormValues = {
 const TABLE_NAME = 'event'
 const eventService = createCRUD(TABLE_NAME)
 
+const EventModal = ({ modalState, setModalState, selectedRecord, handleModalSubmit }) => {
+  const initialValues = modalState === 'UPDATE' && selectedRecord ? {
+    title: selectedRecord.title ?? '',
+    description: selectedRecord.description ?? '',
+    location: selectedRecord.location ?? '',
+    date: selectedRecord.date ?? '',
+    time_start: selectedRecord.time_start ?? '',
+    time_end: selectedRecord.time_end ?? '',
+  } : emptyFormValues
+
+  return (
+    <Modal
+      onClose={() => setModalState(false)}
+      width='480px'
+      height='620px'
+    >
+      <Formik
+        initialValues={initialValues}
+        validationSchema={schema}
+        enableReinitialize
+        onSubmit={handleModalSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => {
+          return (
+            <Form className={s.form}>
+              <div>
+                <Input displayName='Title' error={errors.title} touched={touched.title} input={{ type: 'text', name:'title', id:'title', required: true }}/>
+                <Input displayName='Description' error={errors.description} touched={touched.description} input={{ type: 'text', name:'description', id:'description', required: false }}/>
+                <Input displayName='Location' error={errors.location} touched={touched.location} input={{ type: 'text', name:'location', id:'location', required: true }}/>
+                <Input displayName='Date' error={errors.date} touched={touched.date} input={{ type: 'date', name:'date', id:'date', required: true }}/>
+                <Input displayName='Time Start' error={errors.time_start} touched={touched.time_start} input={{ type: 'time', name:'time_start', id:'time_start', required: true }}/>
+                <Input displayName='Time End' error={errors.time_end} touched={touched.time_end} input={{ type: 'time', name:'time_end', id:'time_end', required: false }}/>
+              </div>
+              <Button type='submit' text='Submit' disabled={isSubmitting} />
+            </Form>
+          )
+        }}
+      </Formik>
+    </Modal>
+  )
+}
+
 function AdminEvent() {
   const [modalState, setModalState] = useState(false)
-  const [eventsData, setEventsData] = useState([])
-  const [selectedEvent, setSelectedEvent] = useState(null)
+  const [data, setData] = useState([])
+  const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
   
   document.title = `Event | Admin | Rural Rising PH`
   
-  const fetchEvents = async () => await eventService.getAll(setLoading, setEventsData)
+  const fetchData = async () => await eventService.getAll(setLoading, setData)
   
   useEffect(() => {
-    fetchEvents()
+    fetchData()
   }, [])
 
   const handleModalSubmit = async (values, { setSubmitting }) => {
@@ -57,8 +102,8 @@ function AdminEvent() {
     }
 
     const { error } = modalState === 'INSERT' ?
-      await eventService.addData(payload) :
-      await eventService.updateData(payload, selectedEvent.id)
+      await eventService.putData(payload) :
+      await eventService.updateData(payload, selectedRecord.id)
     
     setSubmitting(false)
     if(error){
@@ -68,60 +113,22 @@ function AdminEvent() {
     }
     toast.success(`${TABLE_NAME} has been added`)
     closeModal()
-    fetchEvents()
+    fetchData()
   }
 
-  const handleDelete = async (id) => await eventService.deleteData(id, fetchEvents)
+  const handleDelete = async (id) => await eventService.deleteData(id, fetchData)
 
   const openCreateModal = () => {
-    setSelectedEvent(null)
+    setSelectedRecord(null)
     setModalState('INSERT')
   }
-  const openEditModal = (event) => {
-    setSelectedEvent(event)
+  const openEditModal = (record) => {
+    setSelectedRecord(record)
     setModalState('UPDATE')
   }
   const closeModal = () => {
     setModalState(null)
-    setSelectedEvent(null)
-  }
-  
-  const EventModal = () => {
-    const initialValues = modalState === 'UPDATE' && selectedEvent ? {
-      title: selectedEvent.title ?? '',
-      description: selectedEvent.description ?? '',
-      location: selectedEvent.location ?? '',
-      date: selectedEvent.date ?? '',
-      time_start: selectedEvent.time_start ?? '',
-      time_end: selectedEvent.time_end ?? '',
-    } : emptyFormValues
-
-    return (
-      <Modal
-        onClose={() => setModalState(false)}
-        width='480px'
-        height='600px'
-      >
-        <Formik
-          initialValues={initialValues}
-          validationSchema={schema}
-          enableReinitialize
-          onSubmit={handleModalSubmit}
-        >
-          {({ errors, isSubmitting }) => (
-            <Form className='flex-col gap-15'>
-              <Input displayName='Title' error={errors.title} input={{ type: 'text', name:'title', id:'title', required: true }}/>
-              <Input displayName='Description' error={errors.description} input={{ type: 'text', name:'description', id:'description', required: false }}/>
-              <Input displayName='Location' error={errors.location} input={{ type: 'text', name:'location', id:'location', required: true }}/>
-              <Input displayName='Date' error={errors.date} input={{ type: 'date', name:'date', id:'date', required: true }}/>
-              <Input displayName='Time Start' error={errors.time_start} input={{ type: 'time', name:'time_start', id:'time_start', required: true }}/>
-              <Input displayName='Time End' error={errors.time_end} input={{ type: 'time', name:'time_end', id:'time_end', required: false }}/>
-              <Button type='submit' text='Submit' disabled={isSubmitting} />
-            </Form>
-          )}
-        </Formik>
-      </Modal>
-    )
+    setSelectedRecord(null)
   }
 
   return (
@@ -159,19 +166,19 @@ function AdminEvent() {
               <tr>
                 <td colSpan={5} style={{textAlign: 'center'}}>Loading...</td>
               </tr>
-            ) : eventsData.length === 0 ? (
+            ) : data.length === 0 ? (
               <tr>
                 <td colSpan={5} style={{textAlign: 'center'}}>No events found</td>
               </tr>
             ) : (
-              eventsData.map((event) => (
+              data.map((event) => (
                 <tr key={event.id}>
                   <td>{event.title}</td>
                   <td>{event.description}</td>
                   <td>{event.location}</td>
                   <td>{`${formatDate(event.date)} ${formatTime(event.time_start)}${event.time_end ? ` - ${formatTime(event.time_end)}`: ''}`}</td>
                   <td>
-                    <div className='flex gap-10 j-end'>
+                    <div>
                       <button
                         className={s.editBtn}
                         title='Edit'
@@ -194,7 +201,7 @@ function AdminEvent() {
           </tbody>
         </table>
       </section>
-      {modalState && <EventModal />}
+      {modalState && <EventModal {...{modalState, setModalState, selectedRecord, handleModalSubmit}}/>}
     </div>
   )
 }

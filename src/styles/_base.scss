@@ -114,3 +114,16 @@ $link-color: hsl(211, 100%, 50%);
     grid-template-columns: 1fr;
   }
 }
+
+@mixin thumbnailCont{
+  background: $temp-color-fill;
+  display: flex;
+  aspect-ratio: 1.75;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+@mixin img{
+  object-fit: cover;
+  border-radius: 10px;
+}

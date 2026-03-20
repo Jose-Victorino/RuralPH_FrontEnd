@@ -5,6 +5,10 @@
   @include c.container;
 }
 
+.form{
+  @include c.form;
+}
+
 .dataTable{
   @include c.table;
 

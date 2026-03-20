@@ -7,6 +7,7 @@ export const createCRUD = (tableName) => ({
     const { error, data } = await supabase
       .from(tableName)
       .select('*')
+      .order('id', { ascending: true })
     
     if(error){
       console.error('Error getting task: ', error.message)
