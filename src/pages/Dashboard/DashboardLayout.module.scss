@@ -1,4 +1,13 @@
 @use '@/styles/base' as base;
+@use './generalStyles' as c;
+
+.container{
+  @include c.container;
+  justify-content: center;
+  align-items: end;
+  padding: 0;
+  height: 100%;
+}
 
 .nav{
   background: base.$gs-w-80;
@@ -11,7 +20,8 @@
   }
 
   .userButton{
-    height: 100%;
+    padding: 4px;
+    width: fit-content;
   }
 
   .options{
@@ -24,8 +34,8 @@
     top: anchor(bottom);
     right: anchor(right);
     background: base.$gs-w-90;
-    // padding: 8px 0;
     border: none;
+    box-shadow: 0 0 15px 5px hsla(0, 0%, 0%, 0.15);
 
     button{
       padding: 1em 1.25em;

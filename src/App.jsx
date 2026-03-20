@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 
 import '@/styles/reset.scss'
@@ -16,17 +17,18 @@ import EventPage from '@/pages/Event/EventPage'
 import Stories from '@/pages/Stories/Stories'
 import StoreLocations from '@/pages/StoreLocations/StoreLocations'
 import ContactUs from '@/pages/ContactUs/ContactUs'
-import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy'
-import TermsAndConditions from '@/pages/TermsAndConditions/TermsAndConditions'
-import AuthLayout from '@/pages/Auth/AuthLayout'
-import Login from '@/pages/Auth/Login'
-import ForgotPassword from '@/pages/Auth/ForgotPassword'
-import SignUp from '@/pages/Auth/SignUp'
-import Dashboard from '@/pages/Admin/Dashboard'
-import AdminLayout from '@/pages/Admin/AdminLayout' 
-import AdminEvent from '@/pages/Admin/AdminEvent' 
-import AdminStory from '@/pages/Admin/AdminStory' 
-import AdminNews from '@/pages/Admin/AdminNews' 
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy/PrivacyPolicy'))
+const TermsAndConditions = lazy(() => import('@/pages/TermsAndConditions/TermsAndConditions'))
+const AuthLayout = lazy(() => import('@/pages/Auth/AuthLayout'))
+const Login = lazy(() => import('@/pages/Auth/Login'))
+const ForgotPassword = lazy(() => import('@/pages/Auth/ForgotPassword'))
+const SignUp = lazy(() => import('@/pages/Auth/SignUp'))
+const DashboardLayout = lazy(() => import('@/pages/Dashboard/DashboardLayout'))
+const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'))
+const AdminEvent = lazy(() => import('@/pages/Dashboard/Event'))
+const AdminNews = lazy(() => import('@/pages/Dashboard/News'))
+const AdminJourney = lazy(() => import('@/pages/Dashboard/Journey'))
+const AdminStory = lazy(() => import('@/pages/Dashboard/Story'))
 
 function App() {
 
@@ -54,11 +56,12 @@ function App() {
         <Route path='forgot-password' element={<ForgotPassword />}/>
         <Route path='sign-up' element={<SignUp />}/>
       </Route>
-      <Route path='/admin' element={<AdminLayout />}>
+      <Route path='/dashboard' element={<DashboardLayout />}>
         <Route index element={<Dashboard />}/>
         <Route path='event' element={<AdminEvent />}/>
-        <Route path='story' element={<AdminStory />}/>
         <Route path='news' element={<AdminNews />}/>
+        <Route path='journey' element={<AdminJourney />}/>
+        <Route path='story' element={<AdminStory />}/>
       </Route>
     </Routes>
   )

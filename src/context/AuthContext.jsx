@@ -5,6 +5,7 @@ const AuthContext = createContext()
 
 export function AuthContextProvider({children}) {
   const [session, setSession] = useState(undefined)
+  const [isLoading, setIsLoading] = useState(true)
 
   const signUpNewUser = async (email, password) => {
     const { data, error } = await supabase.auth.signUp({
@@ -37,12 +38,29 @@ export function AuthContextProvider({children}) {
   }
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    let isMounted = true
+
+    const init = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (isMounted) setSession(session)
+      } catch (error) {
+        console.error('Error getting session: ', error)
+      } finally {
+        if (isMounted) setIsLoading(false)
+      }
+    }
+
+    init()
+
+    const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
     })
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-    })
+
+    return () => {
+      isMounted = false
+      authListener.subscription.unsubscribe()
+    }
   }, [])
 
   const signOut = () => {
@@ -52,9 +70,7 @@ export function AuthContextProvider({children}) {
   }
 
   return (
-    <AuthContext.Provider
-      value={{session, logInUser, signUpNewUser, signOut}}
-    >
+    <AuthContext.Provider value={{session, isLoading, logInUser, signUpNewUser, signOut}}>
       {children}
     </AuthContext.Provider>
   )

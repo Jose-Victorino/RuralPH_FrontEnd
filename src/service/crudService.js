@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { supabase } from '@/supabase-client'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
@@ -48,7 +49,7 @@ export const createCRUD = (tableName) => ({
 
     return { error }
   },
-  deleteData: async (id, getAll) => {
+  deleteData: async (id) => {
     Swal.fire({
       title: `Do you want to Delete this ${tableName}?`,
       showDenyButton: true,
@@ -69,7 +70,16 @@ export const createCRUD = (tableName) => ({
       }
 
       toast.success('Event has been deleted')
-      getAll()
     })
   },
+  subscribeToChanges: (getData) => {
+    const channel = supabase
+      .channel(`${tableName}-channel`)
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: tableName,
+      }, () => getData())
+      .subscribe()
+  }
 })

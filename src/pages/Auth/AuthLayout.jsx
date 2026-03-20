@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Outlet, Navigate } from 'react-router-dom'
 import { UserAuth } from '@/context/AuthContext'
 
@@ -5,8 +6,7 @@ import s from './AuthLayout.module.scss'
 
 function Login() {
   const { session } = UserAuth()
-
-  if(session) return <Navigate to='/admin' />
+  if(session) return <Navigate to='/dashboard' />
   
   return (
     <section className={s.authWrapper}>

@@ -39,7 +39,7 @@ function SignUp() {
     
     try {
       const res = await SignUpNewUser(email, password)
-      if(res.success) navigate('/admin')
+      if(res.success) navigate('/dashboard')
     } catch (error) {
       setError('an error occured: ', error)
     } finally {

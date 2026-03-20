@@ -37,7 +37,7 @@ function Login() {
     try {
       const res = await logInUser(email, password)
       
-      if(res.success) navigate('/admin')
+      if(res.success) navigate('/dashboard')
       if(res.error) setError(res.error)
     } catch (error) {
       setError('an error occured: ', error)

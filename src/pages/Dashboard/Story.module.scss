@@ -1,0 +1,14 @@
+@use '@/styles/base' as base;
+@use './generalStyles' as c;
+
+.container{
+  @include c.container;
+}
+
+.form{
+  @include c.form;
+}
+
+.dataTable{
+  @include c.table;
+}

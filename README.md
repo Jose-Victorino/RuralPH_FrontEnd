@@ -30,7 +30,6 @@ Notes:
 - Find the "Farmers are pandemic front-liners" from In the News
 
 ---
----
 
 >A small React + Vite informational landing page.
 
@@ -89,17 +88,27 @@ npm run lint
 - `src/` — application source
 	- `App.jsx` — root app component
 	- `main.jsx` — entry point
+	- `supabase-client.js` — supabase database connection
 	- `components/` — UI components grouped by feature
 	- `pages/` — app pages
 	- `features/` — app features
 	- `layout/` — component layouts
 	- `context/` — global context and state
+	- `hook` — custom hooks
+	- `service` — services for the backend
 	- `assets/` — images and svgs
 	- `styles/` — global SCSS (variables, utils, reset)
 	- `library/` — utility / helpers
 
 ## Deployment
 The project is a static frontend. After `npm run build`, serve the `dist/` output with any static host (Netlify, Vercel, GitHub Pages, or a simple static file server).
+
+Table: Journey
+id: PK
+title: String
+description: String
+image_path: String
+created_at: timestamp
 
 Table: Story
 id: PK

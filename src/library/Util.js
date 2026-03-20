@@ -11,7 +11,11 @@ export function wordCap(str){
 }
 
 export function formatDate(str){
-  const [y, m, d] = str.split("-")
+  if (!str) return str  
+
+  const datePart = str.includes("T") ? str.split("T")[0] : str
+
+  const [y, m, d] = datePart.split(/[-/]/)
 
   return new Date(y, m - 1, d).toLocaleDateString("en-US", {
     month: "short",
@@ -21,10 +25,20 @@ export function formatDate(str){
 }
 
 export function formatTime(str){
-  const date = new Date()
-  const [h, m, s] = str.split(":")
+  if (!str) return str
 
-  date.setHours(h, m, s)
+  const timePart = str.includes("T") ? str.split("T")[1] : str
+
+  let [h, m, s] = timePart.split(":")
+
+  if(s){
+    s = s.split(".")[0]
+    s = s.split("+")[0]
+    s = s.split("-")[0]
+  }
+
+  const date = new Date()
+  date.setHours(Number(h), Number(m), Number(s || 0))
 
   return date.toLocaleTimeString("en-US", {
     hour: "numeric",
