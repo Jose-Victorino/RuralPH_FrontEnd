@@ -5,6 +5,13 @@
   border-radius: 12px;
 }
 
+.thumbnailCont{
+  display: flex;
+  background: base.$temp-color-fill;
+  aspect-ratio: 1.75;
+  cursor: pointer;
+}
+
 .hero{
   background-color: hsla(0, 0%, 0%, 0.4);
   position: relative;
@@ -100,11 +107,6 @@
 .section2{
   background-image: linear-gradient(60deg, base.$primary-light 30%, base.$primary-dark 100%);
   color: base.$gs-w-90;
-}
-
-.imgCont{
-  background: base.$temp-color-fill; //temp-tag
-  aspect-ratio: 1.75;
 }
 
 @media(max-width: 780px){

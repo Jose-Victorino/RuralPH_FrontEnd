@@ -3,20 +3,21 @@
 ### Development
 Page | Status | Notes
 -|-|-
-Home 								| On-going 		| Media required; Video player modal integration
-About Us 						| On-going 		| Media required
+Home 								| `Done`	 		| Media required
+About Us 						| `Done` 			|
 Our journey					|	On-going		| Media required
 FAQs 								| `Done` 			| 
-In The News					| On-going		| Media required; Video player modal integration
-Events 							| On-going		| Data required
+In The News					| On-going		| Media required
+Events 							| `Done`			| 
 Locations						| On-going		| Location selection and display logic
-Contact Us 					| `Done` 			| Media required; Pending email endpoint
+Contact Us 					| `Done` 			| Pending email endpoint
 Privacy Policy 			| `Done` 			| 
 Terms & Conditions	| `Done` 			| 
 Stories							| On-going		| 
 Admin Page					| On-going		|
 Events (admin)			| On-going		| 
 In The News (admin)	| Not Started	| 
+Our journey (admin)	| Not Started	| 
 Stories (admin)			| Not Started	| 
 
 temp-tag

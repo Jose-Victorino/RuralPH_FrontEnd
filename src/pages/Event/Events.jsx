@@ -1,22 +1,37 @@
-import React from 'react'
-import { Link } from'react-router-dom'
-import cn from 'classnames'
+import { useState, useEffect } from 'react'
 import { Formik, Form, Field } from 'formik'
+import { createCRUD } from '@/service/crudService'
+import cn from 'classnames'
 
 import EventCard from './EventCard'
 
 import s from './Events.module.scss'
 
 const PAGE_NAME = 'Events'
+const eventService = createCRUD('event')
 
 function Event() {
+  const [eventsData, setEventsData] = useState([])
+  const [loading, setLoading] = useState(true)
+
   document.title = `${PAGE_NAME} | Rural Rising PH`
+
+  const fetchEvents = async () => await eventService.getAll(setLoading, setEventsData)
+  
+  useEffect(() => {
+    fetchEvents()
+  }, [])
 
   const handleSearch = ({searchBar}) => {
     if(searchBar === '') return
     
-    console.log(searchBar);
+    console.log(searchBar)
   }
+  
+  const now = new Date()
+  
+  const upcomingEvents = eventsData.filter(event => new Date(event.date) >= now)
+  const pastEvents = eventsData.filter(event => new Date(event.date) < now)
 
   return (
     <>
@@ -40,17 +55,29 @@ function Event() {
         <div className='container flex-col gap-20'>
           <h3>Upcoming Events</h3>
             <ul className='flex-col gap-30'>
-              <EventCard />
-              <EventCard />
-              <EventCard />
+              {loading ? (
+                <span>Loading...</span>
+              ) : upcomingEvents.length > 0 ? (
+                upcomingEvents.map((e) => (
+                  <EventCard key={e.id} {...e}/>
+                ))
+              ) : (
+                <p>No upcoming events</p>
+              )}
             </ul>
         </div>
         <div className='container flex-col gap-20'>
           <h3>Past Events</h3>
             <ul className='flex-col gap-30'>
-              <EventCard />
-              <EventCard />
-              <EventCard />
+              {loading ? (
+                <span>Loading...</span>
+              ) : pastEvents.length > 0 ? (
+                pastEvents.map((e) => (
+                  <EventCard key={e.id} {...e}/>
+                ))
+              ) : (
+                <p>No past events</p>
+              )}
             </ul>
         </div>
       </section>

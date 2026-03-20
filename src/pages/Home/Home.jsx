@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { supabase } from '@/supabase-client'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
 import WhatsNew from '@/features/WhatsNew/WhatsNew'
+import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
 
 import s from './Home.module.scss'
 
 import headerVideo from 'uploads/video-banner.mp4'
+import spousesImg from 'uploads/rural-philippines-e1682368256444.png'
 import campMingan from 'uploads/campmingan.jpg'
 import Marketplace from 'uploads/Marketplace.jpg'
 import resources from 'uploads/resources.jpg'
@@ -16,9 +17,11 @@ import capacityBuilding from 'uploads/capacity-building.jpg'
 import tourism from 'uploads/Tourism.jpg'
 
 function Home() {
+  const [open, setOpen] = useState(false)
   
   return (
     <>
+      {open !== false && <VideoPlayer onClose={() => setOpen(false)} videoId={open} />}
       <section className={s.hero}>
         <div className='container flex a-center'>
           <video
@@ -85,12 +88,14 @@ function Home() {
               <li>Improved rural areas present a safety net against the lack of job opportunities in cities.</li>
             </ul>
           </div>
-          <div data-ros='fade-left' className={s.imgCont}></div>
+          <button data-ros='fade-left' className={s.thumbnailCont} onClick={() => setOpen('625271895')}>
+            <img className={s.img} style={{width: '100%'}} src='https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1267606957-40b5df88edba9975eedd7d56c8789b18c573e355fb95c2ba9_295x166%3Fregion%3Dus&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png' alt='thumbnail' />
+          </button>
         </div>
       </section>
       <section className='pad-block-100'>
         <div className='container res-flex-row'>
-          <div data-ros='fade-right' className={s.imgCont}></div>
+          <img data-ros='fade-right' className={s.img} loading="lazy" src={spousesImg} alt='img'/>
           <div data-ros='fade-left' className='flex-col gap-15'>
             <p>Farmers have to contend with a general dearth of resources or knowledge to invest in the land, inability to effectively cope with conflicts and climate change, reluctance to embrace new technologies that would unlock new markets that would boost their productivity and income.</p>
             <p>To achieve a realistic and sustainable country-wide development, the agriculture sector must build on the efforts of the government and strengthen its programs simultaneously deliver food security, environmental sustainability, and economic opportunity through a coordinated effort by all stakeholders.</p>
@@ -130,7 +135,6 @@ function Home() {
       <section className={cn(s.section2, 'pad-block-120')}>
         <div className='container res-flex-row'>
           <img data-ros='fade-right' className={s.img} src={campMingan} alt="Camp Mingan" />
-          {/* <div data-ros='fade-right' className={s.imgCont}></div> */}
           <div data-ros='fade-left' className='flex-col gap-15'>
             <h2 className='lh-1'><span className='textYellow'>Discover Camp Mingan:</span> Where Nature and Community Thrive</h2>
             <p>A conservation park that’s transforming rural communities through sustainable practices, environmental stewardship, and collaborative action.</p>

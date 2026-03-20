@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import { formatDate, formatTime } from '@/library/Util'
-import { createCRUD } from './crudService'
+import { createCRUD } from '@/service/crudService'
 import { toast } from 'react-toastify'
 
 import Button from '@/components/Button/Button'
@@ -40,7 +40,7 @@ function AdminEvent() {
   
   document.title = `Event | Admin | Rural Rising PH`
   
-  const fetchEvents = async () => await eventService.getData(setLoading, setEventsData)
+  const fetchEvents = async () => await eventService.getAll(setLoading, setEventsData)
   
   useEffect(() => {
     fetchEvents()

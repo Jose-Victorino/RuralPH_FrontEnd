@@ -1,36 +1,76 @@
-import React from 'react'
-import { Link } from'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useParams } from'react-router-dom'
+import { createCRUD } from '@/service/crudService'
 import cn from 'classnames'
 
+import { formatDate, formatTime } from '@/library/Util'
 import DateBanner from './DateBanner'
 
 import s from './EventPage.module.scss'
 
+const PAGE_NAME = 'Events'
+const eventService = createCRUD('event')
+
 function EventPage() {
+  const { eventId } = useParams()
+  const [eventData, setEventData] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  const fetchEvent = async () => await eventService.getById(eventId, setLoading, setEventData)
+  
+  useEffect(() => {
+    fetchEvent()
+  }, [])
+
+  const date = new Date(eventData?.[0]?.date)
+  const exactDate = `${date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  })} (${date.toLocaleDateString('en-US', {
+    weekday: 'long'
+  })})`
+  
+  document.title = `${eventData?.[0]?.title ?? PAGE_NAME} | Rural Rising PH`
+  
   return (
     <section>
       <div className='container flex-col gap-10 pad-block-40'>
         <Link className={s.backBtn} to='/events'>All Events</Link>
         <div className={s.info}>
-          <h3>Lorem, ipsum dolor.</h3>
-          <div className='flex gap-10'>
-            <DateBanner />
-            <div className='flex-col j-center'>
-              <p>February 21, 2026 (Saturday)</p>
-              <p>8:00am - 5:00pm</p>
-            </div>
-          </div>
-          <div className='flex gap-5 a-center'>
-            <svg className={s.icon} width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              <path d="M12 22C16 18 20 14.4183 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 14.4183 8 18 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
-          </div>
+          {loading ? (
+            <span>Loading...</span>
+          ) : eventData.length > 0 ? (
+            <>
+              <h3>{eventData[0].title}</h3>
+              <div className='flex gap-10'>
+                <DateBanner date={date}/>
+                <div className='flex-col j-center'>
+                  <p>{exactDate}</p>
+                  <p>{`${formatTime(eventData[0].time_start)}${eventData[0].time_end ? ` - ${formatTime(eventData[0].time_end)}`: ''}`}</p>
+                </div>
+              </div>
+              <div className='flex gap-5 a-center'>
+                <svg className={s.icon} width="100%" height="100%" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 13C13.6569 13 15 11.6569 15 10C15 8.34315 13.6569 7 12 7C10.3431 7 9 8.34315 9 10C9 11.6569 10.3431 13 12 13Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <path d="M12 22C16 18 20 14.4183 20 10C20 5.58172 16.4183 2 12 2C7.58172 2 4 5.58172 4 10C4 14.4183 8 18 12 22Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <p>{eventData[0].location}</p>
+              </div>
+            </>
+          ) : (
+            <p>Event not found</p>
+          )}
         </div>
         <div className='mb-30'>
-          <h5>Details</h5>
-          <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda neque et facilis cumque, saepe non vitae recusandae nemo laudantium, eum optio quasi, ipsa aliquid esse harum consectetur voluptates officiis fugit. Sapiente officia ratione veritatis tempore quidem quibusdam iste perspiciatis nostrum.</p>
+          {loading ? (
+            <span>Loading...</span>
+          ) : eventData.length > 0 &&
+            <>
+              <h5>Details</h5>
+              <p>{eventData[0].description}</p>
+            </>
+          }
         </div>
       </div>
     </section>

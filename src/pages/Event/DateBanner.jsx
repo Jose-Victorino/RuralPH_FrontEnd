@@ -2,14 +2,24 @@ import React from 'react'
 
 import s from './DateBanner.module.scss'
 
-function DateBanner() {
+function DateBanner({ date }) {
+  const isValidDate = date instanceof Date && !Number.isNaN(date.getTime())
+
+  const month = isValidDate
+    ? date.toLocaleDateString('en-US', {
+        month: 'short',
+      })
+    : ''
+
+  const day = isValidDate ? date.getDate() : ''
+
   return (
     <div className={s.dateBanner}>
       <div className={s.month}>
-        <p>Feb</p>
+        <p>{month}</p>
       </div>
       <div className={s.day}>
-        <p>21</p>
+        <p>{day}</p>
       </div>
     </div>
   )
