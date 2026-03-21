@@ -1,9 +1,12 @@
 @use '@/styles/base' as base;
 
 .imageCont{
-  background: base.$temp-color-fill; //temp-tag
+  @include base.thumbnailCont;
+}
+
+.img{
+  @include base.img;
   width: 100%;
-  aspect-ratio: 1.75;
 }
 
 .recentPosts{
@@ -11,8 +14,9 @@
   width: 100%;
   gap: 20px;
 }
+
 .mainPost{
-  width: 100%;
+  flex-grow: 15;
 }
 
 .postList{
@@ -30,6 +34,15 @@
   
   .imageCont{
     width: 250px;
+  }
+
+  .content{
+    max-width: 200px;
+
+    h5, p{
+      text-wrap: auto;
+      line-height: 1.2;
+    }
   }
 }
 

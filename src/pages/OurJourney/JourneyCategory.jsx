@@ -1,39 +1,48 @@
 import React from 'react'
-import { Link } from'react-router-dom'
+import { Link, useParams } from'react-router-dom'
+import { useGlobal } from '@/context/GlobalContext'
+
+import { wordCap } from '@/library/Util'
 
 import Top from './Top'
 
 import s from './JourneyCategory.module.scss'
 
 function JourneyCategory() {
-  return (
+  const { categoryName } = useParams()
+  const { state: { ourJourney } } = useGlobal()
+
+  const filteredPost = ourJourney.filter((p) => p.category === wordCap(categoryName.replace('-', ' ')))
+  console.log(filteredPost)
+
+  return (filteredPost.length > 0 ?
     <>
       <Top />
       <section className='mb-40'>
-        <div className="container">
+        <div className="container" style={{minHeight: '400px'}}>
           <ul className={s.postList}>
-            <li className={s.postItem}>
-              <Link to="/our-journey/p/1">
-                <div className={s.imageCont}></div>
-                <div>
-                  <h5>Title</h5>
-                  <p>Feb 12, 2026</p>
-                </div>
-              </Link>
-            </li>
-            <li className={s.postItem}>
-              <Link to="/our-journey/p/1">
-                <div className={s.imageCont}></div>
-                <div>
-                  <h5>Title</h5>
-                  <p>Feb 12, 2026</p>
-                </div>
-              </Link>
-            </li>
+            {filteredPost.map((row) => (
+              <li key={row.id} className={s.postItem}>
+                <Link to={`/our-journey/p/${row.id}`}>
+                  <div className={s.imageCont}>
+                    <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
+                  </div>
+                  <div className={s.content}>
+                    <h5>{row.title}</h5>
+                    <p>{row.posted_at}</p>
+                  </div>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
-    </>
+    </> :
+    <section>
+      <div className="container pad-block-80" style={{textAlign: 'center', minHeight: '600px'}}>
+        <p>No post found</p>
+      </div>
+    </section>
   )
 }
 

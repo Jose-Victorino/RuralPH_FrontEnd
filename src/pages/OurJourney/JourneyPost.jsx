@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from'react-router-dom'
+import { Link, useParams } from'react-router-dom'
+import { useGlobal } from '@/context/GlobalContext'
 
 import s from './JourneyPost.module.scss'
 
@@ -10,17 +11,24 @@ import linkedin from '@/assets/svg/linkedin.svg'
 const PAGE_NAME = 'Our Journey'
 
 function Post() {
+  const { postId } = useParams()
+  const { state: { ourJourney } } = useGlobal()
+
   document.title = `${PAGE_NAME} | Rural Rising PH`
 
-  return (
+  const selectedPost = ourJourney.filter((p) => p.id === parseInt(postId))[0]
+  
+  const recentPost = ourJourney.filter((p) => p.id !== parseInt(postId)).slice(0, 4)
+
+  return (selectedPost ?
     <>
       <section>
         <div className="container flex-col gap-10 pad-block-50">
           <Link to='/our-journey' className={s.goBack}>Go Back</Link>
           <div className={s.header}>
             <div>
-              <h3 className='textGreen'>Title</h3>
-              <p>Feb 12, 2026</p>
+              <h3 className='textGreen'>{selectedPost.title}</h3>
+              <p>{selectedPost.posted_at}</p>
             </div>
             <ul className='flex a-end gap-10'>
               <li className='flex'>
@@ -41,38 +49,38 @@ function Post() {
             </ul>
           </div>
           <hr />
-          <div className={s.imageCont}></div>
-          <div>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Libero accusantium dolor repellat nulla? Harum adipisci dolor, dolorem doloribus non, voluptate velit pariatur veniam rerum laboriosam odit? Aspernatur unde quae nulla accusantium aliquid et neque recusandae blanditiis, deserunt vero expedita. Impedit repellendus obcaecati eaque sequi, ullam autem quod hic iste quis tempora cumque non expedita! Eaque ullam sequi quidem molestias voluptas ducimus veritatis error harum tempore officia odit in, nulla expedita quo soluta dolorem dolore doloremque. Maxime, quia ab. Eligendi quis voluptate error iure temporibus quasi perferendis debitis qui magnam voluptates quaerat, obcaecati nobis delectus natus molestiae ipsa doloribus nihil iste.</p>
+          <div className={s.imageCont}>
+            <img className={s.img} src={selectedPost.image_path} loading='lazy' alt={selectedPost.title} />
           </div>
+          <div className={s.htmlInsert} dangerouslySetInnerHTML={{__html: selectedPost.description}}/>
         </div>
       </section>
       <section>
         <div className="container flex-col gap-10 pad-block-50">
           <h3>Recent Posts</h3>
           <ul className={s.postList}>
-            <li className={s.postItem}>
-              <Link to="/our-journey/p/2a">
-                <div className={s.imageCont}></div>
-                <div>
-                  <h5 className='textGreen'>Title</h5>
-                  <p>Feb 12, 2026</p>
-                </div>
-              </Link>
-            </li>
-            <li className={s.postItem}>
-              <Link to="/our-journey/p/2b">
-                <div className={s.imageCont}></div>
-                <div>
-                  <h5 className='textGreen'>Title</h5>
-                  <p>Feb 12, 2026</p>
-                </div>
-              </Link>
-            </li>
+            {recentPost.map((row) => (
+              <li key={row.id} className={s.postItem}>
+                <Link to={`/our-journey/p/${row.id}`}>
+                  <div className={s.imageCont}>
+                    <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
+                  </div>
+                  <div className={s.content}>
+                    <h5>{row.title}</h5>
+                    <p>{row.posted_at}</p>
+                  </div>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
-    </>
+    </> :
+    <section>
+      <div className="container pad-block-80" style={{textAlign: 'center', minHeight: '600px'}}>
+        <p>Post not found</p>
+      </div>
+    </section>
   )
 }
 

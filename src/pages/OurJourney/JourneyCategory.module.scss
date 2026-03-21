@@ -1,8 +1,11 @@
 @use '@/styles/base' as base;
 
 .imageCont{
-  background: base.$temp-color-fill; //temp-tag
-  width: 100%;
+  @include base.thumbnailCont;
+}
+
+.img{
+  @include base.img;
   aspect-ratio: 1.75;
 }
 

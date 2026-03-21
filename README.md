@@ -5,7 +5,7 @@ Page | Status | Notes
 -|-|-
 Home 								| `Done`	 		|
 About Us 						| `Done` 			|
-Our journey					|	On-going		| Media required
+Our journey					|	On-going		| Search functionality
 FAQs 								| `Done` 			|
 In The News					| `Done`			|
 Events 							| On-going		| Search functionality
@@ -28,6 +28,10 @@ temp-tag
 Notes:
 - Content revision in Our Journey 'Growing Together for a Sustainable Future'
 - Find the "Farmers are pandemic front-liners" from In the News
+
+#### Future Improvements
+- pagination on admin dashboard
+- 
 
 ---
 
