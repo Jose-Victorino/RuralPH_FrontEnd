@@ -1,4 +1,3 @@
-import { Field } from 'formik'
 import cn from 'classnames'
 
 import { wordCap } from '@/library/Util'
@@ -12,8 +11,8 @@ function Input({ children, input, displayName, error, touched }) {
     <div className={cn('flex-col', s.inputCont)}>
       <label htmlFor={id} className='mb-5'>{wordCap(displayName || id.replace('_', ' '))} {required && <span className={s.inputRequired}>*</span>}</label>
       {['select', 'textarea'].includes(type)
-        ? <Field as={type} {...input}>{children}</Field>
-        : <Field {...input}/>
+        ? <input as={type} {...input}>{children}</input>
+        : <input {...input}/>
       }
       {error && touched && <span className={s.errorMsg}>{error}</span>}
     </div>

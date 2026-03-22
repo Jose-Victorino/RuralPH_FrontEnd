@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Button from '@/components/Button/Button'
 
@@ -63,19 +64,19 @@ const MODE_TYPES = [
 const PAGE_NAME = 'Locations'
 
 function StoreLocations() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  const [distance, setDistance] = useState(1)
+  // const [distance, setDistance] = useState(1)
   const [mode, setMode] = useState({})
   const [view, setView] = useState({})
 
   const handleModeChange = (m, id) => {
-    if(mode[id] === m) return;
+    if(mode[id] === m) return
     setMode((prev) => ({ ...prev, [id]: m }))
   }
 
   const handleViewChange = (v, id) => {
-    if(view[id] === v) return;
+    if(view[id] === v) return
     setView((prev) => ({ ...prev, [id]: v }))
   }
 

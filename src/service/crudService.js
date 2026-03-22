@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import React from 'react'
 import { supabase } from '@/supabase-client'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
@@ -73,7 +73,7 @@ export const createCRUD = (tableName) => ({
     })
   },
   subscribeToChanges: (getData) => {
-    const channel = supabase
+    supabase
       .channel(`${tableName}-channel`)
       .on('postgres_changes', {
         event: '*',

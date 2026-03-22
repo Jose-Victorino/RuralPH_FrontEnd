@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './Faq.module.scss'
 
@@ -13,7 +14,7 @@ const youtubeIcon = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640
 const PAGE_NAME = 'FAQs'
 
 function Faq() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   return (
     <>

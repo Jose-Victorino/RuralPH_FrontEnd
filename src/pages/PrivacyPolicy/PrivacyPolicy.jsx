@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './PrivacyPolicy.module.scss'
 
 const PAGE_NAME = 'Privacy Policy'
 
 function PrivacyPolicy() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   return (
     <>

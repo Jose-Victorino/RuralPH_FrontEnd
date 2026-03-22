@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from'react-router-dom'
 import { createCRUD } from '@/service/crudService'
-import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
-import { formatDate, formatTime } from '@/library/Util'
+import { formatTime } from '@/library/Util'
 import DateBanner from './DateBanner'
 
 import s from './EventPage.module.scss'
@@ -31,11 +31,11 @@ function EventPage() {
     weekday: 'long'
   })})`
   
-  document.title = `${eventData?.[0]?.title ?? PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${eventData?.[0]?.title ?? PAGE_NAME} | Rural Rising PH`)
   
   return (
     <section>
-      <div className='container flex-col gap-10 pad-block-40'>
+      <div className='container flex-col gap-10 pad-block-40' style={{minHeight: '420px'}}>
         <Link className={s.backBtn} to='/events'>All Events</Link>
         <div className={s.info}>
           {loading ? (
@@ -62,13 +62,15 @@ function EventPage() {
             <p>Event not found</p>
           )}
         </div>
-        <div className='mb-30'>
+        <div>
           {loading ? (
             <span>Loading...</span>
           ) : eventData.length > 0 &&
             <>
               <h5>Details</h5>
-              <p>{eventData[0].description}</p>
+              {eventData[0].description &&
+                <p>{eventData[0].description}</p>
+              }
             </>
           }
         </div>

@@ -1,14 +1,14 @@
 @use '@/styles/base' as base;
 
 .dateBanner{
+  color: black;
   display: flex;
   flex-direction: column;
+  min-width: fit-content;
   height: fit-content;
+  overflow: hidden;
   border: 1px solid base.$gs-w-80;
   border-radius: 6px;
-  overflow: hidden;
-  width: fit-content;
-  color: black;
   
   .month{
     background: base.$gs-w-80;

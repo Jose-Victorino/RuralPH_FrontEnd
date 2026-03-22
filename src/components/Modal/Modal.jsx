@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { createPortal } from 'react-dom'
 
 import s from './Modal.module.scss'
@@ -10,32 +10,56 @@ function Modal({
   height = '520px',
   width = 'fit-content',
 }){
-  const startedInside = useRef(false);
+  const startedInside = useRef(false)
 
+  useEffect(() => {
+    const root = document.getElementById('root')
+    const { body, documentElement } = document
+    const prevOverflow = body.style.overflow
+    const prevPadding = body.style.paddingRight
+    const scrollbarWidth = window.innerWidth - documentElement.clientWidth
+    const hasVerticalScrollbar = scrollbarWidth > 0
+
+    body.style.overflow = 'hidden'
+    root.ariaHidden = 'true'
+    root.inert = 'true'
+    
+    if(hasVerticalScrollbar){
+      const computedPaddingRight = parseFloat(window.getComputedStyle(body).paddingRight) || 0
+      body.style.paddingRight = `${computedPaddingRight + scrollbarWidth}px`
+    }
+    
+    return () => {
+      root.inert = ''
+      root.ariaHidden = 'false'
+      body.style.overflow = prevOverflow
+      body.style.paddingRight = prevPadding
+    }
+  }, [])
+  
   const handleMouseDown = (e) => {
-    startedInside.current = e.target.closest('.modal-container') !== null;
-  };
+    startedInside.current = e.target.closest('.modal-container') !== null
+  }
 
   const handleMouseUp = (e) => {
-    const endedInside = e.target.closest('.modal-container') !== null;
+    const endedInside = e.target.closest('.modal-container') !== null
     if (!startedInside.current && !endedInside) {
-      onClose();
+      onClose()
     }
-  };
+  }
 
   return createPortal(
     <div
       className={s.modalOverlay}
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
-      // role="presentation"
-      // aria-hidden="true"
+      role="presentation"
     >
       <div
         className={`${s.modalContainer} modal-container`}
         style={{ height, width }}
         role="document"
-        // tabIndex="-1"
+        tabIndex="-1"
       >
         <div className={s.header} style={{ justifyContent: title ? 'space-between' : 'right' }}>
           {title &&

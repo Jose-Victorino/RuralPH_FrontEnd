@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Formik, Form } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatDate, formatTime, wordCap } from '@/library/Util'
 import { createCRUD } from '@/service/crudService'
@@ -51,34 +52,30 @@ const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
     time_end: selectedRecord.time_end ?? '',
   } : emptyFormValues
 
+  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: initialValues,
+    validationSchema: schema,
+    enableReinitialize: true,
+    onSubmit: handleModalSubmit
+  })
+
   return (
     <Modal
       onClose={() => setMainModal(false)}
       width='480px'
       height='620px'
     >
-      <Formik
-        initialValues={initialValues}
-        validationSchema={schema}
-        enableReinitialize
-        onSubmit={handleModalSubmit}
-      >
-        {({ errors, touched, isSubmitting }) => {
-          return (
-            <Form className={s.form}>
-              <div>
-                <Input displayName='Title' error={errors.title} touched={touched.title} input={{ type: 'text', name:'title', id:'title', required: true }}/>
-                <Input displayName='Description' error={errors.description} touched={touched.description} input={{ type: 'text', name:'description', id:'description', required: false }}/>
-                <Input displayName='Location' error={errors.location} touched={touched.location} input={{ type: 'text', name:'location', id:'location', required: true }}/>
-                <Input displayName='Date' error={errors.date} touched={touched.date} input={{ type: 'date', name:'date', id:'date', required: true }}/>
-                <Input displayName='Time Start' error={errors.time_start} touched={touched.time_start} input={{ type: 'time', name:'time_start', id:'time_start', required: true }}/>
-                <Input displayName='Time End' error={errors.time_end} touched={touched.time_end} input={{ type: 'time', name:'time_end', id:'time_end', required: false }}/>
-              </div>
-              <Button type='submit' text='Submit' disabled={isSubmitting} />
-            </Form>
-          )
-        }}
-      </Formik>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <div>
+          <Input displayName='Title' error={errors.title} touched={touched.title} input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}/>
+          <Input displayName='Description' error={errors.description} touched={touched.description} input={{ type: 'text', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: false }}/>
+          <Input displayName='Location' error={errors.location} touched={touched.location} input={{ type: 'text', name:'location', id:'location', value: values.location, onChange: handleChange, onBlur: handleBlur, required: true }}/>
+          <Input displayName='Date' error={errors.date} touched={touched.date} input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}/>
+          <Input displayName='Time Start' error={errors.time_start} touched={touched.time_start} input={{ type: 'time', name:'time_start', id:'time_start', value: values.time_start, onChange: handleChange, onBlur: handleBlur, required: true }}/>
+          <Input displayName='Time End' error={errors.time_end} touched={touched.time_end} input={{ type: 'time', name:'time_end', id:'time_end', value: values.time_end, onChange: handleChange, onBlur: handleBlur, required: false }}/>
+        </div>
+        <Button type='submit' text='Submit' disabled={isSubmitting} />
+      </form>
     </Modal>
   )
 }
@@ -90,7 +87,7 @@ function Event() {
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
   
-  document.title = `${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`
+  useDocumentTitle(`${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`)
   
   const fetchData = async () => await service.getAll(setLoading, setData)
   
@@ -180,7 +177,7 @@ function Event() {
               </tr>
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{textAlign: 'center'}}>No events found</td>
+                <td colSpan={5} style={{textAlign: 'center'}}>{`No ${TABLE_NAME} found`}</td>
               </tr>
             ) : (
               data.map((row) => (

@@ -4,7 +4,7 @@ import s from './Top.module.scss'
 
 function Header() {
   const navigate = useNavigate()
-  const { categoryName } = useParams();
+  const { categoryName } = useParams()
 
   const handleChange = ({ value }) => {
     navigate(`/our-journey${value == '' ? '' : `/c/${value}`}`)
@@ -14,9 +14,7 @@ function Header() {
     <section>
       <div className="container pad-block-20">
         <div data-ros='fade-down' className={s.header}>
-          <div>
-            <input type="text" placeholder='Search...'/>
-          </div>
+          <input type="text" id='search' name='search' placeholder='Search...'/>
           <div className='flex gap-10'>
             <p>Category</p>
             <select name="catagory" id="catagory" value={categoryName} onChange={(e) => handleChange(e.target)}>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link, useParams } from'react-router-dom'
 import { useGlobal } from '@/context/GlobalContext'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './JourneyPost.module.scss'
 
@@ -14,7 +15,7 @@ function Post() {
   const { postId } = useParams()
   const { state: { ourJourney } } = useGlobal()
 
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   const selectedPost = ourJourney.filter((p) => p.id === parseInt(postId))[0]
   

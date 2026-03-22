@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Formik, Form, Field } from 'formik'
+import { useFormik } from 'formik'
 import { createCRUD } from '@/service/crudService'
-import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import EventCard from './EventCard'
 
@@ -14,10 +14,10 @@ function Event() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
 
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   const fetchData = async () => await eventService.getAll(setLoading, setData)
-  
+
   useEffect(() => {
     fetchData()
   }, [])
@@ -27,6 +27,11 @@ function Event() {
     
     console.log(searchBar)
   }
+  
+  const { values, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: { searchBar: '' },
+    onSubmit: handleSearch
+  })
   
   const now = new Date()
   
@@ -38,16 +43,9 @@ function Event() {
       <section>
         <div className="container pad-block-20">
           <div data-ros='fade-down' className={s.header}>
-            <Formik
-              initialValues={{
-                searchBar: ''
-              }}
-              onSubmit={handleSearch}
-            >
-              <Form>
-                <Field type="text" name='searchBar' placeholder='Search...'/>
-              </Form>
-            </Formik>
+            <form onSubmit={handleSubmit}>
+              <input type="text" name='searchBar' placeholder='Search...' value={values.searchBar} onChange={handleChange} onBlur={handleBlur}/>
+            </form>
           </div>
         </div>
       </section>

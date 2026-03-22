@@ -22,7 +22,7 @@ const RichTextEditor = ({value, setValue}) => {
     <ReactQuill
       theme='snow'
       value={value}
-      onChange={() => setValue(e.target.value)}
+      onChange={(e) => setValue(e.target.value)}
       modules={modules}
     />
   )

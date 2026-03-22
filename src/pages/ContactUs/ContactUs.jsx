@@ -1,5 +1,6 @@
 import cn from 'classnames'
-import { Formik, Form } from 'formik'
+import { useFormik } from 'formik'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Input from '@/components/Input/Input'
 import Button from '@/components/Button/Button'
@@ -14,7 +15,17 @@ const viber = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><pat
 const PAGE_NAME = 'Contact Us'
 
 function ContactUs() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
+  
+  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+    },
+    // onSubmit: handleModalSubmit
+  })
 
   return (
     <>
@@ -37,30 +48,16 @@ function ContactUs() {
               {viber}<p>ruralrisingph</p>
             </li>
           </ul>
-          <Formik
-            initialValues={{
-              name: '',
-              email: '',
-              phone: '',
-              message: '',
-            }}
-          >
-            {({errors, touched}) => (
-              <Form className={s.form}>
-                <h5>We love to hear from you</h5>
-                <div className='flex-col gap-20'>
-                  <Input displayName='Name' touched={touched.name} error={errors.name} input={{type: 'text', name:'name', id:'name', required: true}}/>
-                  <Input displayName='Email' touched={touched.email} error={errors.email} input={{type: 'email', name:'email', id:'email', required: true}}/>
-                  <Input displayName='Phone' touched={touched.phone} error={errors.phone} input={{type: 'text', name:'phone', id:'phone', required: true}}/>
-                  <Input displayName='Message' touched={touched.message} error={errors.message} input={{type: 'textarea', name:'message', id:'message', required: true}}/>
-                </div>
-                <Button
-                  type='submit'
-                  text='Submit'
-                />
-              </Form>
-            )}
-          </Formik>
+          <form className={s.form} onSubmit={handleSubmit}>
+            <h5>We love to hear from you</h5>
+            <div className='flex-col gap-20'>
+              <Input displayName='Name' touched={touched.name} error={errors.name} input={{type: 'text', name:'name', id:'name', value: values.name, onChange: handleChange, onBlur: handleBlur, required: true}}/>
+              <Input displayName='Email' touched={touched.email} error={errors.email} input={{type: 'email', name:'email', id:'email', value: values.email, onChange: handleChange, onBlur: handleBlur, required: true}}/>
+              <Input displayName='Phone' touched={touched.phone} error={errors.phone} input={{type: 'text', name:'phone', id:'phone', value: values.phone, onChange: handleChange, onBlur: handleBlur, required: true}}/>
+              <Input displayName='Message' touched={touched.message} error={errors.message} input={{type: 'textarea', name:'message', id:'message', value: values.message, onChange: handleChange, onBlur: handleBlur, required: true}}/>
+            </div>
+            <Button type='submit' text='Submit' disabled={isSubmitting}/>
+          </form>
         </div>
       </section>
     </>

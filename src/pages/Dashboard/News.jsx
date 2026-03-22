@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Formik, Form, Field } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
 import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
 import { createCRUD } from '@/service/crudService'
@@ -77,79 +78,90 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
     thumbnail_url: selectedRecord.thumbnail_url ?? '',
   } : emptyFormValues
 
+  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, setFieldValue, setFieldError, setFieldTouched } = useFormik({
+    initialValues: initialValues,
+    validationSchema: schema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    enableReinitialize: true,
+    onSubmit: handleModalSubmit
+  })
+
+  const debouncedVideoUrl = useDebounce(values.video_url, 500)
+
+  useEffect(() => {
+    let isMounted = true
+
+    const processVideo = async () => {
+      const videoId = extractVimeoId(debouncedVideoUrl)
+      if(!videoId){
+        setFieldValue('video_id', '')
+        setFieldValue('thumbnail_url', '')
+        return
+      }
+
+      setIsFetchingThumbnail(true)
+      const result = await getThumbnail(videoId)
+      if(!isMounted) return
+      setIsFetchingThumbnail(false)
+
+      if(result.error){
+        setFieldValue('video_id', '')
+        setFieldValue('thumbnail_url', '')
+        setFieldError('video_url', result.error)
+        setFieldTouched('video_url', true, false)                  
+        return
+      }
+      
+      setFieldValue('video_id', videoId)
+      setFieldValue('thumbnail_url', result.thumbnail)
+    }
+
+    processVideo()
+    return () => { isMounted = false }
+  }, [debouncedVideoUrl])
+  
   return (
     <Modal
       onClose={() => setMainModal(false)}
       width='480px'
       height='620px'
     >
-      <Formik
-        initialValues={initialValues}
-        validationSchema={schema}
-        validateOnChange
-        validateOnBlur
-        enableReinitialize
-        onSubmit={handleModalSubmit}
-      >
-        {({ values, setFieldValue, setFieldError, setFieldTouched, errors, touched, isSubmitting }) => {
-          const debouncedVideoUrl = useDebounce(values.video_url, 500)
-
-          useEffect(() => {
-            let isMounted = true
-
-            const processVideo = async () => {
-              const videoId = extractVimeoId(debouncedVideoUrl)
-              if(!videoId) {
-                setFieldValue('video_id', '')
-                setFieldValue('thumbnail_url', '')
-                return
-              }
-
-              setIsFetchingThumbnail(true)
-              const result = await getThumbnail(videoId)
-              if(!isMounted) return
-              setIsFetchingThumbnail(false)
-
-              if(result.error){
-                setFieldValue('video_id', '')
-                setFieldValue('thumbnail_url', '')
-                setFieldError('video_url', result.error)
-                setFieldTouched('video_url', true, false)                  
-                return
-              }
-              
-              setFieldValue('video_id', videoId)
-              setFieldValue('thumbnail_url', result.thumbnail)
-            }
-
-            processVideo()
-            return () => { isMounted = false }
-          }, [debouncedVideoUrl])
-
-          return (
-            <Form className={s.form}>
-              <div className='flex-col gap-15'>
-                <Input displayName='Title' error={errors.title} touched={touched.title} input={{type: 'text', name:'title', id:'title', required: true}}/>
-                <Input displayName='Description' error={errors.description} touched={touched.description} input={{ type: 'text', name:'description', id:'description', required: true }}/>
-                <Input displayName='Video Link' error={errors.video_url} touched={touched.video_url} input={{ type: 'text', name:'video_url', id:'video_url', placeholder: 'vimeo.com/xxxxxxxxx', required: true }}/>
-                {isFetchingThumbnail ? (
-                  <div className={cn(s.thumbnailCont, 'flex j-center a-center')}>
-                    <p>Loading...</p>
-                  </div>
-                ) : values.thumbnail_url ? (
-                  // <button className={s.thumbnailCont} onClick={() => setPlayerState(values.video_id)}>
-                  <button className={s.thumbnailCont}>
-                    <img className={s.img} src={values.thumbnail_url} alt="thumbnail" />
-                  </button>
-                ) : null}
-                <Field type='hidden' name='video_id' id='video_id'/>
-                <Field type='hidden' name='thumbnail_url' id='thumbnail_url'/>
-              </div>
-              <Button type='submit' text='Submit' disabled={isSubmitting} />
-            </Form>
-          )
-        }}
-      </Formik>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <div>
+          <Input
+            displayName='Title'
+            error={errors.title}
+            touched={touched.title}
+            input={{ type: 'text', name: 'title', id: 'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          <Input
+            displayName='Description'
+            error={errors.description}
+            touched={touched.description}
+            input={{ type: 'text', name: 'description', id: 'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          <Input
+            displayName='Video Link'
+            error={errors.video_url}
+            touched={touched.video_url}
+            input={{ type: 'text', name: 'video_url', id: 'video_url', placeholder: 'vimeo.com/xxxxxxxxx', value: values.video_url, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          {isFetchingThumbnail ? (
+            <div className={cn(s.thumbnailCont, 'flex j-center a-center')}>
+              <p>Loading...</p>
+            </div>
+          ) : values.thumbnail_url ? (
+            // <button className={s.thumbnailCont} onClick={() => setPlayerState(values.video_id)}>
+            <button className={s.thumbnailCont}>
+              <img className={s.img} src={values.thumbnail_url} alt="thumbnail" />
+            </button>
+          ) : null}
+          <input type="hidden" name="video_id" value={values.video_id} />
+          <input type="hidden" name="thumbnail_url" value={values.thumbnail_url} />
+        </div>
+        <Button type='submit' text='Submit' disabled={isSubmitting} />
+      </form>
       {/* {playerState && <VideoPlayer onClose={() => setPlayerState(false)} videoId={playerState}/>} */}
     </Modal>
   )
@@ -162,7 +174,7 @@ function News() {
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  document.title = `${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`
+  useDocumentTitle(`${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`)
 
   const fetchData = async () => await service.getAll(setLoading, setData)
     
@@ -246,11 +258,11 @@ function News() {
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={5} style={{textAlign: 'center'}}>Loading...</td>
+                <td colSpan={4} style={{textAlign: 'center'}}>Loading...</td>
               </tr>
             ) : data.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{textAlign: 'center'}}>No news found</td>
+                <td colSpan={4} style={{textAlign: 'center'}}>{`No ${TABLE_NAME} found`}</td>
               </tr>
             ) : (
               data.map((row) => (

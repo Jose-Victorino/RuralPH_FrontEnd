@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom'
 import cn from 'classnames'
 
 import Button from '@/components/Button/Button'
 import WhatsNew from '@/features/WhatsNew/WhatsNew'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './AboutUs.module.scss'
 
@@ -12,7 +12,7 @@ import mainAboutImg from 'uploads/angel-locsin.jpg'
 const PAGE_NAME = 'About Us'
 
 function AboutUs() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   return (
     <>
@@ -74,6 +74,7 @@ function AboutUs() {
           <h2 style={{color: 'white'}}>Important Resources</h2>
           <div className='flex-wrap gap-15'>
             <Button
+              style={{flexGrow: '1'}}
               color='yellow'
               role='link'
               span
@@ -81,6 +82,7 @@ function AboutUs() {
               to='https://ruriclub.com/pages/membership'
             />
             <Button
+              style={{flexGrow: '1'}}
               color='yellow'
               role='link'
               span
@@ -88,6 +90,7 @@ function AboutUs() {
               to='https://facebook.com/groups/RuRiPh'
             />
             <Button
+              style={{flexGrow: '1'}}
               color='yellow'
               role='link'
               span
@@ -95,6 +98,7 @@ function AboutUs() {
               to='https://www.youtube.com/@ruralrisingphilippines1993'
             />
             <Button
+              style={{flexGrow: '1'}}
               color='yellow'
               role='link'
               span

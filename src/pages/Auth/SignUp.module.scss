@@ -35,6 +35,11 @@
   }
 }
 
+.errorMsg{
+  color: hsl(0, 65%, 51%);
+  font-size: 0.85rem;
+}
+
 .alt a{
   color: base.$link-color;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { createCRUD } from '@/service/crudService'
-import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
 
@@ -14,7 +14,7 @@ function News() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
 
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
   
   const fetchData = async () => await newsService.getAll(setLoading, setData)
   

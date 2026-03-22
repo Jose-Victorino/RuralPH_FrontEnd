@@ -36,35 +36,26 @@ const Socmed = () =>(
 )
 
 function Navigation() {
-  const { pathname } = useLocation();
+  const { pathname } = useLocation()
   const [menuVisible, setMenuVisible] = useState(false)
   const [subnavOpen, setSubnavOpen] = useState(false)
   const [atTop, setAtTop] = useState(true)
   const mobileNavRef = useRef(null)
-
-  const closeMenu = () => setMenuVisible(false)
-
-  const openMenu = () => setMenuVisible(true)
-
-  const closeSubnav = () => setSubnavOpen(false)
-
-  const openSubnav = () => setSubnavOpen(true)
-
+  
   const isHome = pathname === '/'
-
-  useEffect(() => {
-    if(!isHome){
-      setAtTop(false)
-      return
-    }
-    
+  useEffect(() => { 
     const handleScroll = () => setAtTop(window.scrollY === 0)
 
     handleScroll()
     window.addEventListener("scroll", handleScroll)
 
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [isHome])
+  }, [])
+  
+  const closeMenu = () => setMenuVisible(false)
+  const openMenu = () => setMenuVisible(true)
+  const closeSubnav = () => setSubnavOpen(false)
+  const openSubnav = () => setSubnavOpen(true)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -81,7 +72,7 @@ function Navigation() {
 
   return (
     <>
-      <header className={cn(s.navigation, {[s.atTop]: isHome && atTop, [s.isRouted]: !isHome},)}>
+      <header className={cn(s.navigation, {[s.atTop]: isHome && atTop, [s.isRouted]: !isHome})}>
         <div className={s.logoWrap}>
           <div className="container flex-col">
             <Link to='/'>
@@ -171,6 +162,9 @@ function Navigation() {
               <NavLink to='/about-us' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>About us</NavLink>
             </li>
             <li>
+              <NavLink to='https://ruriclub.com/' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Shop</NavLink>
+            </li>
+            <li>
               <NavLink to='/our-journey' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
             </li>
             <li>
@@ -184,12 +178,6 @@ function Navigation() {
             </li>
             <li>
               <NavLink to='/stories' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Stories</NavLink>
-            </li>
-            <li>
-              <NavLink to='/events' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
-            </li>
-            <li>
-              <NavLink to='https://ruriclub.com/' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Shop</NavLink>
             </li>
             <li>
               <NavLink to='/location' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>

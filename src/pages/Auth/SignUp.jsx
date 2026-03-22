@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { UserAuth } from '@/context/AuthContext'
-import { Formik, Field, Form } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useGlobal, ACTIONS } from '@/context/GlobalContext'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Button from '@/components/Button/Button'
 
@@ -27,6 +27,7 @@ const validationSchema = Yup.object().shape({
 })
 
 function SignUp() {
+  useDocumentTitle('Signup | Rural Rising PH')
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -34,7 +35,7 @@ function SignUp() {
   const { SignUpNewUser } = UserAuth()
 
   const onSubmit = async (values) => {
-    const { email, password, rememberMe } = values
+    const { email, password } = values
     setLoading(true)
     
     try {
@@ -46,41 +47,43 @@ function SignUp() {
       setLoading(false)
     }
   }
+
+  const { values, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    },
+    validationSchema,
+    onSubmit
+  })
   
   return (
     <>
-      <Formik
-        initialValues={{
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={onSubmit}
-      >
-        <Form className={s.form}>
-          <h4 className='mb-15'>Sign up</h4>
-          <div className='flex-col gap-15'>
-            <div className='flex gap-15'>
-              <Field className={s.txtField} type='text' name='firstName' placeholder='First Name' required/>
-              <Field className={s.txtField} type='text' name='lastName' placeholder='Last Name' required/>
-            </div>
-            <Field className={s.txtField} type='text' name='email' placeholder='Email' required/>
-            <div style={{position: 'relative'}}>
-              <Field className={s.txtField} type={showPassword ? 'text' : 'password'} name='password' placeholder='Password' required/>
-              <button type='button' className={s.showPass} onClick={() => setShowPassword((prev) => !prev)}>
-                <img src={showPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
-              </button>
-            </div>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <h4 className='mb-15'>Sign up</h4>
+        <div className='flex-col gap-15'>
+          <div className='flex gap-15'>
+            <input className={s.txtField} type='text' name='firstName' placeholder='First Name' value={values.firstName} onChange={handleChange} onBlur={handleBlur} required/>
+            <input className={s.txtField} type='text' name='lastName' placeholder='Last Name' value={values.lastName} onChange={handleChange} onBlur={handleBlur} required/>
           </div>
-          <Button
-            type='submit'
-            text='Sign up'
-            color='green'
-          />
-        </Form>
-      </Formik>
+          <input className={s.txtField} type='email' name='email' placeholder='Email' value={values.email} onChange={handleChange} onBlur={handleBlur} required/>
+          <div className='pos-r'>
+            <input className={s.txtField} type={showPassword ? 'text' : 'password'} name='password' placeholder='Password' value={values.password} onChange={handleChange} onBlur={handleBlur} required/>
+            <button type='button' className={s.showPass} onClick={() => setShowPassword((prev) => !prev)}>
+              <img src={showPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
+            </button>
+          </div>
+          {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
+        </div>
+        <Button
+          type='submit'
+          text='Sign up'
+          color='green'
+          disabled={isSubmitting}
+        />
+      </form>
       <div className={s.alt}>
         <p>Already have an account? <NavLink to='/auth/login' replace={true}>Login</NavLink></p>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { createPortal } from 'react-dom'
 
 import s from './VideoPlayer.module.scss'

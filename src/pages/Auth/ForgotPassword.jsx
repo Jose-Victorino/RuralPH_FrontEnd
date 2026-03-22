@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserAuth } from '@/context/AuthContext'
-import { Formik, Form, Field } from 'formik'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Button from '@/components/Button/Button'
 
@@ -28,6 +28,7 @@ const passwordValidationSchema = Yup.object().shape({
 })
 
 function ForgotPassword() {
+  useDocumentTitle('Forgot Password | Rural Rising PH')
   const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [email, setEmail] = useState('')
@@ -41,7 +42,9 @@ function ForgotPassword() {
       }, 500)
     })
   }
-
+  const handleBackToEmail = () => {
+    setStep(1)
+  }
   const handleEmailSubmit = async (values) => {
     setIsVerifying(true)
     setError('')
@@ -59,83 +62,83 @@ function ForgotPassword() {
       setIsVerifying(false)
     }
   }
-
   const handlePasswordSubmit = (values) => {
     navigate({pathname: '/', replace: true})
     setEmail('')
   }
 
-  const handleBackToEmail = () => {
-    setStep(1)
-  }
+  const ConfirmEmail = () => {
+    const { values, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+      initialValues: {
+        email: ''
+      },
+      validationSchema: emailValidationSchema,
+      onSubmit: handleEmailSubmit
+    })
 
-  const ConfirmEmail = () => (
-    <Formik
-      initialValues={{ email: '' }}
-      validationSchema={emailValidationSchema}
-      onSubmit={handleEmailSubmit}
-    >
-      {({ errors, touched, isSubmitting }) => (
-        <Form className={s.form}>
-          <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
-            <div>
-              <img src={arrowLeft} loading="lazy" alt="arrow" />
-            </div>
-            <span>Go Back</span>
-          </button>
-          <h4 className='mb-15'>Recover Password</h4>
-          <Field className={s.txtField} type='email' name='email' placeholder='Enter email' required/>
-          {error && <span className={s.errorMsg}>{error}</span>}
+    return (
+      <form className={s.form} onSubmit={handleSubmit}>
+        <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
+          <div>
+            <img src={arrowLeft} loading="lazy" alt="arrow" />
+          </div>
+          <span>Go Back</span>
+        </button>
+        <h4 className='mb-15'>Recover Password</h4>
+        <input className={s.txtField} type='email' name='email' placeholder='Enter email' value={values.email} onChange={handleChange} onBlur={handleBlur} required/>
+        {error && <span className={s.errorMsg}>{error}</span>}
+        <Button
+          type='submit'
+          text={isVerifying ? 'Verifying...' : 'Confirm'}
+          color='green'
+          disabled={isVerifying || isSubmitting}
+        />
+      </form>
+    )
+}
+
+  const PasswordChange = () => {
+    const { values, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+      initialValues: {
+        password: '',
+        confirmPassword: ''
+      },
+      validationSchema: passwordValidationSchema,
+      onSubmit: handlePasswordSubmit
+    })
+
+    return (
+      <form className={s.form} onSubmit={handleSubmit}>
+        <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
+          <div>
+            <img src={arrowLeft} loading="lazy" alt="arrow" />
+          </div>
+          <span>Go Back</span>
+        </button>
+        <h4 className='mb-15'>Set New Password</h4>
+        <p className={s.emailDisplay}>Email: <strong>{email}</strong></p>
+        <div className='flex-col gap-15'>
+          <input className={s.txtField} type='password' name='password' placeholder='Password' value={values.password} onChange={handleChange} onBlur={handleBlur} required/>
+          <input className={s.txtField} type='password' name='confirmPassword' placeholder='Re-enter Password' value={values.confirmPassword} onChange={handleChange} onBlur={handleBlur} required/>
+        </div>
+        <div className='flex gap-10'>
+          <Button
+            btnType='secondary'
+            type='button'
+            text='Back'
+            color='green'
+            onClick={handleBackToEmail}
+          />
           <Button
             type='submit'
-            text={isVerifying ? 'Verifying...' : 'Confirm'}
+            text='Reset Password'
             color='green'
-            disabled={isVerifying || isSubmitting}
+            disabled={isSubmitting}
           />
-        </Form>
-      )}
-    </Formik>
-  )
-
-  const PasswordChange = () => (
-    <Formik
-      initialValues={{ password: '', confirmPassword: '' }}
-      validationSchema={passwordValidationSchema}
-      onSubmit={handlePasswordSubmit}
-    >
-      {({ errors, touched, isSubmitting }) => (
-        <Form className={s.form}>
-          <button type="button" className={s.goBackbtn} onClick={() => navigate(-1)}>
-            <div>
-              <img src={arrowLeft} loading="lazy" alt="arrow" />
-            </div>
-            <span>Go Back</span>
-          </button>
-          <h4 className='mb-15'>Set New Password</h4>
-          <p className={s.emailDisplay}>Email: <strong>{email}</strong></p>
-          <div className='flex-col gap-15'>
-            <Field className={s.txtField} type='password' name='password' placeholder='Password' required />
-            <Field className={s.txtField} type='password' name='confirmPassword' placeholder='Re-enter Password' required />
-          </div>
-          <div className='flex gap-10'>
-            <Button
-              btnType='secondary'
-              type='button'
-              text='Back'
-              color='green'
-              onClick={handleBackToEmail}
-            />
-            <Button
-              type='submit'
-              text='Reset Password'
-              color='green'
-              disabled={isSubmitting}
-            />
-          </div>
-        </Form>
-      )}
-    </Formik>
-  )
+        </div>
+      </form>
+    )
+  }
 
   return step === 1 ? <ConfirmEmail /> : <PasswordChange />
 }

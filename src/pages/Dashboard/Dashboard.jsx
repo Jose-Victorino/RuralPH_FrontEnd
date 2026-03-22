@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom'
-import { UserAuth } from '@/context/AuthContext'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './Dashboard.module.scss'
 
 function Dashboard() {
-  document.title = `Admin | Rural Rising PH`
-  // const { session } = UserAuth()
-  // console.log(session)
+  useDocumentTitle('Admin | Rural Rising PH')
   
   return (
     <section className={s.container}>

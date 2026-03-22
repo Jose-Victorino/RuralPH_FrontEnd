@@ -1,4 +1,5 @@
 import React from 'react'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Button from '@/components/Button/Button'
 import RecentPost from './RecentPost'
@@ -12,7 +13,7 @@ import s from './OurJourney.module.scss'
 const PAGE_NAME = 'Our Journey'
 
 function OurJourney() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   return (
     <>

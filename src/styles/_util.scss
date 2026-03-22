@@ -178,18 +178,11 @@
   }
 }
 
-@for $i from 1 through 30{
+@for $i from 1 through 20{
   $val_i: $i * 5;
    
   .gap-#{$val_i}{
     gap: #{$val_i}px;
-  }
-
-  @for $j from 1 through 30{
-    $val_j: $j * 5;
-    .gap-#{$val_i}-#{$val_j}{
-      gap: #{$val_i}px #{$val_j}px;
-    }
   }
   
   .mb-#{$val_i}{
@@ -210,7 +203,6 @@
     width: $val_i * 1%;
   }
 }
-
 
 @media(max-width: 1400px){
   :root{

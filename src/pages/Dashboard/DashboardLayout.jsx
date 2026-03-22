@@ -1,18 +1,18 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { UserAuth } from '@/context/AuthContext'
 
 import s from './DashboardLayout.module.scss' 
 import PrivateRoute from '@/components/PrivateRoute'
 
 function DashboardLayout() {
-  const { signOut, session } = UserAuth()
+  const navigate = useNavigate()
+  const { signOut } = UserAuth()
 
   const handleSignOut = async () => {
-    try {
-      await signOut()
-      navigate('/')
-    } catch (err) {}
+    const { error } = await signOut()
+
+    if(!error) navigate('/')
   }
   
   return (

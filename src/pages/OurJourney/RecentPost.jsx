@@ -11,7 +11,7 @@ function RecentPost() {
   const journeyData = [...ourJourney]
   const firstJourney = journeyData.shift()
   const nextThree = journeyData.slice(0, 3)
-  const remaining = journeyData.slice(3)
+  // const remaining = journeyData.slice(3)
   
   return (
     <section>

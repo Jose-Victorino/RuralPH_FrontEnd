@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom'
 import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './TermsAndConditions.module.scss'
 
 const PAGE_NAME = 'Terms And Conditions'
 
 function TermsAndConditions() {
-  document.title = `${PAGE_NAME} | Rural Rising PH`
+  useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
   return (
     <>

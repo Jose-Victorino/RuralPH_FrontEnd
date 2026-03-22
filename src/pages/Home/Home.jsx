@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import cn from 'classnames'
+import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Button from '@/components/Button/Button'
 import WhatsNew from '@/features/WhatsNew/WhatsNew'
@@ -19,7 +20,7 @@ import tourism from 'uploads/Tourism.jpg'
 function Home() {
   const [open, setOpen] = useState(false)
   
-  document.title = `Rural Rising PH`
+  useDocumentTitle('Rural Rising PH')
   
   return (
     <>
