@@ -44,12 +44,6 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 10px;
-
-  .rememberMe{
-    display: flex;
-    gap: 5px;
-    cursor: pointer;
-  }
   a{
     color: base.$link-color;
 

@@ -29,7 +29,7 @@ Notes:
 - Content revision in Our Journey 'Growing Together for a Sustainable Future'
 - Find the "Farmers are pandemic front-liners" from In the News
 
-#### Future Improvements
+### Future Improvements
 - pagination on admin dashboard
 - 
 
@@ -88,7 +88,6 @@ npm run lint
 ```
 
 ## Project Structure
-
 - `src/` — application source
 	- `App.jsx` — root app component
 	- `main.jsx` — entry point

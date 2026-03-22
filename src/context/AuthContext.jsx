@@ -1,7 +1,79 @@
 import { useState, useEffect, createContext, useContext } from 'react'
+import { Navigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '@/supabase-client'
 
 const AuthContext = createContext()
+const appURL = import.meta.env.VITE_APP_URL
+
+// Supabase recovery links use URL hash fragments by default; PKCE uses ?code=
+function parseHashParams() {
+  const raw = window.location.hash.replace(/^#/, '')
+  return raw ? new URLSearchParams(raw) : new URLSearchParams()
+}
+
+// Call only under React Router (e.g. Recover page).
+export function useRecoverySession() {
+  const [recoveryStatus, setRecoveryStatus] = useState('checking')
+  const [searchParams] = useSearchParams()
+
+  useEffect(() => {
+    let cancelled = false
+
+    const establishRecoverySession = async () => {
+      const hashParams = parseHashParams()
+      const accessToken =
+        searchParams.get('access_token') || hashParams.get('access_token')
+      const refreshToken =
+        searchParams.get('refresh_token') || hashParams.get('refresh_token')
+
+      if (accessToken && refreshToken) {
+        const { error: sessionError } = await supabase.auth.setSession({
+          access_token: accessToken,
+          refresh_token: refreshToken
+        })
+        if (cancelled) return
+        if (sessionError) {
+          setRecoveryStatus('invalid')
+          return
+        }
+        setRecoveryStatus('ready')
+        window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`)
+        return
+      }
+
+      const code = searchParams.get('code')
+      if (code) {
+        const { error: codeError } = await supabase.auth.exchangeCodeForSession(code)
+        if (cancelled) return
+        if (codeError) {
+          setRecoveryStatus('invalid')
+          return
+        }
+        setRecoveryStatus('ready')
+        window.history.replaceState(null, '', window.location.pathname)
+        return
+      }
+
+      const {
+        data: { session }
+      } = await supabase.auth.getSession()
+      if (cancelled) return
+      if (session) {
+        setRecoveryStatus('ready')
+        return
+      }
+
+      setRecoveryStatus('invalid')
+    }
+
+    establishRecoverySession()
+    return () => {
+      cancelled = true
+    }
+  }, [searchParams])
+
+  return { recoveryStatus }
+}
 
 export function AuthContextProvider({children}) {
   const [session, setSession] = useState(undefined)
@@ -45,6 +117,7 @@ export function AuthContextProvider({children}) {
     }
     return { success: true, data }
   }
+
   const logInUser = async (email, password) => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
@@ -61,6 +134,7 @@ export function AuthContextProvider({children}) {
       console.error('Error on login: ', error)
     }
   }
+
   const signOut = async () => {
     const { error } = await supabase.auth.signOut()
 
@@ -68,8 +142,19 @@ export function AuthContextProvider({children}) {
     return error
   }
 
+  // return { data, error }
+  const requestPasswordReset = async (email) => {
+    const redirectTo = `${appURL}/auth/recover`
+    return await supabase.auth.resetPasswordForEmail(email, { redirectTo })
+  }
+
+  // return { data, error }
+  const updatePassword = async (password) => (
+    await supabase.auth.updateUser({ password })
+  )
+
   return (
-    <AuthContext.Provider value={{session, isLoading, logInUser, signUpNewUser, signOut}}>
+    <AuthContext.Provider value={{session, isLoading, logInUser, signUpNewUser, signOut, requestPasswordReset, updatePassword}}>
       {children}
     </AuthContext.Provider>
   )
@@ -77,4 +162,12 @@ export function AuthContextProvider({children}) {
 
 export function UserAuth() {
   return useContext(AuthContext)
+}
+
+// Wrap components/elements that need to be protected/private
+export function PrivateRoute({children}) {
+  const { session, isLoading } = UserAuth()
+
+  if(isLoading) return null
+  return session ? children : <Navigate to='/auth/login' replace />
 }

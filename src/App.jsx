@@ -22,6 +22,7 @@ const TermsAndConditions = lazy(() => import('@/pages/TermsAndConditions/TermsAn
 const AuthLayout = lazy(() => import('@/pages/Auth/AuthLayout'))
 const Login = lazy(() => import('@/pages/Auth/Login'))
 const ForgotPassword = lazy(() => import('@/pages/Auth/ForgotPassword'))
+const Recover = lazy(() => import('@/pages/Auth/Recover'))
 const SignUp = lazy(() => import('@/pages/Auth/SignUp'))
 const DashboardLayout = lazy(() => import('@/pages/Dashboard/DashboardLayout'))
 const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'))
@@ -54,6 +55,7 @@ function App() {
         <Route index element={<Navigate to='/auth/login' />} />
         <Route path='login' element={<Login />}/>
         <Route path='forgot-password' element={<ForgotPassword />}/>
+        <Route path='recover' element={<Recover />}/>
         <Route path='sign-up' element={<SignUp />}/>
       </Route>
       <Route path='/dashboard' element={<DashboardLayout />}>

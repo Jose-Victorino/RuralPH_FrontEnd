@@ -1,11 +1,14 @@
-import { Outlet, Navigate } from 'react-router-dom'
+import { Outlet, Navigate, useLocation } from 'react-router-dom'
 import { UserAuth } from '@/context/AuthContext'
 
 import s from './AuthLayout.module.scss'
 
-function Login() {
+function AuthLayout() {
   const { session } = UserAuth()
-  if(session) return <Navigate to='/dashboard' />
+  const { pathname } = useLocation()
+  const isPasswordRecovery = pathname === '/auth/recover'
+
+  if(session && !isPasswordRecovery) return <Navigate to='/dashboard' />
   
   return (
     <section className={s.authWrapper}>
@@ -17,4 +20,4 @@ function Login() {
   )
 }
 
-export default Login
+export default AuthLayout

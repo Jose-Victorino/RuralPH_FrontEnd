@@ -33,7 +33,7 @@ function Login() {
   const { logInUser } = UserAuth()
 
   const onSubmit = async (values) => {
-    const { email, password, rememberMe } = values
+    const { email, password } = values
     setLoading(true)
     
     try {
@@ -52,11 +52,11 @@ function Login() {
     initialValues: {
       email: '',
       password: '',
-      rememberMe: false,
     },
     validationSchema,
     onSubmit
   })
+  
   return (
     <>
       <form className={s.form} onSubmit={handleSubmit}>
@@ -72,17 +72,19 @@ function Login() {
             </button>
           </div>
           {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
+          {error && <span className={s.errorMsg}>{error}</span>}
         </div>
         <div className={s.bottom}>
-          <label htmlFor='rememberMe' role='button' className={s.rememberMe}>
-            <input type='checkbox' name='rememberMe' id='rememberMe' value={values.rememberMe} onChange={handleChange} onBlur={handleBlur}/>
-            <span>Remember me</span>
-          </label>
           <div>
             <NavLink to='/auth/forgot-password'>Forgot your password?</NavLink>
           </div>
         </div>
-        <Button type='submit' text='Login' color='green' disabled={isSubmitting}/>
+        <Button
+          type='submit'
+          text={(isSubmitting && loading) ? 'Loading...' : 'Login'}
+          color='green'
+          disabled={isSubmitting}
+        />
       </form>
       <div className={s.alt}>
         <p>Don't have an account? <NavLink to='/auth/sign-up' replace={true}>Sign up</NavLink></p>

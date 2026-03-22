@@ -3,14 +3,14 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { UserAuth } from '@/context/AuthContext'
 
 import s from './DashboardLayout.module.scss' 
-import PrivateRoute from '@/components/PrivateRoute'
+import { PrivateRoute } from '@/context/AuthContext'
 
 function DashboardLayout() {
   const navigate = useNavigate()
   const { signOut } = UserAuth()
 
   const handleSignOut = async () => {
-    const { error } = await signOut()
+    const error = await signOut()
 
     if(!error) navigate('/')
   }

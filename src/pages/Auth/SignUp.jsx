@@ -76,10 +76,11 @@ function SignUp() {
             </button>
           </div>
           {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
+          {error && <span className={s.errorMsg}>{error}</span>}
         </div>
         <Button
           type='submit'
-          text='Sign up'
+          text={(isSubmitting && loading) ? 'Loading...' : 'Sign up'}
           color='green'
           disabled={isSubmitting}
         />
