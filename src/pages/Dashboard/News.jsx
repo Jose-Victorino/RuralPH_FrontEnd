@@ -38,6 +38,21 @@ const emptyFormValues = {
   video_url: '',
   thumbnail_url: '',
 }
+const inputNames = Object.keys(emptyFormValues)
+
+const generateValues = (record) => {
+  return inputNames.reduce((prev, cur) => ({
+    ...prev,
+    [cur]: record?.[cur] ?? ''
+  }), {})
+}
+const generatePayload = (record) => {
+  return inputNames.reduce((prev, cur) => ({
+    ...prev,
+    [cur]: record?.[cur] || null
+  }), {})
+}
+
 const extractVimeoId = (url) => {
   const match = url.trim().match(VIMEO_REGEX)
   return match ? match[3] : null
@@ -70,13 +85,9 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
   const [isFetchingThumbnail, setIsFetchingThumbnail] = useState(false)
   // const [playerState, setPlayerState] = useState(false)
   
-  const initialValues = mainModal === 'UPDATE' && selectedRecord ? {
-    title: selectedRecord.title ?? '',
-    description: selectedRecord.description ?? '',
-    video_id: selectedRecord.video_id ?? '',
-    video_url: selectedRecord.video_url ?? '',
-    thumbnail_url: selectedRecord.thumbnail_url ?? '',
-  } : emptyFormValues
+  const initialValues = mainModal === 'UPDATE' && selectedRecord
+  ? generateValues(selectedRecord)
+  : emptyFormValues
 
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit, setFieldValue, setFieldError, setFieldTouched } = useFormik({
     initialValues: initialValues,
@@ -174,7 +185,7 @@ function News() {
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useDocumentTitle(`${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`)
+  useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
 
   const fetchData = async () => await service.getAll(setLoading, setData)
     
@@ -184,13 +195,7 @@ function News() {
   }, [])
 
   const handleModalSubmit = async (values, { setSubmitting }) => {
-    const payload = {
-      title: values.title || null,
-      description: values.description || null,
-      video_id: values.video_id || null,
-      video_url: values.video_url || null,
-      thumbnail_url: values.thumbnail_url || null,
-    }
+    const payload = generatePayload(values)
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
@@ -222,8 +227,8 @@ function News() {
     setInfoModal(true)
   }
   const closeModal = () => {
-    setMainModal(null)
     setSelectedRecord(null)
+    setMainModal(null)
   }
   
   return (

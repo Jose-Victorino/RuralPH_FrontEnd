@@ -19,6 +19,7 @@ body{
   height: 100vh;
   height: 100dvh;
   overflow: auto;
+  overflow-x: hidden;
   scroll-behavior: auto;
 }
 
@@ -39,11 +40,17 @@ h4{
 h5{
   font-size: base.$sz-20-24;
 }
+h1, h2, h3, h4, h5, h6{
+  text-wrap: balance;
+}
 h6, p, a, b, li, th, td, button,
 input, textarea, select, option, label{
   font-size: base.$sz-14-16;
 }
 h2, h3, h4, h5, h6, p, a, li, th, td, input, textarea, select, option, label{ line-height: 1.5; }
+p, li, figcaption{
+  text-wrap: pretty;
+}
 a{
   font-family: inherit;
   text-decoration: none;

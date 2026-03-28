@@ -42,7 +42,7 @@ function OurJourney() {
           />
         </div>
       </section>
-      <section className='pad-block-120'>
+      <section className='pad-block-100'>
         <div className='container flex-col gap-10'>
           <div data-ros='fade-right'>
             <h2 className='textGreen'>Camp Mingan</h2>

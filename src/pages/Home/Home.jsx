@@ -135,7 +135,7 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className={cn(s.section2, 'pad-block-120')}>
+      <section className={cn(s.section2, 'pad-block-100')}>
         <div className='container res-flex-row'>
           <img data-ros='fade-right' className={s.img} src={campMingan} alt="Camp Mingan" />
           <div data-ros='fade-left' className='flex-col gap-15'>

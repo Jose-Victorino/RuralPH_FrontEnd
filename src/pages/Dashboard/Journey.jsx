@@ -27,7 +27,7 @@ today.setHours(0, 0, 0, 0)
 
 const schema = Yup.object({
   string: Yup.string().required('String is required'),
-  number: Yup.number().required('Number is requered'),
+  number: Yup.number().required('Number is required'),
   date: Yup.date().min(today, 'Date must be today or onwards').required('Date is required'),
 })
 const emptyFormValues = {
@@ -35,16 +35,28 @@ const emptyFormValues = {
   number: '',
   date: '',
 }
+const inputNames = Object.keys(emptyFormValues)
+
+const generateValues = (record) => {
+  return inputNames.reduce((prev, cur) => ({
+    ...prev,
+    [cur]: record?.[cur] ?? ''
+  }), {})
+}
+const generatePayload = (record) => {
+  return inputNames.reduce((prev, cur) => ({
+    ...prev,
+    [cur]: record?.[cur] || null
+  }), {})
+}
 
 const TABLE_NAME = 'journey'
 const service = createCRUD(TABLE_NAME)
 
 const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
-  const initialValues = mainModal === 'UPDATE' && selectedRecord ? {
-    string: selectedRecord.string ?? '',
-    number: selectedRecord.number ?? '',
-    date: selectedRecord.date ?? '',
-  } : emptyFormValues
+  const initialValues = mainModal === 'UPDATE' && selectedRecord
+  ? generateValues(selectedRecord)
+  : emptyFormValues
 
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -93,7 +105,7 @@ function Journey() {
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
   
-    useDocumentTitle(`${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`)
+  useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
 
   const fetchData = async () => await service.getAll(setLoading, setData)
 
@@ -103,11 +115,7 @@ function Journey() {
   }, [])
   
   const handleModalSubmit = async (values, { setSubmitting }) => {
-    const payload = {
-      string: values.string || null,
-      number: values.number || null,
-      date: values.date || null,
-    }
+    const payload = generatePayload(values)
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
@@ -139,8 +147,8 @@ function Journey() {
     setInfoModal(true)
   }
   const closeModal = () => {
-    setMainModal(null)
     setSelectedRecord(null)
+    setMainModal(null)
   }
 
   return (

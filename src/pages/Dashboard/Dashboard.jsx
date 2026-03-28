@@ -4,7 +4,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 import s from './Dashboard.module.scss'
 
 function Dashboard() {
-  useDocumentTitle('Admin | Rural Rising PH')
+  useDocumentTitle('Dashboard | Rural Rising PH')
   
   return (
     <section className={s.container}>

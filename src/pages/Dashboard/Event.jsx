@@ -26,7 +26,8 @@ const schema = Yup.object({
   title: Yup.string().required('Title is required'),
   description: Yup.string(),
   location: Yup.string().required('Location is required'),
-  date: Yup.date().min(today, 'Date must be today or onwards').required('Date is required'),
+  date: Yup.date().required('Date is required'),
+  //.min(today, 'Date must be today or onwards')
   time_start: Yup.string().required('Start time is required'),
   time_end: Yup.string(),
 })
@@ -38,19 +39,28 @@ const emptyFormValues = {
   time_start: '',
   time_end: '',
 }
+const inputNames = Object.keys(emptyFormValues)
+
+const generateValues = (record) => {
+  return inputNames.reduce((prev, cur) => ({
+    ...prev,
+    [cur]: record?.[cur] ?? ''
+  }), {})
+}
+const generatePayload = (record) => {
+  return inputNames.reduce((prev, cur) => ({
+    ...prev,
+    [cur]: record?.[cur] || null
+  }), {})
+}
 
 const TABLE_NAME = 'event'
 const service = createCRUD(TABLE_NAME)
 
 const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
-  const initialValues = mainModal === 'UPDATE' && selectedRecord ? {
-    title: selectedRecord.title ?? '',
-    description: selectedRecord.description ?? '',
-    location: selectedRecord.location ?? '',
-    date: selectedRecord.date ?? '',
-    time_start: selectedRecord.time_start ?? '',
-    time_end: selectedRecord.time_end ?? '',
-  } : emptyFormValues
+  const initialValues = mainModal === 'UPDATE' && selectedRecord
+  ? generateValues(selectedRecord)
+  : emptyFormValues
 
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -87,7 +97,7 @@ function Event() {
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
   
-  useDocumentTitle(`${wordCap(TABLE_NAME)} | Admin | Rural Rising PH`)
+  useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
   
   const fetchData = async () => await service.getAll(setLoading, setData)
   
@@ -97,14 +107,7 @@ function Event() {
   }, [])
 
   const handleModalSubmit = async (values, { setSubmitting }) => {
-    const payload = {
-      title: values.title || null,
-      description: values.description || null,
-      location: values.location || null,
-      date: values.date || null,
-      time_start: values.time_start || null,
-      time_end: values.time_end || null,
-    }
+    const payload = generatePayload(values)
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
@@ -136,8 +139,8 @@ function Event() {
     setInfoModal(true)
   }
   const closeModal = () => {
-    setMainModal(null)
     setSelectedRecord(null)
+    setMainModal(null)
   }
 
   return (
