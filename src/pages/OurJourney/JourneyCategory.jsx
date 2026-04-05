@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useParams } from'react-router-dom'
 import { useGlobal } from '@/context/GlobalContext'
 
-import { wordCap } from '@/library/Util'
+import { wordCap, scrollReset } from '@/library/Util'
 
 import Top from './Top'
 
@@ -23,7 +23,7 @@ function JourneyCategory() {
           <ul className={s.postList}>
             {filteredPost.map((row) => (
               <li key={row.id} className={s.postItem}>
-                <Link to={`/our-journey/p/${row.id}`}>
+                <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
                   <div className={s.imageCont}>
                     <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
                   </div>

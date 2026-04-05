@@ -4,23 +4,6 @@
   @include base.thumbnailCont;
 }
 
-.img{
-  @include base.img;
-  width: 100%;
-}
-
 .gridList{
-  @include base.grid-repeat-column(auto-fill, 360px);
-  gap: 20px;
-}
-
-.listItem{
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 3;
-  row-gap: 15px;
-
-  h5{
-    line-height: 1;
-  }
+  @include base.card-design;
 }

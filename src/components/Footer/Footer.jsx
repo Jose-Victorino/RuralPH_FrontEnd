@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
+import { scrollReset } from '@/library/Util'
 import Button from '@/components/Button/Button'
 
 import s from './Footer.module.scss'
@@ -27,10 +28,10 @@ function Footer() {
         <div className={s.bottom}>
           <ul className='flex gap-20'>
             <li>
-              <NavLink to='/privacy-policy' onClick={() => window.scrollTo(0, 0)}>Privacy Policy</NavLink>
+              <NavLink to='/privacy-policy' onClick={() => scrollReset()}>Privacy Policy</NavLink>
             </li>
             <li>
-              <NavLink to='/terms-and-conditions' onClick={() => window.scrollTo(0, 0)}>Terms and Conditions</NavLink>
+              <NavLink to='/terms-and-conditions' onClick={() => scrollReset()}>Terms and Conditions</NavLink>
             </li>
           </ul>
           <p>© Rural Rising PH, All rights reserved.</p>

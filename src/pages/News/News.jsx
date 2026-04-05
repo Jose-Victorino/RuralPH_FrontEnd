@@ -3,6 +3,7 @@ import { createCRUD } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
+import Loader from '@/components/Loader/Loader'
 
 import s from './News.module.scss'
 
@@ -26,23 +27,24 @@ function News() {
     <section className='pad-block-50'>
       <div className='container flex-col gap-10' style={{ minHeight: '400px'}}>
         <h3>Watch Our Latest Videos</h3>
-        <ul className={s.gridList}>
-          {loading ? (
-            <span>Loading...</span>
-          ) : data.length > 0 ? (
-            data.map((news) => (
+        {loading ? <Loader />
+        : data.length > 0 ? (
+          <ul className={s.gridList}>
+            {data.map((news) => (
               <li key={news.id} className={s.listItem}>
                 <button className={s.thumbnailCont} onClick={() => setOpen(news.video_id)}>
                   <img className={s.img} src={news.thumbnail_url} alt="thumbnail" />
                 </button>
-                <h5>{news.title}</h5>
-                <p>{news.description}</p>
+                <div className={s.content}>
+                  <h5>{news.title}</h5>
+                  <p>{news.description}</p>
+                </div>
               </li>
-            ))
-          ) : (
-            <p>No news available</p>
-          )}
-        </ul>
+            ))}
+          </ul>
+        ) : (
+          <p>No news available</p>
+        )}
       </div>
       {open !== false && <VideoPlayer onClose={() => setOpen(false)} videoId={open} />}
     </section>

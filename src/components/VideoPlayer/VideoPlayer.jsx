@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { createPortal } from 'react-dom'
 
 import s from './VideoPlayer.module.scss'
@@ -17,6 +17,31 @@ function VideoPlayer({onClose, videoId}) {
       onClose()
     }
   }
+
+  useEffect(() => {
+    const root = document.getElementById('root')
+    const { body, documentElement } = document
+    const prevOverflow = body.style.overflow
+    const prevPadding = body.style.paddingRight
+    const scrollbarWidth = window.innerWidth - documentElement.clientWidth
+    const hasVerticalScrollbar = scrollbarWidth > 0
+
+    body.style.overflow = 'hidden'
+    root.ariaHidden = 'true'
+    root.inert = 'true'
+    
+    if(hasVerticalScrollbar){
+      const computedPaddingRight = parseFloat(window.getComputedStyle(body).paddingRight) || 0
+      body.style.paddingRight = `${computedPaddingRight + scrollbarWidth}px`
+    }
+    
+    return () => {
+      root.inert = ''
+      root.ariaHidden = 'false'
+      body.style.overflow = prevOverflow
+      body.style.paddingRight = prevPadding
+    }
+  }, [])
 
   return createPortal(
     <div

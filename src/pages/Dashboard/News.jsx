@@ -7,6 +7,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
 import { createCRUD } from '@/service/crudService'
+import Loader from '@/components/Loader/Loader'
 import useDebounce from '@/hooks/useDebounce'
 
 import Button from '@/components/Button/Button'
@@ -158,11 +159,8 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
             touched={touched.video_url}
             input={{ type: 'text', name: 'video_url', id: 'video_url', placeholder: 'vimeo.com/xxxxxxxxx', value: values.video_url, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
-          {isFetchingThumbnail ? (
-            <div className={cn(s.thumbnailCont, 'flex j-center a-center')}>
-              <p>Loading...</p>
-            </div>
-          ) : values.thumbnail_url ? (
+          {isFetchingThumbnail ? <Loader />
+          : values.thumbnail_url ? (
             // <button className={s.thumbnailCont} onClick={() => setPlayerState(values.video_id)}>
             <button className={s.thumbnailCont}>
               <img className={s.img} src={values.thumbnail_url} alt="thumbnail" />
@@ -235,11 +233,11 @@ function News() {
     <div className={s.container}>
       <Breadcrumbs crumbs={[
         {
-          text: 'Home',
+          label: 'Home',
           path: '/dashboard/',
         },
         {
-          text: 'News',
+          label: 'News',
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
@@ -251,60 +249,58 @@ function News() {
         />
       </section>
       <section>
-        <table className={s.dataTable}>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th style={{width: '160px'}}>Video Attached</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+        {loading ? <Loader /> : (
+          <table className={s.dataTable}>
+            <thead>
               <tr>
-                <td colSpan={4} style={{textAlign: 'center'}}>Loading...</td>
+                <th>Title</th>
+                <th>Description</th>
+                <th style={{width: '160px'}}>Video Attached</th>
+                <th>Actions</th>
               </tr>
-            ) : data.length === 0 ? (
-              <tr>
-                <td colSpan={4} style={{textAlign: 'center'}}>{`No ${TABLE_NAME} found`}</td>
-              </tr>
-            ) : (
-              data.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.title}</td>
-                  <td>{row.description}</td>
-                  <td>{row.video_id && checkSVG}</td>
-                  <td>
-                    <div>
-                      <button
-                        className={s.infoBtn}
-                        title='Info'
-                        onClick={() => openInfoModal(row)}
-                      >
-                        {infoSVG}
-                      </button>
-                      <button
-                        className={s.editBtn}
-                        title='edit'
-                        onClick={() => openEditModal(row)}
-                      >
-                        {editSVG}
-                      </button>
-                      <button
-                        className={s.deleteBtn}
-                        title='delete'
-                        onClick={() => handleDelete(row.id)}
-                      >
-                        {deleteSVG}
-                      </button>
-                    </div>
-                  </td>
+            </thead>
+            <tbody>
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                data.map((row) => (
+                  <tr key={row.id}>
+                    <td>{row.title}</td>
+                    <td>{row.description}</td>
+                    <td>{row.video_id && checkSVG}</td>
+                    <td>
+                      <div>
+                        <button
+                          className={s.infoBtn}
+                          title='Info'
+                          onClick={() => openInfoModal(row)}
+                        >
+                          {infoSVG}
+                        </button>
+                        <button
+                          className={s.editBtn}
+                          title='edit'
+                          onClick={() => openEditModal(row)}
+                        >
+                          {editSVG}
+                        </button>
+                        <button
+                          className={s.deleteBtn}
+                          title='delete'
+                          onClick={() => handleDelete(row.id)}
+                        >
+                          {deleteSVG}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
       </section>
       {mainModal && <NewsModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}

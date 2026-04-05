@@ -1,27 +1,59 @@
 @use '@/styles/base' as base;
 
-.grid{
-  @include base.grid-repeat-column(auto-fill, 285px);
-  grid-auto-rows: max-content;
-  gap: 30px;
+.qnaBlock{
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 0 10px 5px hsla(0, 0%, 0%, 0.05);
 
-  & > :first-child{
-    grid-row: span 3;
-  }
-
-  @media(max-width: 560px){
-    display: flex;
-    flex-direction: column;
+  &.showAccordion{
+    .header svg{
+      transform: rotateZ(180deg);
+    }
+    .content{
+      max-height: 670px;
+      padding-block: 15px;
+      opacity: 1;
+    }
   }
 }
 
-.qnaBlock{
+.header{
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  gap: 10px;
+
+  button{
+    background-color: base.$gs-w-80;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1.75em;
+    width: 1.75em;
+    min-height: 1.75em;
+    min-width: 1.75em;
+    border-radius: 0.5em;
+    
+    svg{
+      height: 1.25em;
+      width: 1.25em;
+      transition: transform 0.4s;
+    }
+  }
+}
+.content{
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  padding: 5px 5px 0;
-  border-top: 3px solid base.$primary-color;
-  border-radius: 6px;
+  gap: 10px;
+  padding-inline: 15px;
+  opacity: 0;
+  overflow: hidden;
+  max-height: 0;
+
+  transition: max-height 0.4s ease, padding-block 0.4s ease, opacity 0.4s ease;
 }
 
 .socmed{

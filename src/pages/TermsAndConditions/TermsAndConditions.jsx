@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import cn from 'classnames'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
+import { scrollReset } from '@/library/Util'
+
 import s from './TermsAndConditions.module.scss'
 
 const PAGE_NAME = 'Terms And Conditions'
@@ -16,7 +18,7 @@ function TermsAndConditions() {
           <h3 className='textGreen-dark'>Terms And Conditions</h3>
           <div className={cn('flex-col gap-10', s.top)}>
             <b>Last updated: <strong>January 26, 2019</strong></b>
-            <p>Please read these Terms of Use (“Terms”, “Terms of Use”) carefully before using the <Link className='baseLink' to='/'>ruralrising.com</Link> website (the “Service”) operated by Web Design & Digital Marketing Philippines (“us”, “we”, or “our”).</p>
+            <p>Please read these Terms of Use (“Terms”, “Terms of Use”) carefully before using the <Link className='baseLink' to='/' onClick={() => scrollReset()}>ruralrising.com</Link> website (the “Service”) operated by Web Design & Digital Marketing Philippines (“us”, “we”, or “our”).</p>
             <p>Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all visitors, users and others who access or use the Service.</p>
             <p>By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.</p>
           </div>
@@ -51,7 +53,7 @@ function TermsAndConditions() {
           </div>
           <div className='flex-col gap-10'>
             <h5>Contact Us</h5>
-            <p>If you have any questions about this Privacy Policy, please <Link className='baseLink' to="/contact-us">contact us</Link></p>
+            <p>If you have any questions about this Privacy Policy, please <Link className='baseLink' to='/contact-us' onClick={() => scrollReset()}>contact us</Link></p>
           </div>
         </div>
       </section>

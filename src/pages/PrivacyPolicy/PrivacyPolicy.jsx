@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import cn from 'classnames'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
+import { scrollReset } from '@/library/Util'
+
 import s from './PrivacyPolicy.module.scss'
 
 const PAGE_NAME = 'Privacy Policy'
@@ -19,7 +21,7 @@ function PrivacyPolicy() {
             <p>Web Design & Digital Marketing Philippines (“us”, “we”, or “our”) operates the Web Design & Digital Marketing Philippines website (the “Service”).</p>
             <p>This page informs you of our policies regarding the collection, use and disclosure of Personal Information when you use our Service.</p>
             <p>We will not use or share your information with anyone except as described in this Privacy Policy.</p>
-            <p>We use your Personal Information for providing and improving the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible at <Link className='baseLink' to='/'>ruralrisingph.com</Link></p>
+            <p>We use your Personal Information for providing and improving the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible at <Link className='baseLink' to='/' onClick={() => scrollReset()}>ruralrisingph.com</Link></p>
           </div>
           <div className='flex-col gap-10'>
             <h5>Information Collection And Use</h5>
@@ -61,7 +63,7 @@ function PrivacyPolicy() {
           </div>
           <div className='flex-col gap-10'>
             <h5>Contact Us</h5>
-            <p>If you have any questions about this Privacy Policy, please <Link className='baseLink' to="/contact-us">contact us</Link></p>
+            <p>If you have any questions about this Privacy Policy, please <Link className='baseLink' to='/contact-us' onClick={() => scrollReset()}>contact us</Link></p>
           </div>
         </div>
       </section>

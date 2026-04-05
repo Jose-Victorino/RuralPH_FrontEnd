@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from'react-router-dom'
 
+import { scrollReset } from '@/library/Util'
 import DateBanner from './DateBanner'
 
 import s from './EventCard.module.scss'
@@ -20,7 +21,7 @@ function EventCard(event) {
   
   return (
     <li className={s.eventCard}>
-      <Link to={`/events/${event.id}`}>
+      <Link to={`/events/${event.id}`} onClick={() => scrollReset()}>
         <DateBanner date={date} />
         <div className='flex-col gap-5'>
           <h6>{event.title}</h6>

@@ -1,12 +1,11 @@
-import { useState } from 'react'
 import cn from 'classnames'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
+import { useFormik } from 'formik'
 
 import Button from '@/components/Button/Button'
 
 import s from './StoreLocations.module.scss'
 
-import checkIcon from 'svg/check.svg'
 import car from 'svg/car.svg'
 import transit from 'svg/bus.svg'
 import walking from 'svg/person-walking.svg'
@@ -14,30 +13,35 @@ import bicycle from 'svg/bicycle.svg'
 
 const STORES = [
   {
-    id: 'WEST',
-    name: 'RURAL RISING PHILIPPINES - WEST',
-    address: 'RURAL RISING PHILIPPINES - West, 79 Sgt. Esguerra, West Triangle, Quezon City, 1104',
-    landmark: 'GREEN GATE with Rural Rising Signage.',
-    contact: '0917 166 7787 (for courier bookings only)',
+    id: 'central 1',
+    name: 'Rural Rising Philippines - Central',
+    address: 'Avida Towers Centera Retail, Epifanio de los Santos Ave, Mandaluyong, 1550 Metro Manila',
+    email: 'hello@ruralrisingph.com',
+    contact: '09175027787',
   },
   {
-    id: 'SOUTH',
-    name: 'RURAL RISING PHILIPPINES - SOUTH',
-    address: 'RURAL RISING PHILIPINES - SOUTH. Transport Terminal Alabang Town Center, Theater Dr, Ayala Alabang, Muntinlupa',
-    landmark: 'Beside Alabang Barangay Health Center. You will see a banner saying "RURI SOUTH"',
-    contact: '0968 858 7787 (for courier bookings only)',
+    id: 'north',
+    name: 'RURI NORTH',
+    address: '22 Congressional Avenue, Project 8, Quezon City (infront of Congressional Town Center)',
+    email: 'hello@ruralrisingph.com',
+    contact: '09171667787',
   },
   {
-    id: 'CENTRAL',
-    name: 'RURAL RISING PHILIPPINES - CENTRAL',
-    address: 'RURAL RISING PHILIPINES - CENTRAL. Unit #1C-06 G/F Avida Towers Centera Tower 1 Reliance, Cor EDSA, Mandaluyong',
-    landmark: 'Beside 24 Chicken. Facing EDSA',
-    contact: '0918 908 7786 (for courier bookings only)',
+    id: 'south',
+    name: 'RURI SOUTH',
+    address: 'Old Transport Terminal Bldg., Alabang Town Center, Theater Dr., Ayala Alabang, Muntinlupa.',
+    email: 'hello@ruralrisingph.com',
+    contact: '09688587787',
+  },
+  {
+    id: 'central 2',
+    name: 'RURI CENTRAL',
+    address: 'G/F Tower 1, Avida Towers Centera, EDSA cor. Reliance Street, Mandaluyong, M.M.',
+    email: 'hello@ruralrisingph.com',
+    contact: '09175027787',
   },
 ]
-
-const VIEW_TYPES = ['street', 'map']
-
+const VIEW_TYPES = ['map', 'street']
 const MODE_TYPES = [
   {
     name: 'car',
@@ -60,99 +64,97 @@ const MODE_TYPES = [
     svg: bicycle,
   },
 ]
-
 const PAGE_NAME = 'Locations'
 
-function StoreLocations() {
+function StoreLocations() {  
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  // const [distance, setDistance] = useState(1)
-  const [mode, setMode] = useState({})
-  const [view, setView] = useState({})
+  const { values, setFieldValue, isSubmitting, handleSubmit, handleChange} = useFormik({
+    initialValues: {
+      store: STORES[0]?.id ?? '',
+      view: VIEW_TYPES[0] ?? '',
+      mode: MODE_TYPES[0].name ?? '',
+      location: '',
+    },
+    onSubmit: (values) => {
+      console.log(values)
+    },
+  })
 
-  const handleModeChange = (m, id) => {
-    if(mode[id] === m) return
-    setMode((prev) => ({ ...prev, [id]: m }))
-  }
-
-  const handleViewChange = (v, id) => {
-    if(view[id] === v) return
-    setView((prev) => ({ ...prev, [id]: v }))
-  }
+  const selectedStore = STORES.find((s) => s.id === values.store)
 
   return (
     <section className={s.locationContainer}>
-      <div className="container">
-        <div className={s.top}>
-          <p>See the closest Rural Rising store to you.</p>
-          <div className='flex-col flex-wrap j-space-between gap-15'>
-            <div className={s.inputCont}>
-              <input className={s.input} name='user_location' placeholder='Enter Location' type="text" />
+      <div className={cn(s.main, 'container pad-block-60')}>
+        <form className={s.form} onSubmit={handleSubmit}>
+          <select
+            name="store"
+            value={values.store}
+            onChange={handleChange}
+            className={s.input}
+          >
+            {STORES.map((store) => (
+              <option key={store.id} value={store.id}>
+                {store.name}
+              </option>
+            ))}
+          </select>
+          {selectedStore &&
+            <div>
+              <p>Address: {selectedStore.address}</p>
+              <p>Email: {selectedStore.email}</p>
+              <p>Contact: {selectedStore.contact}</p>
             </div>
-            <Button
-              text='Search'
-              color='green'
-              span
-            />
+          }
+          <div className={cn('flex gap-15', s.view)}>
+            {VIEW_TYPES.map((v) => (
+              <button
+                key={v}
+                type="button"
+                aria-selected={values.store === v}
+                onClick={() => setFieldValue('view', v)}
+              >
+                {v}
+              </button>
+            ))}
           </div>
-        </div>
-        <div className={s.main}>
-          <div className={s.left}>
-            {STORES.map((store) => {
-              return(
-                <div key={store.id} className={s.locationItem}>
-                  <div>
-                    <h5>{store.name}</h5>
-                    <p>Address: {store.address}</p>
-                    <p>Landmark: {store.landmark}</p>
-                    <p>Contact: {store.contact}</p>
+          <ul className={s.mode}>
+            {MODE_TYPES.map((m) => {
+              const isSelected = values.mode === m.name
+              return (
+                <li
+                  key={m.name}
+                  className={cn({[s.selected]: isSelected})}
+                  aria-selected={isSelected}
+                  title={m.title}
+                >
+                  <div className={s.checkMark} aria-hidden>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+                      <path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/>
+                    </svg>
                   </div>
-                  <div className={cn('flex gap-15', s.view)}>
-                    {VIEW_TYPES.map((v) => {
-                      const isSelected = view[store.id] === v
-                      return (
-                        <button
-                          key={v}
-                          aria-selected={isSelected}
-                          onClick={() => handleViewChange(v, store.id)}
-                        >
-                          {v}
-                        </button>
-                      )
-                    })}
-                  </div>
-                  <ul className={s.mode}>
-                    {MODE_TYPES.map((m) => {
-                      const isSelected = mode[store.id] === m.name
-                      return (
-                        <li key={m.name} className={cn({[s.selected]: isSelected})} aria-selected={isSelected} title={m.title}>
-                          <div className={s.checkMark} aria-hidden>
-                            <img src={checkIcon} loading="lazy" alt="check" />
-                          </div>
-                          <button onClick={() => handleModeChange(m.name, store.id)}>
-                            <img src={m.svg} loading='lazy' alt={m.name}/>
-                          </button>
-                        </li>
-                      )
-                    })
-                    }
-                  </ul>
-                  <div>
-                    <input className={s.input} type="text" name={`user_location-${store.id}`} placeholder="Enter Location" autoComplete='off'/>
-                  </div>
-                  <Button
-                    style={{width: 'fit-content'}}
-                    text='Go'
-                    color='green'
-                    span
-                  />
-                </div>
+                  <button
+                    type="button"
+                    onClick={() => setFieldValue('mode', m.name)}
+                  >
+                    <img src={m.svg} loading='lazy' alt={m.name}/>
+                  </button>
+                </li>
               )
             })}
-          </div>
-          <div className={s.right}>
-            <div className={s.mapProxy}/>
-          </div>
+          </ul>
+          <input className={s.input} type="text" name='location' placeholder="Enter Location" value={values.location} onChange={handleChange} autoComplete='off' required/>
+          <Button
+            type="submit"
+            style={{width: 'fit-content'}}
+            text='Go'
+            color='green'
+            disable={isSubmitting}
+            span
+          />
+        </form>
+        <div className={s.mapCont}>
+          <div className={s.mapProxy}/>
         </div>
       </div>
     </section>

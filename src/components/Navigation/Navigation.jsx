@@ -2,6 +2,8 @@ import { useState, useRef, useEffect } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import cn from 'classnames'
 
+import { scrollReset } from '@/library/Util'
+
 import s from './Navigation.module.scss'
 
 import logoPng from '/logo.png'
@@ -75,7 +77,7 @@ function Navigation() {
       <header className={cn(s.navigation, {[s.atTop]: isHome && atTop, [s.isRouted]: !isHome})}>
         <div className={s.logoWrap}>
           <div className="container flex-col">
-            <Link to='/'>
+            <Link to='/' onClick={() => scrollReset()}>
               <img src={logoPng} className={s.logo} alt="logo" />
             </Link>
           </div>
@@ -101,7 +103,7 @@ function Navigation() {
             <nav className='flex'>
               <ul className={s.navLinks}>
                 <li>
-                  <NavLink to='/' className={({ isActive }) => cn({ [s.active]: isActive })}>Home</NavLink>
+                  <NavLink to='/' onClick={() => scrollReset()} className={({ isActive }) => cn({ [s.active]: isActive })}>Home</NavLink>
                 </li>
                 <li className={s.hasSubnav} onMouseEnter={openSubnav} onMouseLeave={closeSubnav}>
                   <div className={s.navItem}>
@@ -110,22 +112,22 @@ function Navigation() {
                   </div>
                   <ul className={cn(s.subNav, { [s.open]: subnavOpen })}>
                     <li>
-                      <NavLink to='/about-us' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>About us</NavLink>
+                      <NavLink to='/about-us' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>About us</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/our-journey' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>Our Journey</NavLink>
+                      <NavLink to='/our-journey' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/faqs' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>FAQs</NavLink>
+                      <NavLink to='/faqs' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>FAQs</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/in-the-news' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>In The News</NavLink>
+                      <NavLink to='/in-the-news' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>In The News</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/events' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>Events</NavLink>
+                      <NavLink to='/events' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/stories' className={({ isActive }) => cn({ [s.active]: isActive })} onClick={closeSubnav}>Stories</NavLink>
+                      <NavLink to='/stories' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Stories</NavLink>
                     </li>
                   </ul>
                 </li>
@@ -133,10 +135,10 @@ function Navigation() {
                   <NavLink to='https://ruriclub.com/'>Shop</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/location' className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
+                  <NavLink to='/location' onClick={() => scrollReset()} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
                 </li>
                 <li>
-                  <NavLink to='/contact-us' className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>
+                  <NavLink to='/contact-us' onClick={() => scrollReset()} className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>
                 </li>
               </ul>
             </nav>
@@ -156,34 +158,34 @@ function Navigation() {
         <nav>
           <ul className={s.mobileNavLinks}>
             <li>
-              <NavLink to='/' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Home</NavLink>
+              <NavLink to='/' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Home</NavLink>
             </li>
             <li>
-              <NavLink to='/about-us' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>About us</NavLink>
+              <NavLink to='/about-us' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>About us</NavLink>
             </li>
             <li>
-              <NavLink to='https://ruriclub.com/' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Shop</NavLink>
+              <NavLink to='https://ruriclub.com/' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Shop</NavLink>
             </li>
             <li>
-              <NavLink to='/our-journey' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
+              <NavLink to='/our-journey' onClick={() => {scrollReset();closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
             </li>
             <li>
-              <NavLink to='/faqs' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>FAQs</NavLink>
+              <NavLink to='/faqs' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>FAQs</NavLink>
             </li>
             <li>
-              <NavLink to='/in-the-news' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>In The News</NavLink>
+              <NavLink to='/in-the-news' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>In The News</NavLink>
             </li>
             <li>
-              <NavLink to='/events' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
+              <NavLink to='/events' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
             </li>
             <li>
-              <NavLink to='/stories' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Stories</NavLink>
+              <NavLink to='/stories' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Stories</NavLink>
             </li>
             <li>
-              <NavLink to='/location' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
+              <NavLink to='/location' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
             </li>
             <li>
-              <NavLink to='/contact-us' onClick={() => closeMenu()} className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>
+              <NavLink to='/contact-us' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>
             </li>
           </ul>
         </nav>

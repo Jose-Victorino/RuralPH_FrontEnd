@@ -26,21 +26,16 @@
 
   .options{
     position: absolute;
-    top: 0;
-  }
-
-  [popover]{
-    inset: unset;
-    top: anchor(bottom);
-    right: anchor(right);
+    top: 100%;
+    right: 0;
     background: base.$gs-w-90;
     border: none;
     box-shadow: 0 0 15px 5px hsla(0, 0%, 0%, 0.15);
-
+  
     button{
       padding: 1em 1.25em;
       width: 100%;
-
+  
       &:hover{
         background: base.$secondary-light;
         color: white;

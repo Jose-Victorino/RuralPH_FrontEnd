@@ -10,7 +10,7 @@ const shareSvg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><
 
 function Stories() {
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
-
+   //TODO: style
   return (
     <>
       <section className={s.stories}>

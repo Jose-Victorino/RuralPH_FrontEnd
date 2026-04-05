@@ -15,7 +15,7 @@ function Breadcrumbs({ crumbs }) {
             end
             className={({ isActive }) => cn({ [s.active]: isActive })}
           >
-            {c.text}
+            {c.label}
           </NavLink>
 
           {i < crumbs.length - 1 &&

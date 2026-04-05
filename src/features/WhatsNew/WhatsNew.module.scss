@@ -5,21 +5,5 @@
 }
 
 .whatsNew{
-  @include base.grid-repeat-column(auto-fill, 360px);
-  grid-template-rows: max-content 1fr max-content;
-  gap: 20px;
-  
-
-  img{
-    object-fit: cover;
-    aspect-ratio: 1.75;
-    width: 100%;
-  }
-
-  li{
-    display: grid;
-    grid-template-rows: subgrid;
-    grid-row: span 3;
-    gap: 10px;
-  }
+  @include base.card-design;
 }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import cn from 'classnames'
 
+import { scrollReset } from '@/library/Util'
 import Button from '@/components/Button/Button'
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
 
@@ -35,16 +35,18 @@ function WhatsNew() {
   
   return (
     <section className='pad-block-100'>
-      <div data-ros='fade-down' className='container flex-col gap-30'>
-        <h2 className='text-center'>What's New at <span className='textGreen'>Rural Rising</span></h2>
+      <div data-ros='fade-down' className='container flex-col gap-20'>
+        <h2 data-ros='fade-down' className='text-center'>What's New at <span className='textGreen'>Rural Rising</span></h2>
         <ul className={s.whatsNew}>
           {VIDEOS.map((vid) => (
-            <li key={vid.id}>
+            <li data-ros='fade-down' key={vid.id}>
               <button className={s.thumbnailCont} onClick={() => setOpen(vid.videoId)}>
                 <img src={vid.thumbnailLink} alt="thumbnail" />
               </button>
-              <h5 className='textYellow'>{vid.title}</h5>
-              <p>{vid.description}</p>
+              <div className={s.content}>
+                <h5 className='textYellow'>{vid.title}</h5>
+                <p>{vid.description}</p>
+              </div>
             </li>
           ))}
         </ul>
@@ -55,6 +57,7 @@ function WhatsNew() {
           role='link'
           style={{alignSelf: 'center'}}
           to='/in-the-news'
+          onClick={() => scrollReset()}
         />
       </div>
       {open !== false && <VideoPlayer onClose={() => setOpen(false)} videoId={open} />}

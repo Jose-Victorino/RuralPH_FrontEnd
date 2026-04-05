@@ -1,10 +1,6 @@
 @use '@/styles/base' as base;
 @use 'sass:color';
 
-body:has(.stories){
-  background: base.$gs-w-90;
-}
-
 .container{
   width: 780px;
   max-width: calc(100% - 30px);

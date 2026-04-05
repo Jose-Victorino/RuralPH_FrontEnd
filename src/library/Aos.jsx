@@ -8,7 +8,7 @@ function RosAnimation() {
     const ros = document.querySelectorAll("[data-ros]")
     const rosDuration = document.querySelectorAll("[data-ros-duration]")
 
-    const screenPos = window.innerHeight - window.innerHeight / 3.2
+    const screenPos = window.innerHeight - window.innerHeight / 3.1
 
     rosDuration.forEach((el) => {
       const duration = el.getAttribute("data-ros-duration")
@@ -20,8 +20,8 @@ function RosAnimation() {
       ros.forEach((el) => {
         const pos = el.getBoundingClientRect().top
 
-        if(pos < screenPos && !el.classList.contains("rosActive")){
-          el.classList.add("rosActive")
+        if(pos < screenPos && !el.dataset.rosActive){
+          el.dataset.rosActive = "true"
           
           el.addEventListener('transitionend', () => {
             el.style.transition = 'none'

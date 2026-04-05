@@ -6,7 +6,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
 import { createCRUD } from '@/service/crudService'
-
+import Loader from '@/components/Loader/Loader'
 
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Modal/Modal'
@@ -154,11 +154,11 @@ function Story() {
     <div className={s.container}>
       <Breadcrumbs crumbs={[
         {
-          text: 'Home',
+          label: 'Home',
           path: '/dashboard/',
         },
         {
-          text: 'Story',
+          label: 'Story',
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
@@ -170,60 +170,58 @@ function Story() {
         />
       </section>
       <section>
-        <table className={s.dataTable}>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th style={{width: '160px'}}>Video Attached</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+        {loading ? <Loader /> : (
+          <table className={s.dataTable}>
+            <thead>
               <tr>
-                <td colSpan={4} style={{textAlign: 'center'}}>Loading...</td>
+                <th>Title</th>
+                <th>Description</th>
+                <th style={{width: '160px'}}>Video Attached</th>
+                <th>Actions</th>
               </tr>
-            ) : data.length === 0 ? (
-              <tr>
-                <td colSpan={4} style={{textAlign: 'center'}}>{`No ${TABLE_NAME} found`}</td>
-              </tr>
-            ) : (
-              data.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.title}</td>
-                  <td>{row.description}</td>
-                  <td></td>
-                  <td>
-                    <div>
-                      <button
-                        className={s.infoBtn}
-                        title='Info'
-                        onClick={() => openInfoModal(row)}
-                      >
-                        {infoSVG}
-                      </button>
-                      <button
-                        className={s.editBtn}
-                        title='edit'
-                        onClick={() => openEditModal(row)}
-                      >
-                        {editSVG}
-                      </button>
-                      <button
-                        className={s.deleteBtn}
-                        title='delete'
-                        onClick={() => handleDelete(row.id)}
-                      >
-                        {deleteSVG}
-                      </button>
-                    </div>
-                  </td>
+            </thead>
+            <tbody>
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                data.map((row) => (
+                  <tr key={row.id}>
+                    <td>{row.title}</td>
+                    <td>{row.description}</td>
+                    <td></td>
+                    <td>
+                      <div>
+                        <button
+                          className={s.infoBtn}
+                          title='Info'
+                          onClick={() => openInfoModal(row)}
+                        >
+                          {infoSVG}
+                        </button>
+                        <button
+                          className={s.editBtn}
+                          title='edit'
+                          onClick={() => openEditModal(row)}
+                        >
+                          {editSVG}
+                        </button>
+                        <button
+                          className={s.deleteBtn}
+                          title='delete'
+                          onClick={() => handleDelete(row.id)}
+                        >
+                          {deleteSVG}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
       </section>
       {mainModal && <StoryModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}

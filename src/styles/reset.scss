@@ -14,7 +14,9 @@ modal: v1_beta
 	padding: 0;
 }
 body{
+  background-color: base.$cream;
   font-family: base.$font1;
+  color: base.$gs-b-90;
   width: 100%;
   height: 100vh;
   height: 100dvh;
@@ -70,7 +72,7 @@ blockquote, q {
 // button
 button{
   font-family: inherit;
-  color: base.$gs-b-100;
+  color: base.$gs-b-90;
   background: none;
   border: none;
 
@@ -103,7 +105,7 @@ input, textarea, select{
   outline: none;
 }
 input, textarea{
-  color: base.$gs-b-100;
+  color: base.$gs-b-90;
   outline: none;
   padding: 3px;
   border: 1px solid hsl(222, 2%, 20%);

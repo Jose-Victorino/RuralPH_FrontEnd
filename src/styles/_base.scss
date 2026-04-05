@@ -40,6 +40,7 @@ $temp-color-fill: linear-gradient(120deg, $gs-w-70 30%, $gs-w-80 100%);
 // solid colors
 $primary-color: hsl(133, 50%, 35%);
 $secondary-color: hsl(38, 95%, 52%);
+$cream: hsl(50, 27%, 96%);
 
 $primary-light: color.adjust($primary-color, $lightness: 10%);
 $primary-dark: color.adjust($primary-color, $lightness: -5%);
@@ -49,7 +50,7 @@ $secondary-dark: color.adjust($secondary-color, $lightness: -5%);
 
 $success-color: hsl(120, 52%, 56%);
 $warning-color: hsl(50, 87%, 56%);
-$error-color: hsl(0, 52%, 56%);
+$error-color: hsl(0, 65%, 51%);
 $link-color: hsl(211, 100%, 50%);
 
 @mixin pos-absolute-y-center(){
@@ -87,6 +88,9 @@ $link-color: hsl(211, 100%, 50%);
   border: 1px solid $gs-w-70;
   border-radius: 6px;
 
+  &:hover{
+    border-color: $gs-w-60;
+  }
   &:focus-visible{
     border-color: $gs-b-80;
   }
@@ -115,6 +119,41 @@ $link-color: hsl(211, 100%, 50%);
   }
 }
 
+@mixin card-design{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+
+  img{
+    object-fit: cover;
+    aspect-ratio: 1.75;
+    width: 100%;
+  }
+
+  li{
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+    gap: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .content{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 15px;
+    height: 100%;
+    padding: 1em;
+  }
+
+  @media(max-width: 560px){
+    grid-template-columns: 1fr;
+  }
+}
+
 @mixin thumbnailCont{
   background: $temp-color-fill;
   display: flex;
@@ -126,4 +165,9 @@ $link-color: hsl(211, 100%, 50%);
 @mixin img{
   object-fit: cover;
   border-radius: 10px;
+}
+
+@mixin errorMsg{
+  color: $error-color;
+  font-size: 0.85rem;
 }

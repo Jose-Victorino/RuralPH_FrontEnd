@@ -24,14 +24,14 @@ function ContactUs() {
       phone: '',
       message: '',
     },
-    // onSubmit: handleModalSubmit
+    onSubmit: (values) => {}
   })
 
   return (
     <>
       <section className={cn('flex j-center pad-block-60', s.contactSection)}>
-        <div className={cn('res-flex-row', s.content)}>
-          <ul className={s.contacts}>
+        <div className='container flex-wrap j-space-around gap-20'>
+          <ul data-ros='fade-down' className={s.contacts}>
             <li>
               {envelope}<p>hello@ruralrisingph.com</p>
             </li>
@@ -48,7 +48,7 @@ function ContactUs() {
               {viber}<p>ruralrisingph</p>
             </li>
           </ul>
-          <form className={s.form} onSubmit={handleSubmit}>
+          <form data-ros='fade-down' className={s.form} onSubmit={handleSubmit}>
             <h5>We love to hear from you</h5>
             <div className='flex-col gap-20'>
               <Input displayName='Name' touched={touched.name} error={errors.name} input={{type: 'text', name:'name', id:'name', value: values.name, onChange: handleChange, onBlur: handleBlur, required: true}}/>

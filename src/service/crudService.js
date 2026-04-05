@@ -1,4 +1,3 @@
-import React from 'react'
 import { supabase } from '@/supabase-client'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
@@ -9,7 +8,6 @@ export const createCRUD = (tableName) => ({
       .from(tableName)
       .select('*')
       .order('id', { ascending: true })
-    
     if(error){
       console.error('Error getting task: ', error.message)
       setLoading(false)
@@ -69,7 +67,7 @@ export const createCRUD = (tableName) => ({
         return
       }
 
-      toast.success('Event has been deleted')
+      toast.success(`${tableName} has been deleted`)
     })
   },
   subscribeToChanges: (getData) => {

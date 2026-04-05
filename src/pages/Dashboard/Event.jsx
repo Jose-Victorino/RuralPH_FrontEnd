@@ -6,6 +6,7 @@ import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatDate, formatTime, wordCap } from '@/library/Util'
 import { createCRUD } from '@/service/crudService'
+import Loader from '@/components/Loader/Loader'
 
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Modal/Modal'
@@ -147,11 +148,11 @@ function Event() {
     <div className={s.container}>
       <Breadcrumbs crumbs={[
         {
-          text: 'Home',
+          label: 'Home',
           path: '/dashboard/',
         },
         {
-          text: 'Event',
+          label: 'Event',
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
@@ -163,62 +164,60 @@ function Event() {
         />
       </section>
       <section>
-        <table className={s.dataTable}>
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Location</th>
-              <th>Date & Time</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loading ? (
+        {loading ? <Loader /> : (
+          <table className={s.dataTable}>
+            <thead>
               <tr>
-                <td colSpan={5} style={{textAlign: 'center'}}>Loading...</td>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Date & Time</th>
+                <th>Actions</th>
               </tr>
-            ) : data.length === 0 ? (
-              <tr>
-                <td colSpan={5} style={{textAlign: 'center'}}>{`No ${TABLE_NAME} found`}</td>
-              </tr>
-            ) : (
-              data.map((row) => (
-                <tr key={row.id}>
-                  <td>{row.title}</td>
-                  <td>{row.description}</td>
-                  <td>{row.location}</td>
-                  <td>{`${formatDate(row.date)} ${formatTime(row.time_start)}${row.time_end ? ` - ${formatTime(row.time_end)}`: ''}`}</td>
-                  <td>
-                    <div>
-                      <button
-                        className={s.infoBtn}
-                        title='Info'
-                        onClick={() => openInfoModal(row)}
-                      >
-                        {infoSVG}
-                      </button>
-                      <button
-                        className={s.editBtn}
-                        title='Edit'
-                        onClick={() => openEditModal(row)}
-                      >
-                        {editSVG}
-                      </button>
-                      <button
-                        className={s.deleteBtn}
-                        title='Delete'
-                        onClick={() => handleDelete(row.id)}
-                      >
-                        {deleteSVG}
-                      </button>
-                    </div>
-                  </td>
+            </thead>
+            <tbody>
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                data.map((row) => (
+                  <tr key={row.id}>
+                    <td>{row.title}</td>
+                    <td>{row.description}</td>
+                    <td>{row.location}</td>
+                    <td>{`${formatDate(row.date)} ${formatTime(row.time_start)}${row.time_end ? ` - ${formatTime(row.time_end)}`: ''}`}</td>
+                    <td>
+                      <div>
+                        <button
+                          className={s.infoBtn}
+                          title='Info'
+                          onClick={() => openInfoModal(row)}
+                        >
+                          {infoSVG}
+                        </button>
+                        <button
+                          className={s.editBtn}
+                          title='Edit'
+                          onClick={() => openEditModal(row)}
+                        >
+                          {editSVG}
+                        </button>
+                        <button
+                          className={s.deleteBtn}
+                          title='Delete'
+                          onClick={() => handleDelete(row.id)}
+                        >
+                          {deleteSVG}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        )}
       </section>
       {mainModal && <EventModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}

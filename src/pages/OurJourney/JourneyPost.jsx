@@ -3,6 +3,8 @@ import { Link, useParams } from'react-router-dom'
 import { useGlobal } from '@/context/GlobalContext'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
+import { scrollReset } from '@/library/Util'
+
 import s from './JourneyPost.module.scss'
 
 import facebook from '@/assets/svg/facebook.svg'
@@ -25,7 +27,7 @@ function Post() {
     <>
       <section>
         <div className="container flex-col gap-10 pad-block-50">
-          <Link to='/our-journey' className={s.goBack}>Go Back</Link>
+          <Link to='/our-journey' onClick={() => scrollReset()} className={s.goBack}>Go Back</Link>
           <div className={s.header}>
             <div>
               <h3 className='textGreen'>{selectedPost.title}</h3>
@@ -33,17 +35,17 @@ function Post() {
             </div>
             <ul className='flex a-end gap-10'>
               <li className='flex'>
-                <Link to="">
+                <Link to=''>
                   <img src={facebook} height='24' width='24' loading='lazy' alt="Facebook" />
                 </Link>
               </li>
               <li className='flex'>
-                <Link to="">
+                <Link to=''>
                   <img src={xTwitter} height='24' width='24' loading='lazy' alt="X" />
                 </Link>
               </li>
               <li className='flex'>
-                <Link to="">
+                <Link to=''>
                   <img src={linkedin} height='24' width='24' loading='lazy' alt="Linkedin" />
                 </Link>
               </li>
@@ -62,7 +64,7 @@ function Post() {
           <ul className={s.postList}>
             {recentPost.map((row) => (
               <li key={row.id} className={s.postItem}>
-                <Link to={`/our-journey/p/${row.id}`}>
+                <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
                   <div className={s.imageCont}>
                     <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
                   </div>

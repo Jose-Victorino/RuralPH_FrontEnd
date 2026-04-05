@@ -51,10 +51,6 @@ function AboutUs() {
               <p>We do weekly Rescue Buys in towns and cities all over the country. RuRi operates a Vegetable Rescue Center in Baguio City, and three distribution hubs in the NCR. These are RuRi North at Congressional Avenue., Quezon City and RuRi South at the Alabang Town Center, Muntinlupa, and at Avida Towers Centera in Mandaluyong.</p>
             </div>
           </div>
-        </div>
-      </section>
-      <section className='pad-block-100'>
-        <div className={cn("container flex-col gap-30")}>
           <div className='res-flex-row'>
             <div data-ros='fade-right' className='flex-col gap-15'>
               <p>The conversations at RuRi are led by spouses Ace and Andie Estrada of Baguio City.</p>

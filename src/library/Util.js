@@ -1,3 +1,5 @@
+import { useLocation } from "react-router"
+
 export function wordCap(str){
   str = str.toLowerCase()
 
@@ -46,3 +48,23 @@ export function formatTime(str){
     hour12: true,
   })
 }
+
+function scrollReset(container){
+  try {
+    if(typeof window !== 'undefined' && window.scrollTo) {
+      window.scrollTo(0, 0)
+    }
+    if(document){
+      if(document.documentElement) document.documentElement.scrollTop = 0
+      if(document.body) document.body.scrollTop = 0
+    }
+
+    if(container && container.scrollTop) container.scrollTop = 0
+  }catch(e){}
+}
+export function useScrollReset(container){
+  const location = useLocation()
+
+  useEffect(scrollReset(container), [location.pathname])
+}
+export { scrollReset }
