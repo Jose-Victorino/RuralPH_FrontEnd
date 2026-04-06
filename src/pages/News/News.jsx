@@ -8,7 +8,7 @@ import Loader from '@/components/Loader/Loader'
 import s from './News.module.scss'
 
 const PAGE_NAME = 'In The News'
-const newsService = createCRUD('news')
+const service = createCRUD('news')
 
 function News() {
   const [open, setOpen] = useState(false)
@@ -17,10 +17,17 @@ function News() {
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
   
-  const fetchData = async () => await newsService.getAll(setLoading, setData)
+  const fetchData = async () => {
+    const { data, error } = await service.getAll()
+    if(!error) setData(data)
+    setLoading(false)
+  }
   
   useEffect(() => {
     fetchData()
+    const unsubscribe = service.subscribeToChanges(fetchData)
+    
+    return () => unsubscribe()
   }, [])
 
   return (

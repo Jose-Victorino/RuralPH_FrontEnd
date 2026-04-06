@@ -142,13 +142,11 @@ export function AuthContextProvider({children}) {
     return error
   }
 
-  // return { data, error }
   const requestPasswordReset = async (email) => {
     const redirectTo = `${appURL}/auth/recover`
     return await supabase.auth.resetPasswordForEmail(email, { redirectTo })
   }
 
-  // return { data, error }
   const updatePassword = async (password) => (
     await supabase.auth.updateUser({ password })
   )

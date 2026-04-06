@@ -9,7 +9,7 @@ import Loader from '@/components/Loader/Loader'
 import s from './Events.module.scss'
 
 const PAGE_NAME = 'Events'
-const eventService = createCRUD('event')
+const service = createCRUD('event')
 
 function Event() {
   const [data, setData] = useState([])
@@ -17,10 +17,17 @@ function Event() {
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  const fetchData = async () => await eventService.getAll(setLoading, setData)
-
+  const fetchData = async () => {
+    const { data, error } = await service.getAll()
+    if(!error) setData(data)
+    setLoading(false)
+  }
+  
   useEffect(() => {
     fetchData()
+    const unsubscribe = service.subscribeToChanges(fetchData)
+    
+    return () => unsubscribe()
   }, [])
 
   const handleSearch = ({searchBar}) => {

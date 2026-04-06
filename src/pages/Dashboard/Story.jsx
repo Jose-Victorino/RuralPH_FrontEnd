@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
+import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
@@ -106,11 +107,17 @@ function Story() {
   
   useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
 
-  const fetchData = async () => await service.getAll(setLoading, setData)
-
+  const fetchData = async () => {
+    const { data, error } = await service.getAll()
+    if(!error) setData(data)
+    setLoading(false)
+  }
+  
   useEffect(() => {
     fetchData()
-    service.subscribeToChanges(fetchData)
+    const unsubscribe = service.subscribeToChanges(fetchData)
+    
+    return () => unsubscribe()
   }, [])
   
   const handleModalSubmit = async (values, { setSubmitting }) => {
@@ -131,7 +138,24 @@ function Story() {
     closeModal()
   }
 
-  const handleDelete = async (id) => await service.deleteData(id)
+  const handleDelete = async (id) => {
+    Swal.fire({
+      title: `Do you want to Delete this ${TABLE_NAME}?`,
+      showDenyButton: true,
+      denyButtonText: `Cancel`,
+      confirmButtonText: 'Delete',
+    })
+    if (!result.isConfirmed) return
+
+    const { error } = await service.deleteData(id)
+    if(error){
+      toast.error('An error occurred')
+      console.error('Error deleting: ', error)
+      return
+    }
+
+    toast.success(`${TABLE_NAME} has been deleted`)
+  }
 
   const openCreateModal = () => {
     setSelectedRecord(null)
