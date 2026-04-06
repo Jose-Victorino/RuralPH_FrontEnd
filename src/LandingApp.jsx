@@ -5,7 +5,7 @@ import MainLayout from '@/layouts/MainLayout'
 import Home from '@/pages/Home/Home'
 import AboutUs from '@/pages/AboutUs/AboutUs'
 import Faq from '@/pages/Faq/Faq'
-const News = lazy(() => ('@/pages/News/News'))
+const News = lazy(() => import('@/pages/News/News'))
 import OurJourney from '@/pages/OurJourney/OurJourney'
 const JourneyPost = lazy(() => import('@/pages/OurJourney/JourneyPost'))
 const JourneyCategory = lazy(() => import('@/pages/OurJourney/JourneyCategory'))
