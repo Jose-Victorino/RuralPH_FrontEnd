@@ -10,21 +10,21 @@ import Loader from '@/components/Loader/Loader'
 import s from './EventPage.module.scss'
 
 const PAGE_NAME = 'Events'
-const eventService = createCRUD('event')
+const service = createCRUD('event')
 
 function EventPage() {
   const { eventId } = useParams()
   const [eventData, setEventData] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchEvent = async () => {
-    const { data, error } = await eventService.getById(eventId)
+  const fetchData = async () => {
+    const { data, error } = await service.getById(eventId)
     if(!error) setEventData(data)
     setLoading(false)
   }
   
   useEffect(() => {
-    fetchEvent()
+    fetchData()
     const unsubscribe = service.subscribeToChanges(fetchData)
     
     return () => unsubscribe()

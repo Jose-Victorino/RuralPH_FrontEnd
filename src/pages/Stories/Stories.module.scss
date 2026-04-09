@@ -24,7 +24,7 @@
   padding: 15px;
   border-radius: 8px;
   background: base.$gs-w-100;
-  box-shadow: 0 0 15px 5px hsla(0, 0%, 0%, 0.1);
+  box-shadow: base.$shadow;
   svg{
     height: base.$sz-20-24;
     width: base.$sz-20-24;

@@ -20,9 +20,6 @@ In The News (admin)	| `Done`			|
 Our journey (admin)	| Not Started	|
 Stories (admin)			| Not Started	|
 
-TODO
-- replace ScrollToTop hook
-
 temp-tag
 **Components**
 - Video player modal

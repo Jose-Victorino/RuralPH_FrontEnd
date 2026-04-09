@@ -1,4 +1,5 @@
 @use '@/styles/base' as base;
+@use "sass:color";
 
 @mixin container{
   display: flex;
@@ -31,23 +32,29 @@
     padding: 6px 10px;
   }
   tr{
-    border-bottom: 1px solid base.$gs-w-60;
-
-    &:hover{
-      background: hsla(0, 0%, 0%, 0.08);
-    }
+    border-bottom: 1px solid base.$gs-w-70;
   }
-  thead tr th{
-    text-align: start;
-
-    &:last-child{
-      text-align: end;
-      width: 100px;
+  thead{
+    tr{
+      background: color.adjust(base.$gs-b-100, $alpha: - 0.91);
+    }
+    th{
+      text-align: start;
+  
+      &:last-child{
+        text-align: end;
+        width: 100px;
+      }
     }
   }
   tbody{
-    tr:last-child{
-      border-width: 0;
+    tr{
+      &:hover{
+        background: color.adjust(base.$gs-b-100, $alpha: - 0.95);
+      }
+      &:last-child{
+        border-width: 0;
+      }
     }
     td:last-child div{
       display: flex;

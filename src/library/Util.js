@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useLocation } from "react-router"
 
 export function wordCap(str){
@@ -60,7 +61,7 @@ function scrollReset(container){
     }
 
     if(container && container.scrollTop) container.scrollTop = 0
-  }catch(e){}
+  }catch{}
 }
 export function useScrollReset(container){
   const location = useLocation()

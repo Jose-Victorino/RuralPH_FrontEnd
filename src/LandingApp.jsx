@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route } from 'react-router-dom'
 
 import MainLayout from '@/layouts/MainLayout'
 import Home from '@/pages/Home/Home'
@@ -21,6 +21,7 @@ function LandingApp() {
   return (
     <Routes>
       <Route path='/' element={<MainLayout />}>
+        <Route path='*' element={<Home />}/>
         <Route index element={<Home />}/>
         <Route path='about-us' element={<AboutUs />}/>
         <Route path='our-journey' element={<OurJourney />}/>

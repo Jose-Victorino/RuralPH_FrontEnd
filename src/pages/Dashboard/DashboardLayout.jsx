@@ -22,7 +22,7 @@ function DashboardLayout() {
   }
   
   return (
-    <>
+    <PrivateRoute>
       <nav className={s.nav}>
         <div className={s.container}>
           <div className='pos-r'>
@@ -44,7 +44,7 @@ function DashboardLayout() {
         </div>
       </nav>
       <Outlet />
-    </>
+    </PrivateRoute>
   )
 }
 

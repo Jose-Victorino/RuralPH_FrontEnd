@@ -6,7 +6,7 @@
   flex-direction: column;
   overflow: hidden;
   border-radius: 6px;
-  box-shadow: 0 0 10px 5px hsla(0, 0%, 0%, 0.05);
+  box-shadow: base.$shadow;
 
   &.showAccordion{
     .header svg{

@@ -9,6 +9,9 @@ function Dashboard() {
   
   return (
     <section className={s.container}>
+      <div className={s.backLink}>
+        <Link to='/'>{'<< Go back to Landing Page'}</Link>
+      </div>
       <h4>Dashboard</h4>
       <ul className={s.moduleLinkList}>
         <li className={s.linkItem}>

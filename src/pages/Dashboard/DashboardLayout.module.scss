@@ -30,7 +30,7 @@
     right: 0;
     background: base.$gs-w-90;
     border: none;
-    box-shadow: 0 0 15px 5px hsla(0, 0%, 0%, 0.15);
+    box-shadow: base.$shadow;
   
     button{
       padding: 1em 1.25em;

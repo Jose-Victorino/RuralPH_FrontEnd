@@ -9,7 +9,19 @@
   @include base.grid-repeat-column(auto-fill, 150px);
   gap: 15px;
 }
+.backLink{
+  display: flex;
+  gap: 10px;
+  
+  a{
+    width: fit-content;
+    color: base.$secondary-color;
 
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+}
 .linkItem{
   aspect-ratio: 5 / 4;
   border: 1px solid base.$gs-b-50;
