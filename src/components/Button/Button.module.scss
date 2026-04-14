@@ -36,22 +36,17 @@ $size: (
 }
 
 @mixin setColor($value){
-  p{ color: $value; }
+  &{ color: $value; }
   svg{ fill: $value; }
 }
 
 @mixin btn-base{
   font-size: var(--btn-size);
-  padding: 0.5em 1em;
+  padding: 0.625em 1em;
   gap: 4px;
 
   &:disabled {
     cursor: not-allowed;
-  }
-  p{
-    text-align: center;
-    font-size: inherit;
-    line-height: 1.5;
   }
   svg{
     height: var(--btn-size);
@@ -111,7 +106,7 @@ $size: (
   &:disabled{
     @include setColor($fontColorDisabled);
   }
-  &:hover:not(:disabled) p{
+  &:hover:not(:disabled){
     text-decoration: underline;
   }
   &.color-dark{

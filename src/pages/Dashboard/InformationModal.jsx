@@ -1,20 +1,20 @@
 import Modal from '@/components/Modal/Modal'
-import { formatDate, formatTime } from '@/library/Util'
+import { formatDateTime } from '@/library/Util'
 
 import s from './InformationModal.module.scss'
 
 function formatValue(key, val) {
-  if (!val) return val
-
-  if (key === 'created_at') {
-    return `${formatDate(val)} ${formatTime(val)}`
+  if(!val) return val
+  if(Array.isArray(val)){
+    return val.length
   }
-
-  if (key.includes('date')) {
+  if(key === 'created_at'){
+    return formatDateTime(val)
+  }
+  if(key.includes('date')){
     return formatDate(val)
   }
-
-  if (key.includes('time')) {
+  if(key.includes('time')){
     return formatTime(val)
   }
 
@@ -32,7 +32,7 @@ function InformationModal({ setInfoModal, selectedRecord }) {
     >
       <ul className={s.infoGrid}>
         {Object.entries(selectedRecord).map(([key, val]) => {
-          if (key === 'id') return null
+          if(key === 'id') return null
 
           const normalizedKey = key.replaceAll('_', ' ')
           const formattedValues = formatValue(key, val)

@@ -26,7 +26,6 @@ export function formatDate(str){
     year: "numeric",
   })
 }
-
 export function formatTime(str){
   if (!str) return str
 
@@ -48,6 +47,9 @@ export function formatTime(str){
     minute: "2-digit",
     hour12: true,
   })
+}
+export function formatDateTime(str){
+  return formatDate(str) + ', ' + formatTime(str)
 }
 
 function scrollReset(container){

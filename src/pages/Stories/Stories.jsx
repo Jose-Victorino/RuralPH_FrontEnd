@@ -1,5 +1,7 @@
 import React from 'react'
 import cn from 'classnames'
+
+import Navigation from '@/components/Navigation/Navigation'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './Stories.module.scss'
@@ -10,73 +12,28 @@ const shareSvg = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><
 
 function Stories() {
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
-   //TODO: style
+
   return (
     <>
-      <section className={s.stories}>
-        <div className={cn(s.container, 'flex-col gap-30')}>
-          <ul className={s.storyList}>
-            <li className={s.storyItem}>
-              <div className='flex-col gap-10'>
-                <div className='flex j-space-between'>
-                  <div className={s.left}>
-                    <h5>Lorem, ipsum dolor.</h5>
-                    <p className='lh-1'>February 21, 2026</p>
-                  </div>
-                  <div>
-                    <a href="">
-                      {shareSvg}
-                    </a>
-                  </div>
+      <Navigation />
+      <section className='pad-block-50'>
+        <div className={cn(s.container, 'flex-col gap-20')}>
+          {[1,2,3].map((i) => (
+            <div key={i} className={cn('flex-col', s.storyItem)}>
+              <div className='flex-col gap-10 pad-20'>
+                <div>
+                  <h5>Lorem, ipsum dolor.</h5>
+                  <p className={s.date}>February 21, 2026</p>
                 </div>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae culpa deleniti ducimus molestiae, ullam deserunt. Fugit alias distinctio sequi eveniet quo a, reiciendis sapiente sed quam numquam, doloremque sunt quae.</p>
               </div>
               <div className='flex j-center'>
                 <div className={s.imgCont}>
+
                 </div>
               </div>
-            </li>
-            <li className={s.storyItem}>
-              <div className='flex-col gap-10'>
-                <div className='flex j-space-between'>
-                  <div className={s.left}>
-                    <h5>Lorem, ipsum dolor.</h5>
-                    <p className='lh-1'>February 21, 2026</p>
-                  </div>
-                  <div>
-                    <a href="">
-                      {shareSvg}
-                    </a>
-                  </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae culpa deleniti ducimus molestiae, ullam deserunt. Fugit alias distinctio sequi eveniet quo a, reiciendis sapiente sed quam numquam, doloremque sunt quae.</p>
-              </div>
-              <div className='flex j-center'>
-                <div className={s.imgCont}>
-                </div>
-              </div>
-            </li>
-            <li className={s.storyItem}>
-              <div className='flex-col gap-10'>
-                <div className='flex j-space-between'>
-                  <div className={s.left}>
-                    <h5>Lorem, ipsum dolor.</h5>
-                    <p className='lh-1'>February 21, 2026</p>
-                  </div>
-                  <div>
-                    <a href="">
-                      {shareSvg}
-                    </a>
-                  </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae culpa deleniti ducimus molestiae, ullam deserunt. Fugit alias distinctio sequi eveniet quo a, reiciendis sapiente sed quam numquam, doloremque sunt quae.</p>
-              </div>
-              <div className='flex j-center'>
-                <div className={s.imgCont}>
-                </div>
-              </div>
-            </li>
-          </ul>
+            </div>
+          ))}
         </div>
       </section>
     </>

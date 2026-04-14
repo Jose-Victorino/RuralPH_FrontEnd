@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
-import { wordCap } from '@/library/Util'
+import { formatDateTime, wordCap } from '@/library/Util'
 import { createCRUD } from '@/service/crudService'
 import Loader from '@/components/Loader/Loader'
 
@@ -17,48 +17,52 @@ import InformationModal from './InformationModal'
 
 import s from './Story.module.scss'
 
-// const checkSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/></svg>
 const infoSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
 const editSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
 const deleteSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
 
-const today = new Date()
-today.setHours(0, 0, 0, 0)
-
 const schema = Yup.object({
-  string: Yup.string().required('String is required'),
-  number: Yup.number().required('Number is required'),
-  date: Yup.date().min(today, 'Date must be today or onwards').required('Date is required'),
+  title: Yup.string(),
+  description: Yup.string().required('description is required'),
+  media: Yup.array().min(1, 'upload atleast 1 media'),
 })
 const emptyFormValues = {
-  string: '',
-  number: '',
-  date: '',
+  title: '',
+  description: '',
+  media: [],
 }
 const inputNames = Object.keys(emptyFormValues)
 
-const generateValues = (record) => {
-  return inputNames.reduce((prev, cur) => ({
-    ...prev,
-    [cur]: record?.[cur] ?? ''
-  }), {})
-}
-const generatePayload = (record) => {
-  return inputNames.reduce((prev, cur) => ({
-    ...prev,
-    [cur]: record?.[cur] || null
-  }), {})
-}
+const generateValues = (record) => ({
+  title: record?.title ?? '',
+  description: record?.description ?? '',
+  media: record?.story_media?.map(m => m.media_path) ?? [],
+})
+const generatePayload = (record) => ({
+  title: record?.title || null,
+  description: record?.description || null,
+})
 
 const TABLE_NAME = 'story'
-const service = createCRUD(TABLE_NAME)
-
+const service = createCRUD(TABLE_NAME, {
+  defaultSelect: '*, story_media(id, media_path)'
+})
+const storyMediaService = createCRUD('story_media')
+/**
+ * TODO
+ * ! 1 media per post?
+ * ? implement infinite scroll
+ * ? implement "see more" in post description
+ * 
+ * * CRUD
+ * ? implement image and video verification when adding
+ */
 const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
   const initialValues = mainModal === 'UPDATE' && selectedRecord
   ? generateValues(selectedRecord)
   : emptyFormValues
 
-  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
+  const { values, setFieldValue, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: initialValues,
     validationSchema: schema,
     enableReinitialize: true,
@@ -74,23 +78,51 @@ const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='String'
+            displayName='Title'
             error={errors.title}
             touched={touched.title}
-            input={{ type: 'text', name:'string', id:'string', value: values.string, onChange: handleChange, onBlur: handleBlur, required: true }}
+            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur }}
           />
           <Input
-            displayName='Number'
-            error={errors.title}
-            touched={touched.title}
-            input={{ type: 'number', name:'number', id:'number', value: values.number, onChange: handleChange, onBlur: handleBlur, required: true }}
+            displayName='Description'
+            error={errors.description}
+            touched={touched.description}
+            input={{ type: 'text', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
-          <Input
-            displayName='Date'
-            error={errors.date}
-            touched={touched.date}
-            input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}
-          />
+          <div className='flex-col gap-10'>
+            <div>
+              <p>Media</p>
+              <Button
+                type='button'
+                text='+ Add Media'
+                onClick={() => setFieldValue('media', [...values.media, ''])}
+                disabled={values.media.length >= 10}
+                span
+              />
+            </div>
+            {touched.media && errors.media && <span>{errors.media}</span>}
+            {values.media.length > 0 &&
+              <ul className='flex-col gap-10'>
+                {values.media.map((path, i) => (
+                  <li key={i} className='flex a-center gap-5'>
+                    <input
+                      type="text"
+                      value={path}
+                      className={s.mediaInput}
+                      onChange={e => {
+                        const updated = [...values.media]
+                        updated[i] = e.target.value
+                        setFieldValue('media', updated)
+                      }}
+                    />
+                    <button type="button" className={s.removeBtn} onClick={() => setFieldValue('media', values.media.filter((_, idx) => idx !== i))}>
+                      Remove
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            }
+          </div>
         </div>
         <Button type='submit' text='Submit' disabled={isSubmitting} />
       </form>
@@ -115,18 +147,45 @@ function Story() {
   
   useEffect(() => {
     fetchData()
-    const unsubscribe = service.subscribeToChanges(fetchData)
+    const unsubscribe = service.subscribeToChanges(fetchData, ['story_media'])
     
     return () => unsubscribe()
   }, [])
-  
+
   const handleModalSubmit = async (values, { setSubmitting }) => {
-    const payload = generatePayload(values)
+    const storyPayload = generatePayload(values)
+    const mediaPaths = values.media
 
     const isInsert = mainModal === 'INSERT'
-    const { error } = isInsert ?
-      await service.putData(payload) :
-      await service.updateData(payload, selectedRecord.id)
+    let error
+    if(isInsert){
+      const { data: story, error: storyError } = await service.putData(storyPayload)
+      if(!storyError && mediaPaths.length > 0){
+        const mediaPayload = mediaPaths.map(media_path => ({
+          story_id: story[0].id,
+          media_path,
+        }))
+        const { error: mediaError } = await storyMediaService.putData(mediaPayload)
+        error = mediaError
+      }
+      else error = storyError
+    } else{
+      const { error: storyError } = await service.updateData(storyPayload, selectedRecord.id)
+      if(!storyError){
+        const { error: deleteError } = await await storyMediaService.deleteWhere('story_id', selectedRecord.id)
+
+        if(!deleteError && mediaPaths.length > 0){
+          const mediaPayload = mediaPaths.map(media_path => ({
+            story_id: selectedRecord.id,
+            media_path,
+          }))
+          const { error: mediaError } = await storyMediaService.putData(mediaPayload)
+          error = mediaError
+        }
+        else error = deleteError
+      }
+      else error = storyError
+    }
     
     setSubmitting(false)
     if(error){
@@ -144,17 +203,18 @@ function Story() {
       showDenyButton: true,
       denyButtonText: `Cancel`,
       confirmButtonText: 'Delete',
+    }).then(async (result) => {
+      if(!result.isConfirmed) return
+  
+      const { error } = await service.deleteData(id)
+      if(error){
+        toast.error('An error occurred')
+        console.error('Error deleting: ', error)
+        return
+      }
+  
+      toast.success(`${TABLE_NAME} has been deleted`)
     })
-    if (!result.isConfirmed) return
-
-    const { error } = await service.deleteData(id)
-    if(error){
-      toast.error('An error occurred')
-      console.error('Error deleting: ', error)
-      return
-    }
-
-    toast.success(`${TABLE_NAME} has been deleted`)
   }
 
   const openCreateModal = () => {
@@ -200,21 +260,23 @@ function Story() {
               <tr>
                 <th>Title</th>
                 <th>Description</th>
-                <th style={{width: '160px'}}>Video Attached</th>
+                <th style={{width: '120px'}}>Media</th>
+                <th style={{width: '200px'}}>Date Posted</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                  <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                 </tr>
               ) : (
                 data.map((row) => (
                   <tr key={row.id}>
                     <td>{row.title}</td>
                     <td>{row.description}</td>
-                    <td></td>
+                    <td>{row.story_media.length}</td>
+                    <td>{formatDateTime(row.created_at)}</td>
                     <td>
                       <div>
                         <button

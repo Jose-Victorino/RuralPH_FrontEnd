@@ -138,17 +138,18 @@ function Event() {
       showDenyButton: true,
       denyButtonText: `Cancel`,
       confirmButtonText: 'Delete',
+    }).then(async (result) => {
+      if(!result.isConfirmed) return
+  
+      const { error } = await service.deleteData(id)
+      if(error){
+        toast.error('An error occurred')
+        console.error('Error deleting: ', error)
+        return
+      }
+  
+      toast.success(`${TABLE_NAME} has been deleted`)
     })
-    if (!result.isConfirmed) return
-
-    const { error } = await service.deleteData(id)
-    if(error){
-      toast.error('An error occurred')
-      console.error('Error deleting: ', error)
-      return
-    }
-
-    toast.success(`${TABLE_NAME} has been deleted`)
   }
 
   const openCreateModal = () => {

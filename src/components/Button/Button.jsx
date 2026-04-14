@@ -64,7 +64,7 @@ const Button = ({
       to={isLink ? to : ''}
     >
       {icon}
-      {!["", null, undefined].includes(text) && <p>{text}</p>}
+      {text}
     </Component>
   )
 }

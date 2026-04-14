@@ -1,69 +1,90 @@
 import { supabase } from '@/supabase-client'
 
-export const createCRUD = (tableName) => ({
-  getAll: async () => {
-    const { data, error } = await supabase
+export const createCRUD = (
+  tableName,
+  {
+    defaultSelect = '*',
+  } = {}
+) => ({
+  getAll: async ({ select = defaultSelect, order = { column: 'id', ascending: true } } = {}) => {
+    const result = await supabase
       .from(tableName)
-      .select('*')
-      .order('id', { ascending: true })
+      .select(select)
+      .order(order.column, { ascending: order.ascending })
 
-    if(error) console.error(`Error getting on ${tableName}:`, error.message)
-    return { data, error }
+    if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
+    return result
   },
-  getById: async (id) => {
-    const { data, error } = await supabase
+  getById: async (id, { select = defaultSelect } = {}) => {
+    const result = await supabase
       .from(tableName)
-      .select('*')
+      .select(select)
       .eq('id', id)
       .single()
     
-    if(error) console.error(`Error getting on ${tableName}:`, error.message)
-    return { data, error }
+    if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
+    return result
   },
   putData: async (payload) => {
-    const { data, error } = await supabase
+    const result = await supabase
       .from(tableName)
       .insert(payload)
       .select()
 
-    if(error) console.error(`Error insert on ${tableName}:`, error.message)
-    return { data, error }
+    if(result.error) console.error(`Error insert on ${tableName}:`, result.error.message)
+    return result
   },
   updateData: async (payload, id) => {
-    const { data, error } = await supabase
+    const result = await supabase
       .from(tableName)
       .update(payload)
       .eq('id', id)
       .select()
 
-    if(error) console.error(`Error update on ${tableName}:`, error.message)
+    if(result.error) console.error(`Error update on ${tableName}:`, result.error.message)
 
-    return { data, error }
+    return result
   },
   deleteData: async (id) => {
-    const { error } = await supabase
+    const result = await supabase
       .from(tableName)
       .delete()
       .eq('id', id)
 
-    if(error) console.error(`Error delete on ${tableName}:`, error.message)
+    if(result.error) console.error(`Error delete on ${tableName}:`, result.error.message)
 
-    return { error }
+    return result
   },
-  subscribeToChanges: (getData) => {
-    supabase.getChannels()
-      .filter(ch => ch.topic === `realtime:${tableName}-channel`)
-      .forEach(ch => supabase.removeChannel(ch))
+  deleteWhere: async (column, value) => {
+    const result = await supabase
+      .from(tableName)
+      .delete()
+      .eq(column, value)
 
-    const channel = supabase
-      .channel(`${tableName}-channel`)
-      .on('postgres_changes', {
-        event: '*',
-        schema: 'public',
-        table: tableName,
-      }, () => getData())
-      .subscribe()
+    if(result.error) console.error(`Error delete on ${tableName}:`, result.error.message)
+    return result
+  },
+  subscribeToChanges: (getData, extraTables = []) => {
+    const tables = [tableName, ...extraTables]
+
+    tables.forEach(table => {
+      const existing = supabase
+        .getChannels()
+        .find(ch => ch.subTopic === `${table}-channel`)
+      if(existing) supabase.removeChannel(existing)
+    })
+
+    const channels = tables.map(table =>
+      supabase
+        .channel(`${table}-channel`)
+        .on('postgres_changes', {
+          event: '*',
+          schema: 'public',
+          table,
+        }, () => getData())
+        .subscribe()
+    )
     
-    return () => supabase.removeChannel(channel)
-  }
+    return () => channels.forEach(ch => supabase.removeChannel(ch))
+  },
 })

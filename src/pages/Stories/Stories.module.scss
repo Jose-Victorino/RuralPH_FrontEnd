@@ -2,29 +2,20 @@
 @use 'sass:color';
 
 .container{
-  width: 780px;
+  width: 700px;
   max-width: calc(100% - 30px);
   margin-inline: auto;
 }
 
-.stories{
-  padding-block: 50px;
-}
-
-.storyList{
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .storyItem{
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  padding: 15px;
-  border-radius: 8px;
+  border-radius: 6px;
   background: base.$gs-w-100;
   box-shadow: base.$shadow;
+
+  .date{
+    font-size: base.$sz-12-14;
+    color: base.$gs-w-40;
+  }
   svg{
     height: base.$sz-20-24;
     width: base.$sz-20-24;
@@ -32,8 +23,7 @@
 }
 
 .imgCont{
-  background: base.$temp-color-fill; //temp-tag
   width: 100%;
-  max-width: 600px;
+  max-height: 420px;
   aspect-ratio: 1.25;
 }

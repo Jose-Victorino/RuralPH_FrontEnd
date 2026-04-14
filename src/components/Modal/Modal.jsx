@@ -21,7 +21,6 @@ function Modal({
     const hasVerticalScrollbar = scrollbarWidth > 0
 
     body.style.overflow = 'hidden'
-    root.ariaHidden = 'true'
     root.inert = 'true'
     
     if(hasVerticalScrollbar){
@@ -31,7 +30,6 @@ function Modal({
     
     return () => {
       root.inert = ''
-      root.ariaHidden = 'false'
       body.style.overflow = prevOverflow
       body.style.paddingRight = prevPadding
     }

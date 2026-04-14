@@ -12,3 +12,21 @@
 .dataTable{
   @include c.table;
 }
+
+.mediaInput{
+  background: hsl(214, 15%, 98%);
+  width: 100%;
+  padding: 0.5em 0.75em;
+  border: 1px solid hsl(214, 9%, 87%);
+  border-radius: 6px;
+}
+
+.removeBtn{
+  color: base.$link-color;
+  font-size: base.$sz-12-14;
+  height: fit-content;
+
+  &:hover{
+    text-decoration: underline;
+  }
+}

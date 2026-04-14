@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
 import MainLayout from '@/layouts/MainLayout'
 import Home from '@/pages/Home/Home'
@@ -21,7 +21,7 @@ function LandingApp() {
   return (
     <Routes>
       <Route path='/' element={<MainLayout />}>
-        <Route path='*' element={<Home />}/>
+        <Route path='*' element={<Navigate to='/' />}/>
         <Route index element={<Home />}/>
         <Route path='about-us' element={<AboutUs />}/>
         <Route path='our-journey' element={<OurJourney />}/>
@@ -31,12 +31,12 @@ function LandingApp() {
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>
         <Route path='events/:eventId' element={<EventPage />}/>
-        <Route path='stories' element={<Stories />}/>
         <Route path='location' element={<StoreLocations />}/>
         <Route path='contact-us' element={<ContactUs />}/>
         <Route path='privacy-policy' element={<PrivacyPolicy />}/>
         <Route path='terms-and-conditions' element={<TermsAndConditions />}/>
       </Route>
+      <Route path='stories' element={<Stories />}/>
     </Routes>
   )
 }
