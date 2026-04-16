@@ -23,12 +23,7 @@ function News() {
     setLoading(false)
   }
   
-  useEffect(() => {
-    fetchData()
-    const unsubscribe = service.subscribeToChanges(fetchData)
-    
-    return () => unsubscribe()
-  }, [])
+  useEffect(() => { fetchData() }, [])
 
   return (
     <section className='pad-block-50'>

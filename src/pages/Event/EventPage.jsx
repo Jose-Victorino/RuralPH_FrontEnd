@@ -23,12 +23,7 @@ function EventPage() {
     setLoading(false)
   }
   
-  useEffect(() => {
-    fetchData()
-    const unsubscribe = service.subscribeToChanges(fetchData)
-    
-    return () => unsubscribe()
-  }, [eventId])
+  useEffect(() => { fetchData() }, [eventId])
 
   const date = new Date(eventData?.date)
   const exactDate = `${date.toLocaleDateString('en-US', {

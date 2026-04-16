@@ -15,6 +15,19 @@ export const createCRUD = (
     if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
     return result
   },
+  getPage: async ({ select = defaultSelect, page = 1, pageSize = 10, order = { column: 'id', ascending: true } } = {}) => {
+    const from = (page - 1) * pageSize
+    const to = from + pageSize - 1
+
+    const result = await supabase
+      .from(tableName)
+      .select(select, { count: 'exact' })
+      .order(order.column, { ascending: order.ascending })
+      .range(from, to)
+
+    if(result.error) console.error(`Error getting page on ${tableName}:`, result.error.message)
+    return result
+  },
   getById: async (id, { select = defaultSelect } = {}) => {
     const result = await supabase
       .from(tableName)
@@ -42,7 +55,6 @@ export const createCRUD = (
       .select()
 
     if(result.error) console.error(`Error update on ${tableName}:`, result.error.message)
-
     return result
   },
   deleteData: async (id) => {
@@ -52,7 +64,6 @@ export const createCRUD = (
       .eq('id', id)
 
     if(result.error) console.error(`Error delete on ${tableName}:`, result.error.message)
-
     return result
   },
   deleteWhere: async (column, value) => {

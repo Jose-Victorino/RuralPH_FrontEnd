@@ -30,3 +30,7 @@
     text-decoration: underline;
   }
 }
+
+.pagination{
+  @include c.pagination;
+}

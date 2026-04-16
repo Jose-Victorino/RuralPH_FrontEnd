@@ -23,12 +23,7 @@ function Event() {
     setLoading(false)
   }
   
-  useEffect(() => {
-    fetchData()
-    const unsubscribe = service.subscribeToChanges(fetchData)
-    
-    return () => unsubscribe()
-  }, [])
+  useEffect(() => { fetchData() }, [])
 
   const handleSearch = ({searchBar}) => {
     if(searchBar === '') return

@@ -12,3 +12,7 @@
 .dataTable{
   @include c.table;
 }
+
+.pagination{
+  @include c.pagination;
+}

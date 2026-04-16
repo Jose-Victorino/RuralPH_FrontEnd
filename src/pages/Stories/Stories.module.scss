@@ -27,3 +27,12 @@
   max-height: 420px;
   aspect-ratio: 1.25;
 }
+
+.seeMoreBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0;
+  color: base.$secondary-color;
+}

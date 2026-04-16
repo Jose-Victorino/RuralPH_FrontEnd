@@ -9,10 +9,16 @@
   @include base.grid-repeat-column(auto-fill, 150px);
   gap: 15px;
 }
+
 .backLink{
   display: flex;
   gap: 10px;
   
+  svg{
+    fill: base.$secondary-color;
+    height: 1em;
+    width: 1em;
+  }
   a{
     width: fit-content;
     color: base.$secondary-color;
@@ -22,6 +28,7 @@
     }
   }
 }
+
 .linkItem{
   aspect-ratio: 5 / 4;
   border: 1px solid base.$gs-b-50;
