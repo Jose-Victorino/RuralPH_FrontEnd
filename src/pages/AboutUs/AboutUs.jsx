@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { useParallax } from 'react-scroll-parallax'
 
 import Button from '@/components/Button/Button'
 import WhatsNew from '@/features/WhatsNew/WhatsNew'
@@ -8,11 +9,21 @@ import s from './AboutUs.module.scss'
 
 import spousesImg from 'uploads/rural-philippines-e1682368256444.png'
 import mainAboutImg from 'uploads/angel-locsin.jpg'
+import CTAbg from 'uploads/CTA-bg.jpg'
 
 const PAGE_NAME = 'About Us'
 
 function AboutUs() {
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
+
+  const { ref: imgBgRef } = useParallax({
+    onProgressChange: (progress) => {
+      const el = imgBgRef.current
+      if (!el) return
+      const p = Math.min(1, Math.max(0, progress))
+      el.style.objectPosition = `50% ${p * 100}%`
+    },
+  })
 
   return (
     <>
@@ -65,9 +76,14 @@ function AboutUs() {
           </div>
         </div>
       </section>
-      <section className='pad-block-100 bgGreen'>
-        <div data-ros='fade-down' className={cn("container flex-col a-center gap-30")}>
-          <h2 style={{color: 'white'}}>Important Resources</h2>
+      <section className={s.imgBg}>
+        <img
+          ref={imgBgRef}
+          className={s.ctaBgImg}
+          src={CTAbg}
+          alt=''
+        />
+        <div data-ros='fade-down' className={cn(s.ctaContainer, 'flex j-center a-center')}>
           <div className='flex-wrap gap-15'>
             <Button
               style={{flexGrow: '1'}}

@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router'
 
 import { scrollReset } from '@/library/Util'
 import Button from '@/components/Button/Button'

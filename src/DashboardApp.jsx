@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router'
 
 import DashboardLayout from '@/pages/Dashboard/DashboardLayout'
 import Dashboard from '@/pages/Dashboard/Dashboard'

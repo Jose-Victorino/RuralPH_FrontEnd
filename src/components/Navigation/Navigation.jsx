@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { NavLink, Link, useLocation } from 'react-router-dom'
+import { NavLink, Link, useLocation } from 'react-router'
 import cn from 'classnames'
 
 import { scrollReset } from '@/library/Util'

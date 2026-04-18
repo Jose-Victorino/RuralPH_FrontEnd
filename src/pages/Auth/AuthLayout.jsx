@@ -1,4 +1,4 @@
-import { Outlet, Navigate, useLocation } from 'react-router-dom'
+import { Outlet, Navigate, useLocation } from 'react-router'
 import { UserAuth } from '@/context/AuthContext'
 
 import s from './AuthLayout.module.scss'

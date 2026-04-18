@@ -138,6 +138,7 @@ $link-color: hsl(211, 100%, 50%);
     gap: 0;
     border-radius: 12px;
     overflow: hidden;
+    box-shadow: $shadow;
   }
 
   .content{

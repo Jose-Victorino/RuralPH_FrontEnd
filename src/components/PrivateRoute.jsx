@@ -1,5 +1,5 @@
 import { UserAuth } from '@/context/AuthContext'
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router'
 
 function PrivateRoute({children}) {
   const { session, isLoading } = UserAuth()

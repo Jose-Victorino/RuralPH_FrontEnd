@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router'
 import cn from 'classnames'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
@@ -100,13 +100,15 @@ function Home() {
             </ul>
           </div>
           <button data-ros='fade-left' className={s.thumbnailCont} onClick={() => setOpen('625271895')}>
-            <img className={s.img} style={{width: '100%'}} src='https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1267606957-40b5df88edba9975eedd7d56c8789b18c573e355fb95c2ba9_295x166%3Fregion%3Dus&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png' alt='thumbnail' />
+            <img className={s.img} src='https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1267606957-40b5df88edba9975eedd7d56c8789b18c573e355fb95c2ba9_295x166%3Fregion%3Dus&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png' alt='thumbnail' />
           </button>
         </div>
       </section>
       <section className='pad-block-100'>
         <div className='container res-flex-row'>
-          <img data-ros='fade-right' className={s.img} loading="lazy" src={spousesImg} alt='img'/>
+          <div>
+            <img data-ros='fade-right' className={s.img} loading="lazy" src={spousesImg} alt='img'/>
+          </div>
           <div data-ros='fade-left' className='flex-col gap-15'>
             <p>Farmers have to contend with a general dearth of resources or knowledge to invest in the land, inability to effectively cope with conflicts and climate change, reluctance to embrace new technologies that would unlock new markets that would boost their productivity and income.</p>
             <p>To achieve a realistic and sustainable country-wide development, the agriculture sector must build on the efforts of the government and strengthen its programs simultaneously deliver food security, environmental sustainability, and economic opportunity through a coordinated effort by all stakeholders.</p>
@@ -151,7 +153,7 @@ function Home() {
         </div>
         <div className='container res-flex-row'>
           <div>
-            <img data-ros='fade-right' className={cn(s.img, 'w-100')} src={campMingan} alt="Camp Mingan" />
+            <img data-ros='fade-right' className={s.img} src={campMingan} alt="Camp Mingan" />
           </div>
           <div data-ros='fade-left' className='flex-col gap-15'>
             <h2 className='lh-1'><span className='textYellow'>Discover Camp Mingan:</span> Where Nature and Community Thrive</h2>

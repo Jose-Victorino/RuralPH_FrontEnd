@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router'
 
 import LandingApp from './LandingApp'
 import DashboardApp from './DashboardApp'

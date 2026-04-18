@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react'
-import { Navigate, useSearchParams } from 'react-router-dom'
+import { Navigate, useSearchParams } from 'react-router'
 import { supabase } from '@/supabase-client'
 
 const AuthContext = createContext()

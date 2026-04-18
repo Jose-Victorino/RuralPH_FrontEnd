@@ -1,4 +1,4 @@
-import { Link, useParams } from'react-router-dom'
+import { Link, useParams } from'react-router'
 import { useGlobal } from '@/context/GlobalContext'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 

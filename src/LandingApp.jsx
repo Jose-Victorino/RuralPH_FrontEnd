@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router'
 
 import MainLayout from '@/layouts/MainLayout'
 import Home from '@/pages/Home/Home'

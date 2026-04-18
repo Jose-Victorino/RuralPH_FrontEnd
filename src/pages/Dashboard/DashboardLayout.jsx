@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router'
 import { UserAuth, PrivateRoute } from '@/context/AuthContext'
 
 import useClickOutside from '@/hooks/useClickOutside'
