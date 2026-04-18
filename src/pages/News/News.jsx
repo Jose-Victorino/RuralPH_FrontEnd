@@ -17,13 +17,15 @@ function News() {
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
   
-  const fetchData = async () => {
-    const { data, error } = await service.getAll()
-    if(!error) setData(data)
-    setLoading(false)
-  }
-  
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await service.getAll()
+      if(!error) setData(data)
+      setLoading(false)
+    }
+
+    fetchData()
+  }, [])
 
   return (
     <section className='pad-block-50'>

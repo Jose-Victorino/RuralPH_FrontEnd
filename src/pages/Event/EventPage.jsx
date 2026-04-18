@@ -17,13 +17,16 @@ function EventPage() {
   const [eventData, setEventData] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const fetchData = async () => {
-    const { data, error } = await service.getById(eventId)
-    if(!error) setEventData(data)
-    setLoading(false)
-  }
   
-  useEffect(() => { fetchData() }, [eventId])
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await service.getById(eventId)
+      if(!error) setEventData(data)
+      setLoading(false)
+    }
+    
+    fetchData()
+  }, [eventId])
 
   const date = new Date(eventData?.date)
   const exactDate = `${date.toLocaleDateString('en-US', {

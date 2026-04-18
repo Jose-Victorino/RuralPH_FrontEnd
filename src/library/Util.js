@@ -68,6 +68,6 @@ function scrollReset(container){
 export function useScrollReset(container){
   const location = useLocation()
 
-  useEffect(scrollReset(container), [location.pathname])
+  useEffect(() => scrollReset(container), [container, location.pathname])
 }
 export { scrollReset }

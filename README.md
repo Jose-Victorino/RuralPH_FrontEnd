@@ -8,7 +8,7 @@ About Us 						| `Done` 			|
 Our journey					|	On-going		| Search functionality
 FAQs 								| `Done` 			|
 In The News					| `Done`			|
-Events 							| On-going		| Search functionality
+Events 							| `Done`  		|
 Locations						| On-going		| Location selection and display logic
 Contact Us 					| On-going		| Pending email endpoint
 Privacy Policy 			| `Done` 			|

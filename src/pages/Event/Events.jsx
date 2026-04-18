@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router'
 import { useFormik } from 'formik'
 import { createCRUD } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
@@ -12,34 +13,88 @@ const PAGE_NAME = 'Events'
 const service = createCRUD('event')
 
 function Event() {
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
+  const queryParam = searchParams.get('query') ?? ''
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  const fetchData = async () => {
-    const { data, error } = await service.getAll()
-    if(!error) setData(data)
-    setLoading(false)
-  }
-  
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      const { data, error } = await service.search({
+        query: queryParam,
+        columns: ['title', 'description'],
+      })
+      if(!error) setData(data)
+      setLoading(false)
+    }
+    fetchData()
+  }, [queryParam])
 
-  const handleSearch = ({searchBar}) => {
-    if(searchBar === '') return
-    
-    console.log(searchBar)
+  const handleSearch = ({ searchQuery }) => {
+    const trimmed = searchQuery.trim()
+    navigate(trimmed ? `/events/s/?query=${trimmed}` : '/events')
   }
   
   const { values, handleChange, handleBlur, handleSubmit } = useFormik({
-    initialValues: { searchBar: '' },
+    initialValues: { searchQuery: queryParam },
+    enableReinitialize: true,
     onSubmit: handleSearch
   })
+
+  const handleInputChange = (e) => {
+    handleChange(e)
+    if (e.target.value === '') {
+      navigate('/events')
+    }
+  }
   
-  const now = new Date()
-  
-  const upcomingEvents = data.filter(event => new Date(event.date) >= now)
-  const pastEvents = data.filter(event => new Date(event.date) < now)
+  const renderEventList = (events, emptyMessage) => (
+    <ul className='flex-col gap-30'>
+      {events.length > 0
+        ? events.map((e) => <EventCard key={e.id} {...e} />)
+        : <p>{emptyMessage}</p>
+      }
+    </ul>
+  )
+
+  const renderContent = () => {
+    if(loading){
+      return (
+        <div className='container flex-col gap-20'>
+          <Loader />
+        </div>
+      )
+    }
+
+    if(queryParam){
+      return (
+        <div className='container flex-col gap-20'>
+          {renderEventList(data, 'No events found')}
+        </div>
+      )
+    }
+
+    const now = new Date()
+    const upcomingEvents = data.filter(event => new Date(event.date) >= now)
+    const pastEvents = data.filter(event => new Date(event.date) < now)
+
+    return (
+      <>
+        <div className='container flex-col gap-20'>
+          <h3>Upcoming Events</h3>
+          {renderEventList(upcomingEvents, 'No upcoming events')}
+        </div>
+        <div className='container flex-col gap-20'>
+          <h3>Past Events</h3>
+          {renderEventList(pastEvents, 'No past events')}
+        </div>
+      </>
+    )
+  }
 
   return (
     <>
@@ -47,44 +102,14 @@ function Event() {
         <div className="container pad-block-20">
           <div className={s.header}>
             <form onSubmit={handleSubmit}>
-              <input type="text" name='searchBar' placeholder='Search...' value={values.searchBar} onChange={handleChange} onBlur={handleBlur}/>
+              <input type="text" name='searchQuery' placeholder='Search...' value={values.searchQuery} onChange={handleInputChange} onBlur={handleBlur}/>
             </form>
           </div>
         </div>
       </section>
-      {loading ?
-        <div style={{minHeight: '600px'}}>
-          <div className='container flex-col gap-20'>
-            <Loader />
-          </div>
-        </div> :
-        <section className='flex-col gap-50 mb-50'>
-          <div className='container flex-col gap-20'>
-            <h3>Upcoming Events</h3>
-              <ul className='flex-col gap-30'>
-                {upcomingEvents.length > 0 ? (
-                  upcomingEvents.map((e) => (
-                    <EventCard key={e.id} {...e}/>
-                  ))
-                ) : (
-                  <p>No upcoming events</p>
-                )}
-              </ul>
-          </div>
-          <div className='container flex-col gap-20'>
-            <h3>Past Events</h3>
-              <ul className='flex-col gap-30'>
-                {pastEvents.length > 0 ? (
-                  pastEvents.map((e) => (
-                    <EventCard key={e.id} {...e}/>
-                  ))
-                ) : (
-                  <p>No past events</p>
-                )}
-              </ul>
-          </div>
-        </section>
-      }
+      <section className='flex-col gap-50 mb-50' style={{minHeight: '60vh'}}>
+        {renderContent()}
+      </section>
     </>
   )
 }

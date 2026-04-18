@@ -1,5 +1,5 @@
 import Modal from '@/components/Modal/Modal'
-import { formatDateTime } from '@/library/Util'
+import { formatDateTime, formatDate, formatTime } from '@/library/Util'
 
 import s from './InformationModal.module.scss'
 

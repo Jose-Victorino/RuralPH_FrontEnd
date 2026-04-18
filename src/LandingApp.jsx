@@ -30,6 +30,7 @@ function LandingApp() {
         <Route path='faqs' element={<Faq />}/>
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>
+        <Route path='events/s' element={<Events />}/>
         <Route path='events/:eventId' element={<EventPage />}/>
         <Route path='location' element={<StoreLocations />}/>
         <Route path='contact-us' element={<ContactUs />}/>

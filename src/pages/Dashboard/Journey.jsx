@@ -114,20 +114,19 @@ function Journey() {
   
   useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
 
-  const fetchData = async (pageNum = page) => {
-    setLoading(true)
-    const { data, count, error } = await service.getPage({
-      page: pageNum,
-      pageSize: PER_PAGE,
-    })
-    if(!error){
-      setData(data)
-      setTotalPages(Math.ceil(count / PER_PAGE))
-    }
-    setLoading(false)
-  }
-  
   useEffect(() => {
+    const fetchData = async (pageNum = page) => {
+      setLoading(true)
+      const { data, count, error } = await service.getPage({
+        page: pageNum,
+        pageSize: PER_PAGE,
+      })
+      if(!error){
+        setData(data)
+        setTotalPages(Math.ceil(count / PER_PAGE))
+      }
+      setLoading(false)
+    }
     fetchData(page)
     const unsubscribe = service.subscribeToChanges(() => fetchData(page), ['story_media'])
     return () => unsubscribe()

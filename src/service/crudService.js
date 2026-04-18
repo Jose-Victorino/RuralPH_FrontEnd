@@ -15,6 +15,16 @@ export const createCRUD = (
     if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
     return result
   },
+  getById: async (id, { select = defaultSelect } = {}) => {
+    const result = await supabase
+      .from(tableName)
+      .select(select)
+      .eq('id', id)
+      .single()
+    
+    if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
+    return result
+  },
   getPage: async ({ select = defaultSelect, page = 1, pageSize = 10, order = { column: 'id', ascending: true } } = {}) => {
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
@@ -28,14 +38,20 @@ export const createCRUD = (
     if(result.error) console.error(`Error getting page on ${tableName}:`, result.error.message)
     return result
   },
-  getById: async (id, { select = defaultSelect } = {}) => {
-    const result = await supabase
+  search: async ({ query, columns = [], select = defaultSelect, order = { column: 'id', ascending: true } } = {}) => {
+    let req = supabase
       .from(tableName)
       .select(select)
-      .eq('id', id)
-      .single()
-    
-    if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
+      .order(order.column, { ascending: order.ascending })
+
+    if (query && columns.length > 0) {
+      // Supabase OR filter: "title.ilike.%query%,description.ilike.%query%"
+      const orFilter = columns.map(col => `${col}.ilike.%${query}%`).join(',')
+      req = req.or(orFilter)
+    }
+
+    const result = await req
+    if (result.error) console.error(`Error searching on ${tableName}:`, result.error.message)
     return result
   },
   putData: async (payload) => {
