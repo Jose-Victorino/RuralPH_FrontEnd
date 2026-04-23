@@ -27,7 +27,7 @@ function Home() {
     <>
       {open !== false && <VideoPlayer onClose={() => setOpen(false)} videoId={open} />}
       <section className={s.hero}>
-        <div className='container flex a-center'>
+        <div className='container flex a-center' style={{height: '100%'}}>
           <video
             className={s.headerVideo}
             autoPlay

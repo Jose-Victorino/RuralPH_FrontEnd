@@ -13,14 +13,16 @@ modal: v1_beta
 	margin: 0;
 	padding: 0;
 }
+html{
+  overflow-x: hidden;
+}
 body{
   background-color: base.$cream;
   font-family: base.$font1;
   color: base.$gs-b-90;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
-  overflow: auto;
+  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   scroll-behavior: auto;
 }
@@ -113,7 +115,7 @@ input, textarea{
   &:focus{ border: 1px solid hsl(0, 0%, 65%); }
 }
 textarea{
-  --padding: 4px;
+  --padding: 6px;
 
   padding: var(--padding);
   padding-inline: calc(var(--padding) + calc((1lh - 2ex) / 2));

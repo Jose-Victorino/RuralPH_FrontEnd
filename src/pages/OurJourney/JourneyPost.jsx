@@ -79,7 +79,7 @@ function Post() {
       </section>
     </> :
     <section>
-      <div className="container pad-block-80" style={{textAlign: 'center', minHeight: '600px'}}>
+      <div className="container pad-block-80 text-center text-center">
         <p>Post not found</p>
       </div>
     </section>

@@ -29,7 +29,7 @@ function News() {
 
   return (
     <section className='pad-block-50'>
-      <div className='container flex-col gap-10' style={{ minHeight: '400px'}}>
+      <div className='container flex-col gap-10'>
         <h3>Watch Our Latest Videos</h3>
         {loading ? <Loader />
         : data.length > 0 ? (
@@ -37,7 +37,7 @@ function News() {
             {data.map((news) => (
               <li key={news.id} className={s.listItem}>
                 <button className={s.thumbnailCont} onClick={() => setOpen(news.video_id)}>
-                  <img className={s.img} src={news.thumbnail_url} alt="thumbnail" />
+                  <img src={news.thumbnail_url} alt="thumbnail" />
                 </button>
                 <div className={s.content}>
                   <h5>{news.title}</h5>

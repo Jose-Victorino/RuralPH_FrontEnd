@@ -37,7 +37,7 @@ function WhatsNew() {
     <section className='pad-block-100'>
       <div data-ros='fade-down' className='container flex-col gap-20'>
         <h2 data-ros='fade-down' className='text-center'>What's New at <span className='textGreen'>Rural Rising</span></h2>
-        <ul className={s.whatsNew}>
+        <ul className={s.gridList}>
           {VIDEOS.map((vid) => (
             <li data-ros='fade-down' key={vid.id}>
               <button className={s.thumbnailCont} onClick={() => setOpen(vid.videoId)}>

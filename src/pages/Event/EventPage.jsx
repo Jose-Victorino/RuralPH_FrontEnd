@@ -41,7 +41,7 @@ function EventPage() {
   
   return (
     <section>
-      <div className='container flex-col gap-10 pad-block-40' style={{minHeight: '420px'}}>
+      <div className='container flex-col gap-10 pad-block-40'>
         <Link className={s.backBtn} to='/events' onClick={() => scrollReset()}>All Events</Link>
         {loading ? <Loader /> : (
           <>

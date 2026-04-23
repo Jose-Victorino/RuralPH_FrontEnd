@@ -19,7 +19,7 @@ function JourneyCategory() {
     <>
       <Top />
       <section className='mb-40'>
-        <div className="container" style={{minHeight: '400px'}}>
+        <div className="container">
           <ul className={s.postList}>
             {filteredPost.map((row) => (
               <li key={row.id} className={s.postItem}>
@@ -39,7 +39,7 @@ function JourneyCategory() {
       </section>
     </> :
     <section>
-      <div className="container pad-block-80" style={{textAlign: 'center', minHeight: '600px'}}>
+      <div className="container pad-block-80 text-center">
         <p>No post found</p>
       </div>
     </section>

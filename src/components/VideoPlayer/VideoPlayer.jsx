@@ -21,14 +21,15 @@ function VideoPlayer({onClose, videoId}) {
   useEffect(() => {
     const root = document.getElementById('root')
     const { body, documentElement } = document
-    const prevOverflow = body.style.overflow
+    const prevBodyOverflow = body.style.overflow
+    const prevElOverflow = documentElement.style.overflow
     const prevPadding = body.style.paddingRight
     const scrollbarWidth = window.innerWidth - documentElement.clientWidth
     const hasVerticalScrollbar = scrollbarWidth > 0
 
-    body.style.overflow = 'hidden'
-    root.ariaHidden = 'true'
     root.inert = 'true'
+    body.style.overflow = 'hidden'
+    documentElement.style.overflow = 'hidden'
     
     if(hasVerticalScrollbar){
       const computedPaddingRight = parseFloat(window.getComputedStyle(body).paddingRight) || 0
@@ -37,8 +38,8 @@ function VideoPlayer({onClose, videoId}) {
     
     return () => {
       root.inert = ''
-      root.ariaHidden = 'false'
-      body.style.overflow = prevOverflow
+      body.style.overflow = prevBodyOverflow
+      documentElement.style.overflow = prevElOverflow
       body.style.paddingRight = prevPadding
     }
   }, [])

@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router'
+import cn from 'classnames'
 
 import { scrollReset } from '@/library/Util'
 import Button from '@/components/Button/Button'
@@ -10,7 +11,7 @@ import logoPng from '/logo.png'
 function Footer() {
   
   return (
-    <footer className={s.footer}>
+    <footer className={cn(s.footer, 'container-parent')}>
       <div className='container'>
         <div className={s.top}>
             <div className={s.content}>

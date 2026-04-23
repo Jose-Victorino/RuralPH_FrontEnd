@@ -20,7 +20,7 @@ function OurJourney() {
       <Top />
       <RecentPost />
       <section>
-        <div data-ros='fade-down' className="container flex-col gap-15 pad-block-50" style={{textAlign: 'center'}}>
+        <div data-ros='fade-down' className="container flex-col gap-15 pad-block-50 text-center">
           <h3 className='textGreen'>Growing Together for a Sustainable Future</h3>
           <h5>Mission, history, farmer spotlights, and BTS.</h5>
           <p>Learn & Explore <br /> Tips, Recipes, and Resources</p>

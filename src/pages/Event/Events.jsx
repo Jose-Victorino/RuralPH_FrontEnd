@@ -107,7 +107,7 @@ function Event() {
           </div>
         </div>
       </section>
-      <section className='flex-col gap-50 mb-50' style={{minHeight: '60vh'}}>
+      <section className='flex-col gap-50'>
         {renderContent()}
       </section>
     </>

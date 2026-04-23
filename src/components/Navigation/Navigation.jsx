@@ -41,8 +41,13 @@ function Navigation() {
   const { pathname } = useLocation()
   const [menuVisible, setMenuVisible] = useState(false)
   const [subnavOpen, setSubnavOpen] = useState(false)
-  const [atTop, setAtTop] = useState(true)
+  const [atTop, setAtTop] = useState(() => {
+    if(typeof window === 'undefined') return true
+
+    return window.scrollY === 0
+  })
   const mobileNavRef = useRef(null)
+  const headerRef = useRef(null)
   
   const isHome = pathname === '/'
   useEffect(() => { 
@@ -52,7 +57,7 @@ function Navigation() {
     window.addEventListener("scroll", handleScroll)
 
     return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  }, [pathname])
   
   const closeMenu = () => setMenuVisible(false)
   const openMenu = () => setMenuVisible(true)
@@ -72,9 +77,23 @@ function Navigation() {
     return () => document.removeEventListener('click', handleClickOutside)
   }, [menuVisible])
 
+  useEffect(() => {
+    const syncNavHeight = () => {
+      const headerHeight = headerRef.current?.offsetHeight ?? 0
+      document.documentElement.style.setProperty('--navigation-height', `${headerHeight}px`)
+    }
+
+    syncNavHeight()
+    window.addEventListener('resize', syncNavHeight)
+
+    return () => {
+      window.removeEventListener('resize', syncNavHeight)
+    }
+  }, [pathname, atTop, menuVisible, subnavOpen])
+
   return (
     <>
-      <header className={cn(s.navigation, {[s.atTop]: isHome && atTop, [s.isRouted]: !isHome})}>
+      <header ref={headerRef} className={cn(s.navigation, {[s.atTop]: isHome && atTop}, 'container-parent')}>
         <div className={s.logoWrap}>
           <div className="container flex-col">
             <Link to='/' onClick={() => scrollReset()}>
