@@ -1,27 +1,39 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useParams } from'react-router'
-import { useGlobal } from '@/context/GlobalContext'
+import { journeyService } from '@/service/crudService'
+
+import Loader from '@/components/Loader/Loader'
+import Top from './Top'
 
 import { wordCap, scrollReset } from '@/library/Util'
-
-import Top from './Top'
 
 import s from './JourneyCategory.module.scss'
 
 function JourneyCategory() {
-  const { categoryName } = useParams()
-  const { state: { ourJourney } } = useGlobal()
+  const { categoryId } = useParams()
+  const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const filteredPost = ourJourney.filter((p) => p.category === wordCap(categoryName.replace('-', ' ')))
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data, error } = await journeyService.getAllByColumn({params: { column: 'category_id', value: categoryId}})
+      if(!error) setData(data)
+      setLoading(false)
+    }
 
-  return (filteredPost.length > 0 ?
-    <>
-      <Top />
-      <section className='mb-40'>
-        <div className="container">
-          <ul className={s.postList}>
-            {filteredPost.map((row) => (
-              <li key={row.id} className={s.postItem}>
+    fetchData()
+  }, [categoryId])
+
+  return (
+    <section>
+      <div className='container flex-col gap-20 pad-block-20'>
+      {loading ? <Loader />
+      : data.length > 0 ?
+        <>
+          <Top />
+          <ul data-ros='fade-down' className={s.postList}>
+            {data.map((row) =>
+              <li key={row.id}>
                 <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
                   <div className={s.imageCont}>
                     <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
@@ -32,14 +44,11 @@ function JourneyCategory() {
                   </div>
                 </Link>
               </li>
-            ))}
+            )}
           </ul>
-        </div>
-      </section>
-    </> :
-    <section>
-      <div className="container pad-block-80 text-center">
-        <p>No post found</p>
+        </>
+        : <p className='text-center'>No post found</p>
+      }
       </div>
     </section>
   )

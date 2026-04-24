@@ -211,6 +211,10 @@
   text-align: center;
 }
 
+.display-description{
+  white-space: pre-wrap;
+}
+
 @for $i from 1 through 20{
   $val_i: $i * 5;
    

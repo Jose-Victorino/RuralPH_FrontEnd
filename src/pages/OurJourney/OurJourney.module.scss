@@ -5,11 +5,31 @@
 }
 
 .movement{
-  background-image: linear-gradient(60deg, base.$primary-light 30%, base.$primary-dark 100%);
-  color: base.$gs-w-90;
+  height: 400px;
+  overflow: hidden;
+  position: relative;
+}
+
+.ctaBgImg{
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+  pointer-events: none;
+}
+
+.ctaContainer{
+  background: hsla(0, 0%, 0%, 0.2);
+  position: absolute;
+  inset: 0;
+  padding-inline: 15px;
 }
 
 .content{
+  color: white;
   display: flex;
   flex-direction: column;
   max-width: 600px;

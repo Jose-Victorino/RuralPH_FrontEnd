@@ -19,16 +19,16 @@
 
 .dataTable{
   @include c.table;
-  
-  th:nth-child(3){
-    text-align: center;
-  }
-  td:nth-child(3){
-    text-align: center;
-    svg{
-      fill: base.$gs-b-70;
-      height: 20px;
-      width: 20px;
+
+  thead th{
+    &:nth-child(1){
+      width: 20%;
+    }
+    &:nth-child(2){
+      width: 55%;
+    }
+    &:nth-child(3){
+      width: 15%;
     }
   }
 }

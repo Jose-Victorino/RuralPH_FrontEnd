@@ -13,24 +13,30 @@ export function wordCap(str){
   return capitalizedWords.join(' ')
 }
 
-export function formatDate(str){
-  if (!str) return str  
+function isValidDate(date) {
+  return date instanceof Date && !isNaN(date.getTime())
+}
+
+export function formatDate(str) {
+  if(!str) return str
 
   const datePart = str.includes("T") ? str.split("T")[0] : str
-
   const [y, m, d] = datePart.split(/[-/]/)
 
-  return new Date(y, m - 1, d).toLocaleDateString("en-US", {
+  const date = new Date(Number(y), Number(m) - 1, Number(d))
+
+  if(!isValidDate(date)) return ''
+
+  return date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   })
 }
-export function formatTime(str){
-  if (!str) return str
+export function formatTime(str) {
+  if(!str) return str
 
   const timePart = str.includes("T") ? str.split("T")[1] : str
-
   let [h, m, s] = timePart.split(":")
 
   if(s){
@@ -42,14 +48,23 @@ export function formatTime(str){
   const date = new Date()
   date.setHours(Number(h), Number(m), Number(s || 0))
 
+  if(!isValidDate(date)) return ''
+
   return date.toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
   })
 }
-export function formatDateTime(str){
-  return formatDate(str) + ', ' + formatTime(str)
+export function formatDateTime(str) {
+  const date = formatDate(str)
+  const time = formatTime(str)
+
+  if(!date && !time) return ''
+  if(!date) return time
+  if(!time) return date
+
+  return date + ', ' + time
 }
 
 function scrollReset(container){

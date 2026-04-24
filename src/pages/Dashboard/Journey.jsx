@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { toast } from 'react-toastify'
@@ -6,9 +6,8 @@ import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
-import { createCRUD } from '@/service/crudService'
+import { journeyService, journeyCategoryService } from '@/service/crudService'
 import Loader from '@/components/Loader/Loader'
-// import useDebounce from '@/hooks/useDebounce'
 
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Modal/Modal'
@@ -18,26 +17,27 @@ import InformationModal from './InformationModal'
 
 import s from './Journey.module.scss'
 
-// const checkSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/></svg>
+const checkSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M530.8 134.1C545.1 144.5 548.3 164.5 537.9 178.8L281.9 530.8C276.4 538.4 267.9 543.1 258.5 543.9C249.1 544.7 240 541.2 233.4 534.6L105.4 406.6C92.9 394.1 92.9 373.8 105.4 361.3C117.9 348.8 138.2 348.8 150.7 361.3L252.2 462.8L486.2 141.1C496.6 126.8 516.6 123.6 530.9 134z"/></svg>
 const addSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
 const infoSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
 const editSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
 const deleteSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
 const arrowLeft = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M201.4 297.4C188.9 309.9 188.9 330.2 201.4 342.7L361.4 502.7C373.9 515.2 394.2 515.2 406.7 502.7C419.2 490.2 419.2 469.9 406.7 457.4L269.3 320L406.6 182.6C419.1 170.1 419.1 149.8 406.6 137.3C394.1 124.8 373.8 124.8 361.3 137.3L201.3 297.3z"/></svg>
 const arrowRight = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M439.1 297.4C451.6 309.9 451.6 330.2 439.1 342.7L279.1 502.7C266.6 515.2 246.3 515.2 233.8 502.7C221.3 490.2 221.3 469.9 233.8 457.4L371.2 320L233.9 182.6C221.4 170.1 221.4 149.8 233.9 137.3C246.4 124.8 266.7 124.8 279.2 137.3L439.2 297.3z"/></svg>
+const xSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M504.6 148.5C515.9 134.9 514.1 114.7 500.5 103.4C486.9 92.1 466.7 93.9 455.4 107.5L320 270L184.6 107.5C173.3 93.9 153.1 92.1 139.5 103.4C125.9 114.7 124.1 134.9 135.4 148.5L278.3 320L135.4 491.5C124.1 505.1 125.9 525.3 139.5 536.6C153.1 547.9 173.3 546.1 184.6 532.5L320 370L455.4 532.5C466.7 546.1 486.9 547.9 500.5 536.6C514.1 525.3 515.9 505.1 504.6 491.5L361.7 320L504.6 148.5z"/></svg>
 
 const today = new Date()
 today.setHours(0, 0, 0, 0)
 
 const schema = Yup.object({
-  string: Yup.string().required('String is required'),
-  number: Yup.number().required('Number is required'),
-  date: Yup.date().min(today, 'Date must be today or onwards').required('Date is required'),
+  title: Yup.string(),
+  description: Yup.string().required('description is required'),
+  image_path: Yup.string().required('image is required'),
 })
 const emptyFormValues = {
-  string: '',
-  number: '',
-  date: '',
+  title: '',
+  description: '',
+  image_path: '',
 }
 const inputNames = Object.keys(emptyFormValues)
 
@@ -56,7 +56,180 @@ const generatePayload = (record) => {
 
 const TABLE_NAME = 'journey'
 const PER_PAGE = 10
-const service = createCRUD(TABLE_NAME)
+
+const CategoryModal = ({ setCategoryModal }) => {
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [editingId, setEditingId] = useState(null)
+  const [editingName, setEditingName] = useState('')
+  const [newName, setNewName] = useState('')
+  const [isAdding, setIsAdding] = useState(false)
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true)
+      const { data, error } = await journeyCategoryService.getAll()
+      if(!error) setCategories(data)
+      setLoading(false)
+    }
+    fetchCategories()
+    const unsubscribe = journeyCategoryService.subscribeToChanges(fetchCategories)
+    return () => unsubscribe()
+  }, [])
+
+  const handleAdd = async () => {
+    const trimmed = newName.trim()
+    if(!trimmed) return toast.error('Category name is required')
+    setIsAdding(true)
+    const { error } = await journeyCategoryService.putData({ name: trimmed })
+    setIsAdding(false)
+    if(error){
+      toast.error('An error occurred')
+      console.error('Error adding category:', error.message)
+      return
+    }
+    toast.success('Category has been added')
+    setNewName('')
+  }
+
+  const handleEditStart = (record) => {
+    setEditingId(record.id)
+    setEditingName(record.name)
+  }
+
+  const handleEditSave = async (id) => {
+    const trimmed = editingName.trim()
+    if(!trimmed) return toast.error('Category name is required')
+    const { error } = await journeyCategoryService.updateData(
+      { name: trimmed },
+      id
+    )
+    if(error){
+      toast.error('An error occurred')
+      console.error('Error updating category:', error.message)
+      return
+    }
+    toast.success('Category has been updated')
+    setEditingId(null)
+    setEditingName('')
+  }
+
+  const handleEditCancel = () => {
+    setEditingId(null)
+    setEditingName('')
+  }
+
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: 'Do you want to Delete this category?',
+      showDenyButton: true,
+      denyButtonText: 'Cancel',
+      confirmButtonText: 'Delete',
+    }).then(async (result) => {
+      if (!result.isConfirmed) return
+      const { error } = await journeyCategoryService.deleteData(id)
+      if(error){
+        toast.error('An error occurred')
+        console.error('Error deleting category:', error)
+        return
+      }
+      toast.success('Category has been deleted')
+    })
+  }
+
+  const handleKeyDown = (e, action) => {
+    if(e.key === 'Enter') action()
+    if(e.key === 'Escape') handleEditCancel()
+  }
+
+  return (
+    <Modal
+      onClose={() => setCategoryModal(false)}
+      width='480px'
+      height='620px'
+    >
+      <div className='flex-col gap-15'>
+        <div className='flex gap-10'>
+          <input
+            className='w-100'
+            type='text'
+            placeholder='New category name...'
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            onKeyDown={(e) => handleKeyDown(e, handleAdd)}
+          />
+          <Button
+            text='Add'
+            icon={addSVG}
+            span
+            disabled={isAdding}
+            onClick={handleAdd}
+          />
+        </div>
+        {loading ? <Loader /> : (
+          <ul className={s.categoryList}>
+            {categories.length === 0 ? <li className='text-center'>No categories found</li>
+            : categories.map((cat) => (
+                <li key={cat.id}>
+                  {editingId === cat.id ? (
+                    <>
+                      <input
+                        className={s.categoryInput}
+                        type='text'
+                        value={editingName}
+                        autoFocus
+                        onChange={(e) => setEditingName(e.target.value)}
+                        onKeyDown={(e) => handleKeyDown(e, () => handleEditSave(cat.id))}
+                      />
+                      <div className='flex a-center gap-5'>
+                        <button
+                          className={s.greenBtn}
+                          title='Save'
+                          onClick={() => handleEditSave(cat.id)}
+                        >
+                          {checkSVG}
+                        </button>
+                        <button
+                          className={s.redBtn}
+                          title='Cancel'
+                          onClick={handleEditCancel}
+                        >
+                          {xSVG}
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <span className={s.categoryName}>
+                        {cat.name}
+                      </span>
+                      <div className='flex a-center gap-5'>
+                        <button
+                          className={s.blueBtn}
+                          title='Edit'
+                          onClick={() => handleEditStart(cat)}
+                        >
+                          {editSVG}
+                        </button>
+                        <button
+                          className={s.redBtn}
+                          title='Delete'
+                          onClick={() => handleDelete(cat.id)}
+                        >
+                          {deleteSVG}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        )}
+      </div>
+    </Modal>
+  )
+}
 
 const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
   const initialValues = mainModal === 'UPDATE' && selectedRecord
@@ -79,22 +252,22 @@ const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubm
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='String'
+            displayName='Title'
             error={errors.title}
             touched={touched.title}
-            input={{ type: 'text', name:'string', id:'string', value: values.string, onChange: handleChange, onBlur: handleBlur, required: true }}
+            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur }}
           />
           <Input
-            displayName='Number'
-            error={errors.title}
-            touched={touched.title}
-            input={{ type: 'number', name:'number', id:'number', value: values.number, onChange: handleChange, onBlur: handleBlur, required: true }}
+            displayName='Description'
+            error={errors.description}
+            touched={touched.description}
+            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
           <Input
-            displayName='Date'
-            error={errors.date}
-            touched={touched.date}
-            input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}
+            displayName='Image Link'
+            error={errors.image_path}
+            touched={touched.image_path}
+            input={{ type: 'text', name:'image_path', id:'image_path', value: values.image_path, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
         </div>
         <Button type='submit' text='Submit' disabled={isSubmitting} />
@@ -106,6 +279,7 @@ const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubm
 function Journey() {
   const [infoModal, setInfoModal] = useState(false)
   const [mainModal, setMainModal] = useState(false)
+  const [categotyModal, setCategoryModal] = useState(false)
   const [data, setData] = useState([])
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -117,7 +291,7 @@ function Journey() {
   useEffect(() => {
     const fetchData = async (pageNum = page) => {
       setLoading(true)
-      const { data, count, error } = await service.getPage({
+      const { data, count, error } = await journeyService.getPage({
         page: pageNum,
         pageSize: PER_PAGE,
       })
@@ -128,7 +302,7 @@ function Journey() {
       setLoading(false)
     }
     fetchData(page)
-    const unsubscribe = service.subscribeToChanges(() => fetchData(page), ['story_media'])
+    const unsubscribe = journeyService.subscribeToChanges(() => fetchData(page), ['journey_category'])
     return () => unsubscribe()
   }, [page])
   
@@ -137,8 +311,8 @@ function Journey() {
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
-      await service.putData(payload) :
-      await service.updateData(payload, selectedRecord.id)
+      await journeyService.putData(payload) :
+      await journeyService.updateData(payload, selectedRecord.id)
     
     setSubmitting(false)
     if(error){
@@ -159,7 +333,7 @@ function Journey() {
     }).then(async (result) => {
       if(!result.isConfirmed) return
   
-      const { error } = await service.deleteData(id)
+      const { error } = await journeyService.deleteData(id)
       if(error){
         toast.error('An error occurred')
         console.error('Error deleting: ', error)
@@ -199,12 +373,18 @@ function Journey() {
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
-      <section className={s.actionHeader}>
+      <section className='flex gap-10'>
         <Button
           text={`Add ${wordCap(TABLE_NAME)}`}
           icon={addSVG}
           span
           onClick={openCreateModal}
+        />
+        <Button
+          btnType='secondary'
+          text='Manage Categories'
+          span
+          onClick={() => setCategoryModal(true)}
         />
       </section>
       <section className='flex-col gap-20'>
@@ -213,22 +393,24 @@ function Journey() {
             <thead>
               <tr>
                 <th>Title</th>
+                <th>Category</th>
                 <th>Description</th>
-                <th style={{width: '160px'}}>Media Attached</th>
+                <th className={s.checkmarkColumn}>Image Attached</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className='text-center'>No news found</td>
+                  <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                 </tr>
               ) : (
                 data.map((row) => (
                   <tr key={row.id}>
                     <td>{row.title}</td>
-                    <td>{row.description}</td>
-                    <td></td>
+                    <td>{wordCap(row.journey_category.name.replace('_', ' '))}</td>
+                    <td className={s.descriptionData}>{row.description}</td>
+                    <td className={s.checkmarkData}>{row.image_path && checkSVG}</td>
                     <td>
                       <div>
                         <button
@@ -287,7 +469,13 @@ function Journey() {
         </div>
       </section>
       {mainModal && <JourneyModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
-      {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}
+      {categotyModal && <CategoryModal setCategoryModal={setCategoryModal}/>}
+      {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
+        'Title': 'title',
+        'Category': 'journey_category.name',
+        'Description': 'description',
+        'Image': 'image_path',
+      }}}/>}
     </div>
   )
 }

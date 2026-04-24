@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatDate, formatTime, wordCap } from '@/library/Util'
-import { createCRUD } from '@/service/crudService'
+import { eventService } from '@/service/crudService'
 import Loader from '@/components/Loader/Loader'
 
 import Button from '@/components/Button/Button'
@@ -61,7 +61,6 @@ const generatePayload = (record) => {
 
 const TABLE_NAME = 'event'
 const PER_PAGE = 10
-const service = createCRUD(TABLE_NAME)
 
 const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
   const initialValues = mainModal === 'UPDATE' && selectedRecord
@@ -83,12 +82,36 @@ const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
     >
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
-          <Input displayName='Title' error={errors.title} touched={touched.title} input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}/>
-          <Input displayName='Description' error={errors.description} touched={touched.description} input={{ type: 'text', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: false }}/>
-          <Input displayName='Location' error={errors.location} touched={touched.location} input={{ type: 'text', name:'location', id:'location', value: values.location, onChange: handleChange, onBlur: handleBlur, required: true }}/>
-          <Input displayName='Date' error={errors.date} touched={touched.date} input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}/>
-          <Input displayName='Time Start' error={errors.time_start} touched={touched.time_start} input={{ type: 'time', name:'time_start', id:'time_start', value: values.time_start, onChange: handleChange, onBlur: handleBlur, required: true }}/>
-          <Input displayName='Time End' error={errors.time_end} touched={touched.time_end} input={{ type: 'time', name:'time_end', id:'time_end', value: values.time_end, onChange: handleChange, onBlur: handleBlur, required: false }}/>
+          <Input
+            displayName='Title'error={errors.title}
+            touched={touched.title}
+            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          <Input
+            displayName='Description'error={errors.description}
+            touched={touched.description}
+            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: false }}
+          />
+          <Input
+            displayName='Location'error={errors.location}
+            touched={touched.location}
+            input={{ type: 'text', name:'location', id:'location', value: values.location, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          <Input
+            displayName='Date'error={errors.date}
+            touched={touched.date}
+            input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          <Input
+            displayName='Time Start'error={errors.time_start}
+            touched={touched.time_start}
+            input={{ type: 'time', name:'time_start', id:'time_start', value: values.time_start, onChange: handleChange, onBlur: handleBlur, required: true }}
+          />
+          <Input
+            displayName='Time End'error={errors.time_end}
+            touched={touched.time_end}
+            input={{ type: 'time', name:'time_end', id:'time_end', value: values.time_end, onChange: handleChange, onBlur: handleBlur, required: false }}
+          />
         </div>
         <Button type='submit' text='Submit' disabled={isSubmitting} />
       </form>
@@ -110,7 +133,7 @@ function Event() {
   useEffect(() => {
     const fetchData = async (pageNum = page) => {
       setLoading(true)
-      const { data, count, error } = await service.getPage({
+      const { data, count, error } = await eventService.getPage({
         page: pageNum,
         pageSize: PER_PAGE,
       })
@@ -121,7 +144,7 @@ function Event() {
       setLoading(false)
     }
     fetchData(page)
-    const unsubscribe = service.subscribeToChanges(() => fetchData(page), ['story_media'])
+    const unsubscribe = eventService.subscribeToChanges(() => fetchData(page))
     return () => unsubscribe()
   }, [page])
 
@@ -130,8 +153,8 @@ function Event() {
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
-      await service.putData(payload) :
-      await service.updateData(payload, selectedRecord.id)
+      await eventService.putData(payload) :
+      await eventService.updateData(payload, selectedRecord.id)
     
     setSubmitting(false)
     if(error){
@@ -152,7 +175,7 @@ function Event() {
     }).then(async (result) => {
       if(!result.isConfirmed) return
   
-      const { error } = await service.deleteData(id)
+      const { error } = await eventService.deleteData(id)
       if(error){
         toast.error('An error occurred')
         console.error('Error deleting: ', error)
@@ -221,7 +244,7 @@ function Event() {
                 data.map((row) => (
                   <tr key={row.id}>
                     <td>{row.title}</td>
-                    <td>{row.description}</td>
+                    <td className={s.descriptionData}>{row.description}</td>
                     <td>{row.location}</td>
                     <td className='text-right'>{`${formatDate(row.date)} ${formatTime(row.time_start)}${row.time_end ? ` - ${formatTime(row.time_end)}`: ''}`}</td>
                     <td>
@@ -282,7 +305,14 @@ function Event() {
         </div>
       </section>
       {mainModal && <EventModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
-      {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}
+      {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
+        'Title': 'title',
+        'Description': 'description',
+        'Location': 'location',
+        'Date': 'date',
+        'Time Start': 'time_start',
+        'Time End': 'time_end',
+      }}}/>}
     </div>
   )
 }

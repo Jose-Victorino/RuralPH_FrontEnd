@@ -15,6 +15,16 @@ export const createCRUD = (
     if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
     return result
   },
+  getAllByColumn: async ({ select = defaultSelect, params: { column, value }, order = { column: 'id', ascending: true } } = {}) => {
+    const result = await supabase
+      .from(tableName)
+      .select(select)
+      .eq(column, value)
+      .order(order.column, { ascending: order.ascending })
+
+    if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
+    return result
+  },
   getById: async (id, { select = defaultSelect } = {}) => {
     const result = await supabase
       .from(tableName)
@@ -38,20 +48,31 @@ export const createCRUD = (
     if(result.error) console.error(`Error getting page on ${tableName}:`, result.error.message)
     return result
   },
+  getRecent: async (excludeId, { select = defaultSelect, limit = 4, order = { column: 'id', ascending: false } } = {}) => {
+    const result = await supabase
+      .from(tableName)
+      .select(select)
+      .neq('id', excludeId)
+      .order(order.column, { ascending: order.ascending })
+      .limit(limit)
+
+    if (result.error) console.error(`Error getting recent on ${tableName}:`, result.error.message)
+    return result
+  },
   search: async ({ query, columns = [], select = defaultSelect, order = { column: 'id', ascending: true } } = {}) => {
     let req = supabase
       .from(tableName)
       .select(select)
       .order(order.column, { ascending: order.ascending })
 
-    if (query && columns.length > 0) {
+    if(query && columns.length > 0){
       // Supabase OR filter: "title.ilike.%query%,description.ilike.%query%"
       const orFilter = columns.map(col => `${col}.ilike.%${query}%`).join(',')
       req = req.or(orFilter)
     }
 
     const result = await req
-    if (result.error) console.error(`Error searching on ${tableName}:`, result.error.message)
+    if(result.error) console.error(`Error searching on ${tableName}:`, result.error.message)
     return result
   },
   putData: async (payload) => {
@@ -115,3 +136,14 @@ export const createCRUD = (
     return () => channels.forEach(ch => supabase.removeChannel(ch))
   },
 })
+
+export const eventService = createCRUD('event')
+export const newsService = createCRUD('news')
+export const storyService = createCRUD('story', {
+  defaultSelect: '*, story_media(id, media_path)'
+})
+export const storyMediaService = createCRUD('story_media')
+export const journeyService = createCRUD('journey', {
+  defaultSelect: '*, journey_category(id, name)'
+})
+export const journeyCategoryService = createCRUD('journey_category')

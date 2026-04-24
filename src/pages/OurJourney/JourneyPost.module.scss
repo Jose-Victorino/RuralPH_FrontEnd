@@ -11,10 +11,23 @@
   aspect-ratio: 1.75;
 }
 
-.goBack:hover{
-  text-decoration: underline;
-  color: base.$secondary-color;
-  width: fit-content;
+.backLink{
+  display: flex;
+  gap: 10px;
+  
+  svg{
+    fill: base.$secondary-color;
+    height: 1em;
+    width: 1em;
+  }
+  a{
+    width: fit-content;
+    color: base.$secondary-color;
+
+    &:hover{
+      text-decoration: underline;
+    }
+  }
 }
 
 .header{
@@ -27,15 +40,4 @@
 .postList{
   @include base.grid-repeat-column(auto-fill, 300px);
   gap: 20px;
-}
-
-.htmlInsert{
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-
-  ul{
-    list-style: disc;
-    padding-left: 20px;
-  }
 }

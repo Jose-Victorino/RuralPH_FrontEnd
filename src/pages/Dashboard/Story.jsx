@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatDate, wordCap } from '@/library/Util'
-import { createCRUD } from '@/service/crudService'
+import { storyService, storyMediaService } from '@/service/crudService'
 import Loader from '@/components/Loader/Loader'
 
 import Button from '@/components/Button/Button'
@@ -47,14 +47,7 @@ const generatePayload = (record) => ({
 
 const TABLE_NAME = 'story'
 const PER_PAGE = 10
-const service = createCRUD(TABLE_NAME, {
-  defaultSelect: '*, story_media(id, media_path)'
-})
-const storyMediaService = createCRUD('story_media')
-/**
- * TODO
- * ? implement image and video verification when adding
- */
+
 const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
   const initialValues = mainModal === 'UPDATE' && selectedRecord
   ? generateValues(selectedRecord)
@@ -85,7 +78,7 @@ const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
             displayName='Description'
             error={errors.description}
             touched={touched.description}
-            input={{ type: 'text', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
+            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
           <div className='flex-col gap-10'>
             <div>
@@ -143,7 +136,7 @@ function Story() {
   useEffect(() => {
     const fetchData = async (pageNum = page) => {
       setLoading(true)
-      const { data, count, error } = await service.getPage({
+      const { data, count, error } = await storyService.getPage({
         page: pageNum,
         pageSize: PER_PAGE,
       })
@@ -154,7 +147,7 @@ function Story() {
       setLoading(false)
     }
     fetchData(page)
-    const unsubscribe = service.subscribeToChanges(() => fetchData(page), ['story_media'])
+    const unsubscribe = storyService.subscribeToChanges(() => fetchData(page), ['story_media'])
     return () => unsubscribe()
   }, [page])
 
@@ -165,7 +158,7 @@ function Story() {
     const isInsert = mainModal === 'INSERT'
     let error
     if(isInsert){
-      const { data: story, error: storyError } = await service.putData(storyPayload)
+      const { data: story, error: storyError } = await storyService.putData(storyPayload)
       if(!storyError && mediaPaths.length > 0){
         const mediaPayload = mediaPaths.map(media_path => ({
           story_id: story[0].id,
@@ -176,7 +169,7 @@ function Story() {
       }
       else error = storyError
     } else{
-      const { error: storyError } = await service.updateData(storyPayload, selectedRecord.id)
+      const { error: storyError } = await storyService.updateData(storyPayload, selectedRecord.id)
       if(!storyError){
         const { error: deleteError } = await storyMediaService.deleteWhere('story_id', selectedRecord.id)
 
@@ -212,7 +205,7 @@ function Story() {
     }).then(async (result) => {
       if(!result.isConfirmed) return
   
-      const { error } = await service.deleteData(id)
+      const { error } = await storyService.deleteData(id)
       if(error){
         toast.error('An error occurred')
         console.error('Error deleting: ', error)
@@ -267,8 +260,8 @@ function Story() {
               <tr>
                 <th>Title</th>
                 <th>Description</th>
-                <th style={{width: '120px', textAlign: 'end'}}>Media</th>
-                <th style={{width: '200px', textAlign: 'end'}}>Date Posted</th>
+                <th style={{textAlign: 'end'}}>Media</th>
+                <th style={{textAlign: 'end'}}>Date Posted</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -281,7 +274,7 @@ function Story() {
                 data.map((row) => (
                   <tr key={row.id}>
                     <td>{row.title}</td>
-                    <td>{row.description}</td>
+                    <td className={s.descriptionData}>{row.description}</td>
                     <td className='text-right'>{row.story_media.length}</td>
                     <td className='text-right'>{formatDate(row.created_at)}</td>
                     <td>
@@ -342,7 +335,12 @@ function Story() {
         </div>
       </section>
       {mainModal && <StoryModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
-      {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}
+      {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
+        'Title': 'title',
+        'Description': 'description',
+        'Media': 'story_media',
+        'Date Posted': 'created_at',
+      }}}/>}
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { useNavigate, Link } from 'react-router'
-import { createCRUD } from '@/service/crudService'
+import { storyService } from '@/service/crudService'
 import cn from 'classnames'
 
 import Navigation from '@/components/Navigation/Navigation'
@@ -16,16 +16,12 @@ const PAGE_NAME = 'Stories'
 const CHAR_LIMIT = 160
 const PAGE_SIZE = 10
 
-const service = createCRUD('story', {
-  defaultSelect: '*, story_media(id, media_path)'
-})
-
 const StoryDescription = ({ text }) => {
   const [expanded, setExpanded] = useState(false)
   const isLong = text?.length > CHAR_LIMIT
 
   return (
-    <p>
+    <p className='display-description'>
       {isLong && !expanded ? text.slice(0, CHAR_LIMIT) + '...' : text}
       {isLong && (
         <span
@@ -80,7 +76,7 @@ function Stories() {
     const isFirst = pageNum === 1
     isFirst ? setLoading(true) : setLoadingMore(true)
 
-    const { data: newData, count, error } = await service.getPage({ page: pageNum, pageSize: PAGE_SIZE })
+    const { data: newData, count, error } = await storyService.getPage({ page: pageNum, pageSize: PAGE_SIZE })
 
     if(error){
       setError('Failed to load stories. Please try again.')

@@ -4,7 +4,7 @@ Page | Status | Notes
 -|-|-
 Home 								| `Done`	 		|
 About Us 						| `Done` 			|
-Our journey					|	On-going		| Search functionality
+Our journey					|	`Done`  		|
 FAQs 								| `Done` 			|
 In The News					| `Done`			|
 Events 							| `Done`  		|
@@ -16,7 +16,7 @@ Stories							| `Done`			|
 Events (admin)			| `Done`			|
 In The News (admin)	| `Done`			|
 Stories (admin)			| `Done`    	|
-Our journey (admin)	| Not Started	|
+Our journey (admin)	| `Done`    	|
 
 Rural Rising is a React + Vite web application focused on storytelling, events, and community-facing content for rural development initiatives.
 

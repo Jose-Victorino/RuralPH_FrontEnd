@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from 'react'
 import { useNavigate, Link, useParams } from 'react-router'
-import { createCRUD } from '@/service/crudService'
+import { storyService } from '@/service/crudService'
 import cn from 'classnames'
 
 import Navigation from '@/components/Navigation/Navigation'
@@ -14,9 +14,6 @@ import Loader from '@/components/Loader/Loader'
 import s from './Stories.module.scss'
 
 const PAGE_NAME = 'Story'
-const service = createCRUD('story', {
-  defaultSelect: '*, story_media(id, media_path)'
-})
 
 function StoryPost() {
   const { storyId } = useParams()
@@ -25,7 +22,7 @@ function StoryPost() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await service.getById(storyId)
+      const { data, error } = await storyService.getById(storyId)
       if(!error) setStoryData(data)
       setLoading(false)
     }
@@ -51,7 +48,7 @@ function StoryPost() {
                   <h4>{storyData.title}</h4>
                   <p className={s.date}>{formatDate(storyData.created_at)}</p>
                 </div>
-                <p>{storyData.description}</p>
+                <p className='display-description'>{storyData.description}</p>
                 <ul className={s.mediaList}>
                   {storyData.story_media.map((media) =>
                     <li key={media.id}>

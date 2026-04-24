@@ -27,7 +27,7 @@ function LandingApp() {
         <Route path='about-us' element={<AboutUs />}/>
         <Route path='our-journey' element={<OurJourney />}/>
         <Route path='our-journey/p/:postId' element={<JourneyPost />}/>
-        <Route path='our-journey/c/:categoryName' element={<JourneyCategory />}/>
+        <Route path='our-journey/c/:categoryId' element={<JourneyCategory />}/>
         <Route path='faqs' element={<Faq />}/>
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>

@@ -12,17 +12,17 @@
 .postList{
   @include base.grid-repeat-column(auto-fill, 300px);
   gap: 20px;
-}
 
-.postItem{
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  
-  p, h5{
-    white-space: nowrap;
-  }
-  h5{
-    color: base.$primary-color;
+  li{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    p, h5{
+      white-space: nowrap;
+    }
+    h5{
+      color: base.$primary-color;
+    }
   }
 }

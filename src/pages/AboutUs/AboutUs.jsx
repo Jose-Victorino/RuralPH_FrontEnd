@@ -80,7 +80,7 @@ function AboutUs() {
           ref={imgBgRef}
           className={s.ctaBgImg}
           src={CTAbg}
-          alt=''
+          alt='CTA background'
         />
         <div data-ros='fade-down' className={cn(s.ctaContainer, 'flex j-center a-center')}>
           <div className='flex-wrap gap-15'>

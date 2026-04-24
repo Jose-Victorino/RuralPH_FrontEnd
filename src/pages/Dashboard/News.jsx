@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
-import { createCRUD } from '@/service/crudService'
+import { newsService } from '@/service/crudService'
 import Loader from '@/components/Loader/Loader'
 import useDebounce from '@/hooks/useDebounce'
 
@@ -84,7 +84,6 @@ const getThumbnail = async (videoId) => {
 
 const TABLE_NAME = 'news'
 const PER_PAGE = 10
-const service = createCRUD(TABLE_NAME)
 
 const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
   const [isFetchingThumbnail, setIsFetchingThumbnail] = useState(false)
@@ -154,7 +153,7 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
             displayName='Description'
             error={errors.description}
             touched={touched.description}
-            input={{ type: 'text', name: 'description', id: 'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
+            input={{ type: 'textarea', name: 'description', id: 'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
           <Input
             displayName='Video Link'
@@ -192,7 +191,7 @@ function News() {
   useEffect(() => {
     const fetchData = async (pageNum = page) => {
       setLoading(true)
-      const { data, count, error } = await service.getPage({
+      const { data, count, error } = await newsService.getPage({
         page: pageNum,
         pageSize: PER_PAGE,
       })
@@ -203,7 +202,7 @@ function News() {
       setLoading(false)
     }
     fetchData(page)
-    const unsubscribe = service.subscribeToChanges(() => fetchData(page), ['story_media'])
+    const unsubscribe = newsService.subscribeToChanges(() => fetchData(page))
     return () => unsubscribe()
   }, [page])
 
@@ -212,8 +211,8 @@ function News() {
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
-      await service.putData(payload) :
-      await service.updateData(payload, selectedRecord.id)
+      await newsService.putData(payload) :
+      await newsService.updateData(payload, selectedRecord.id)
     
     setSubmitting(false)
     if(error){
@@ -234,7 +233,7 @@ function News() {
     }).then(async (result) => {
       if(!result.isConfirmed) return
   
-      const { error } = await service.deleteData(id)
+      const { error } = await newsService.deleteData(id)
       if(error){
         toast.error('An error occurred')
         console.error('Error deleting: ', error)
@@ -289,7 +288,7 @@ function News() {
               <tr>
                 <th>Title</th>
                 <th>Description</th>
-                <th style={{width: '160px'}}>Video Attached</th>
+                <th className={s.checkmarkColumn}>Video Attached</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -302,8 +301,8 @@ function News() {
                 data.map((row) => (
                   <tr key={row.id}>
                     <td>{row.title}</td>
-                    <td>{row.description}</td>
-                    <td>{row.video_id && checkSVG}</td>
+                    <td className={s.descriptionData}>{row.description}</td>
+                    <td className={s.checkmarkData}>{row.video_id && checkSVG}</td>
                     <td>
                       <div>
                         <button
@@ -362,7 +361,12 @@ function News() {
         </div>
       </section>
       {mainModal && <NewsModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
-      {infoModal && <InformationModal {...{setInfoModal, selectedRecord}}/>}
+      {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
+        'Title': 'title',
+        'Description': 'description',
+        'Video Link': 'video_url',
+        'Date Posted': 'created_at',
+      }}}/>}
     </div>
   )
 }

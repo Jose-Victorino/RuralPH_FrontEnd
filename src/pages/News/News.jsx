@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { createCRUD } from '@/service/crudService'
+import { newsService } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
@@ -8,7 +8,6 @@ import Loader from '@/components/Loader/Loader'
 import s from './News.module.scss'
 
 const PAGE_NAME = 'In The News'
-const service = createCRUD('news')
 
 function News() {
   const [open, setOpen] = useState(false)
@@ -19,7 +18,7 @@ function News() {
   
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await service.getAll()
+      const { data, error } = await newsService.getAll()
       if(!error) setData(data)
       setLoading(false)
     }
@@ -41,7 +40,7 @@ function News() {
                 </button>
                 <div className={s.content}>
                   <h5>{news.title}</h5>
-                  <p>{news.description}</p>
+                  <p className='display-description'>{news.description}</p>
                 </div>
               </li>
             ))}

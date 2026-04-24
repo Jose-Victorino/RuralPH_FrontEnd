@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from'react-router'
-import { createCRUD } from '@/service/crudService'
+import { eventService } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatTime, scrollReset } from '@/library/Util'
@@ -10,7 +10,6 @@ import Loader from '@/components/Loader/Loader'
 import s from './EventPage.module.scss'
 
 const PAGE_NAME = 'Events'
-const service = createCRUD('event')
 
 function EventPage() {
   const { eventId } = useParams()
@@ -19,7 +18,7 @@ function EventPage() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const { data, error } = await service.getById(eventId)
+      const { data, error } = await eventService.getById(eventId)
       if(!error) setEventData(data)
       setLoading(false)
     }
@@ -77,7 +76,7 @@ function EventPage() {
                 <>
                   <h5>Details</h5>
                   {eventData.description &&
-                    <p>{eventData.description}</p>
+                    <p className='display-description'>{eventData.description}</p>
                   }
                 </>
               }

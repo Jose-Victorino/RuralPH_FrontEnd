@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 import { useFormik } from 'formik'
-import { createCRUD } from '@/service/crudService'
+import { eventService } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import EventCard from './EventCard'
@@ -10,7 +10,6 @@ import Loader from '@/components/Loader/Loader'
 import s from './Events.module.scss'
 
 const PAGE_NAME = 'Events'
-const service = createCRUD('event')
 
 function Event() {
   const navigate = useNavigate()
@@ -24,7 +23,7 @@ function Event() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true)
-      const { data, error } = await service.search({
+      const { data, error } = await eventService.search({
         query: queryParam,
         columns: ['title', 'description'],
       })
