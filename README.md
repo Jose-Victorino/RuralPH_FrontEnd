@@ -1,5 +1,4 @@
 # Rural Rising
-
 ### Development
 Page | Status | Notes
 -|-|-
@@ -9,118 +8,112 @@ Our journey					|	On-going		| Search functionality
 FAQs 								| `Done` 			|
 In The News					| `Done`			|
 Events 							| `Done`  		|
-Locations						| On-going		| Location selection and display logic
+Locations						| `Done`  		|
 Contact Us 					| On-going		| Pending email endpoint
 Privacy Policy 			| `Done` 			|
 Terms & Conditions	| `Done` 			|
-Stories							| On-going		|
-Admin Page					| On-going		|
+Stories							| `Done`			|
 Events (admin)			| `Done`			|
 In The News (admin)	| `Done`			|
-Stories (admin)			| On-going  	|
+Stories (admin)			| `Done`    	|
 Our journey (admin)	| Not Started	|
 
-**Components**
-- Video player modal
-- What's new
-
-Notes:
-- Content revision in Our Journey 'Growing Together for a Sustainable Future'
-- Find the "Farmers are pandemic front-liners" from In the News
-
-### Future Improvements
-- pagination on admin dashboard
-- 
-
----
-
->A small React + Vite informational landing page.
-
----
+Rural Rising is a React + Vite web application focused on storytelling, events, and community-facing content for rural development initiatives.
 
 ## Features
-- Authentication pages (Login, Sign Up, Forgot Password)
-- Shop listing, product and category pages
-- Membership tiers and info
-- Track order flow
-- Responsive layout with SCSS modules
+
+- Modern landing pages and informational sections
+- Story listing and story post pages
+- Event page experience
+- Authentication UI (Login and Sign Up)
+- Responsive UI with SCSS modules
+- Scroll and animation enhancements
 
 ## Tech Stack
-- Vite 7
 - React 19
+- Vite 7
 - React Router 7
-- SCSS (module-based)
-- Formik + Yup for form validation
-- React Toastify for notifications
-- ESLint for code quality
+- SCSS modules
+- Formik + Yup
+- Supabase JavaScript client
+- React Toastify
+- React Leaflet
+- ESLint
 
 ## Prerequisites
-- Node.js 18+ (recommended)
-- npm or a compatible package manager
+- Node.js 22
+- npm (or compatible package manager)
 
-## Setup
-Clone the repo and install dependencies:
+## Getting Started
+
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-Start the dev server:
+2. Start the development server:
 ```bash
 npm run dev
 ```
 
-Build for production:
+3. Open the URL shown in your terminal (typically `http://localhost:5173`).
+## Available Scripts
+- `npm run dev` - start development server
+- `npm run build` - create a production build in `dist/`
+- `npm run preview` - preview production build locally
+- `npm run lint` - run ESLint checks
+
+## Project Structure
+```text
+src/
+├─ assets/             # images and static assets
+├─ components/         # reusable UI components
+├─ context/            # global context/state
+├─ hook/               # custom hooks
+├─ layouts/            # layout components
+├─ library/            # utilities/helpers
+├─ pages/              # route-level pages
+├─ service/            # backend-facing service layer
+├─ styles/             # shared SCSS (variables, base, reset)
+├─ App.jsx
+├─ DashboardApp.jsx
+├─ LandingApp.jsx
+├─ main.jsx
+└─ supabase-client.js
+```
+
+## Data Model (Reference)
+### `Journey`
+- `id` (PK)
+- `title` (string)
+- `description` (string)
+- `image_path` (string)
+- `created_at` (timestamp)
+
+### `Event`
+- `id` (PK)
+- `title` (string)
+- `description` (string)
+- `location` (string)
+- `date` (string)
+- `time_start` (time)
+- `time_end` (time)
+
+### `Story`
+- `id` (PK)
+- `title` (string)
+- `description` (text)
+- `created_at` (timestamp)
+
+### `StoryMedia`
+- `id` (PK)
+- `story_id` (FK -> Story)
+- `media_path` (string)
+
+## Deployment
+After building:
 ```bash
 npm run build
 ```
 
-Preview the production build locally:
-
-```bash
-npm run preview
-```
-
-Run the linter:
-
-```bash
-npm run lint
-```
-
-## Project Structure
-`src/`  
-├─`assets/` — images and svgs  
-├─`components/` — UI components grouped by feature  
-├─`context/` — global context and state  
-├─`features/` — app features  
-├─`hook` — custom hooks  
-├─`layouts/` — component layouts  
-├─`library/` — utility / helpers  
-├─`pages/` — app pages  
-├─`service` — services for the backend  
-├─`styles/` — global SCSS (variables, utils, reset)  
-├─`App.jsx` — root app component  
-├─`DashboardApp.jsx` — root dashboard app component  
-├─`LandingApp.jsx` — root landing app component  
-├─`main.jsx` — entry point  
-└─`supabase-client.js` — supabase database connection  
-
-## Deployment
-The project is a static frontend. After `npm run build`, serve the `dist/` output with any static host (Netlify, Vercel, GitHub Pages, or a simple static file server).
-
-Table: Journey
-id: PK
-title: String
-description: String
-image_path: String
-created_at: timestamp
-
-Table: Story
-id: PK
-title: String
-description: textarea
-created_at: timestamp
-
-Table: StoryMedia
-id: PK
-story_id: FK
-media_path: String
+Deploy the generated `dist/` folder to any static host such as Vercel, Netlify, or GitHub Pages.

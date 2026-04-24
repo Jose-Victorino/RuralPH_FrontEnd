@@ -1,17 +1,19 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useNavigate, Link } from 'react-router'
 import { createCRUD } from '@/service/crudService'
 import cn from 'classnames'
 
 import Navigation from '@/components/Navigation/Navigation'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
-import { formatDate } from '@/library/Util'
+import Button from '@/components/Button/Button'
+import { formatDate, scrollReset } from '@/library/Util'
 
 import Loader from '@/components/Loader/Loader'
 
 import s from './Stories.module.scss'
 
 const PAGE_NAME = 'Stories'
-const CHAR_LIMIT = 200
+const CHAR_LIMIT = 160
 const PAGE_SIZE = 10
 
 const service = createCRUD('story', {
@@ -34,6 +36,32 @@ const StoryDescription = ({ text }) => {
         </span>
       )}
     </p>
+  )
+}
+
+const StoryMedia = ({media}) => {
+  const moreMedia = Math.max(media.length - 4, 0)
+  const imgContainerStyles = media.length === 1 ? {
+    gridColumn: 'span 2',
+    maxHeight: 430,
+  } : {
+    aspectRatio: 1,
+  }
+
+  return (
+    <div className={s.mediaGrid}>
+      {media.slice(0, 4).map((m, i) =>
+        <div key={m.id} style={imgContainerStyles}>
+          <img src={m.media_path} alt="Story Media" />
+          {(moreMedia && i === 3) ?
+            <div className={s.mediaOverlay}>
+              <p>{`+${moreMedia}`}</p>
+            </div>
+            : null
+          }
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -65,7 +93,7 @@ function Stories() {
   }, [])
   useEffect(() => {
     fetchPage(1)
-  }, [])
+  }, [fetchPage])
 
   const sentinelRef = useCallback((node) => {
     if(observerRef.current) observerRef.current.disconnect()
@@ -87,40 +115,40 @@ function Stories() {
   return (
     <>
       <Navigation />
-      <section className='pad-block-50'>
-        <div className={cn(s.container, 'flex-col gap-20')}>
-          {loading ? <Loader /> : error ? (
-            <div className={cn('flex-col a-center gap-10', s.errorState)}>
-              <p>{error}</p>
-              <Button text='Try Again' onClick={() => fetchPage(1)} span />
-            </div>
-          ) :  
-            <>
-              {data.map((story) => (
-                <div key={story.id} className={cn('flex-col', s.storyItem)}>
-                  <div className='flex-col gap-10 pad-20'>
-                    <div>
-                      <h5>{story.title}</h5>
-                      <p className={s.date}>{formatDate(story.created_at)}</p>
+      <main style={{ minHeight: '80vh', paddingTop: 'var(--navigation-height, 110px)'}}>
+        <section className='pad-block-50'>
+          <div className={cn(s.container, 'flex-col gap-20')}>
+            {loading ? <Loader /> : error ? (
+              <div className={cn('flex-col a-center gap-10', s.errorState)}>
+                <p>{error}</p>
+                <Button text='Try Again' onClick={() => fetchPage(1)} span />
+              </div>
+            ) :
+              <>
+                {data.map((story) =>
+                  <div data-ros='fade-up' key={story.id} className={cn('flex-col', s.storyItem)}>
+                    <div className='flex-col gap-10 pad-15'>
+                      <Link to={`/stories/${story.id}`} onClick={() => scrollReset()}>
+                        <h5>{story.title}</h5>
+                        <p className={s.date}>{formatDate(story.created_at)}</p>
+                      </Link>
+                      <StoryDescription text={story.description}/>
                     </div>
-                    <StoryDescription text={story.description} />
+                    <Link to={`/stories/${story.id}`} onClick={() => scrollReset()}>
+                      <StoryMedia media={story.story_media}/>
+                    </Link>
                   </div>
-                  <div className='flex j-center'>
-                    <div className={s.imgCont}>
-                      {story.story_media.map((media) => (<div key={media.id}></div>))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-              {hasMore && <div ref={sentinelRef} style={{ height: 1 }} />}
-              {loadingMore && <Loader />}
-              {!hasMore && data.length > 0 &&
-                <p className='text-center'>No more stories</p>
-              }
-            </>
-          }
-        </div>
-      </section>
+                )}
+                {loadingMore && <Loader />}
+                {hasMore && <div ref={sentinelRef} style={{height: '40vh'}} />}
+                {!hasMore && data.length > 0 &&
+                  <p className='text-center' style={{height: 160}}>No more stories</p>
+                }
+              </>
+            }
+          </div>
+        </section>
+      </main>
     </>
   )
 }

@@ -2,11 +2,21 @@
 @use 'sass:color';
 
 .backBtn{
+  display: flex;
+  align-items: center;
   width: fit-content;
-
+  
   &:hover{
     color: base.$secondary-color;
     text-decoration: underline;
+
+    svg{
+      fill: base.$secondary-color;
+    }
+  }
+  svg{
+    height: 1em;
+    width: 1em;
   }
 }
 

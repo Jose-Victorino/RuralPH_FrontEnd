@@ -2,7 +2,6 @@ import cn from 'classnames'
 import { useParallax } from 'react-scroll-parallax'
 
 import Button from '@/components/Button/Button'
-import WhatsNew from '@/features/WhatsNew/WhatsNew'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import s from './AboutUs.module.scss'
@@ -120,7 +119,6 @@ function AboutUs() {
           </div>
         </div>
       </section>
-      <WhatsNew />
     </>
   )
 }

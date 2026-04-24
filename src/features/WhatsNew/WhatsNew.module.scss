@@ -1,9 +1,0 @@
-@use '@/styles/base' as base;
-
-.thumbnailCont{
-  @include base.thumbnailCont;
-}
-
-.gridList{
-  @include base.card-design;
-}

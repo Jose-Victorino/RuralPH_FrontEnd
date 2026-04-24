@@ -67,9 +67,23 @@
   }
   a{
     display: flex;
+    align-items: center;
   }
   svg{
     height: 1.25em;
+    fill: base.$gs-w-100;
+
+    &:hover{
+      fill: base.$secondary-color;
+    }
+  }
+}
+
+.userLink{
+  display: flex;
+  
+  svg{
+    height: 1.5em;
     fill: base.$gs-w-100;
 
     &:hover{
@@ -194,7 +208,7 @@
 }
 
 @media (max-width: 780px){
-  .top, .socmed, .navLinks{ display: none; }
+  .top, .bottom .socmed, .bottom .userLink, .navLinks{ display: none; }
   .bottom > div{ position: relative; }
   
   .logoWrap a{ align-self: end; }

@@ -23,9 +23,10 @@
 
   .showPass{
     position: absolute;
-    top: 0.9em;
-    right: 0.9em;
+    top: 50%;
+    right: 10px;
     display: flex;
+    transform: translateY(-50%);
 
     img{
       height: 1em;

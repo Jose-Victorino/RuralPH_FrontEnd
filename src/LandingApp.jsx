@@ -11,7 +11,8 @@ const JourneyPost = lazy(() => import('@/pages/OurJourney/JourneyPost'))
 const JourneyCategory = lazy(() => import('@/pages/OurJourney/JourneyCategory'))
 const Events = lazy(() => import('@/pages/Event/Events'))
 const EventPage = lazy(() => import('@/pages/Event/EventPage'))
-import Stories from '@/pages/Stories/Stories'
+const Stories = lazy(() => import('@/pages/Stories/Stories'))
+const StoryPost = lazy(() => import('@/pages/Stories/StoryPost'))
 import StoreLocations from '@/pages/StoreLocations/StoreLocations'
 import ContactUs from '@/pages/ContactUs/ContactUs'
 import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy'
@@ -38,6 +39,7 @@ function LandingApp() {
         <Route path='terms-and-conditions' element={<TermsAndConditions />}/>
       </Route>
       <Route path='stories' element={<Stories />}/>
+      <Route path='stories/:storyId' element={<StoryPost />}/>
     </Routes>
   )
 }

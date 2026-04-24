@@ -13,7 +13,6 @@ function JourneyCategory() {
   const { state: { ourJourney } } = useGlobal()
 
   const filteredPost = ourJourney.filter((p) => p.category === wordCap(categoryName.replace('-', ' ')))
-  console.log(filteredPost)
 
   return (filteredPost.length > 0 ?
     <>
