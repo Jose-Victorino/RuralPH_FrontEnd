@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatDate, formatTime, wordCap } from '@/library/Util'
-import { eventService } from '@/service/crudService'
+import { navigationLinksService } from '@/service/crudService'
 import Loader from '@/components/Loader/Loader'
 
 import Button from '@/components/Button/Button'
@@ -15,7 +15,7 @@ import Input from '@/components/Input/Input'
 import Breadcrumbs from './Breadcrumbs'
 import InformationModal from './InformationModal'
 
-import s from './Event.module.scss'
+import s from './NavigationLinks.module.scss'
 
 const addSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M352 128C352 110.3 337.7 96 320 96C302.3 96 288 110.3 288 128L288 288L128 288C110.3 288 96 302.3 96 320C96 337.7 110.3 352 128 352L288 352L288 512C288 529.7 302.3 544 320 544C337.7 544 352 529.7 352 512L352 352L512 352C529.7 352 544 337.7 544 320C544 302.3 529.7 288 512 288L352 288L352 128z"/></svg>
 const infoSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg>
@@ -28,21 +28,12 @@ const today = new Date()
 today.setHours(0, 0, 0, 0)
 
 const schema = Yup.object({
-  title: Yup.string().required('Title is required'),
-  description: Yup.string(),
-  location: Yup.string().required('Location is required'),
-  date: Yup.date().required('Date is required'),
-  //.min(today, 'Date must be today or onwards')
-  time_start: Yup.string().required('Start time is required'),
-  time_end: Yup.string(),
+  name: Yup.string().required('Title is required'),
+  link: Yup.string().required('Link is required'),
 })
 const emptyFormValues = {
-  title: '',
-  description: '',
-  location: '',
-  date: '',
-  time_start: '',
-  time_end: '',
+  name: '',
+  link: '',
 }
 const inputNames = Object.keys(emptyFormValues)
 
@@ -59,7 +50,7 @@ const generatePayload = (record) => {
   }), {})
 }
 
-const TABLE_NAME = 'event'
+const TABLE_NAME = 'navigation links'
 const PER_PAGE = 10
 
 const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
@@ -83,40 +74,16 @@ const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='Title'
-            error={errors.title}
+            displayName='Name'
+            error={errors.name}
             touched={touched.title}
-            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}
+            input={{ type: 'text', name:'name', id:'name', value: values.name, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
           <Input
-            displayName='Description'
-            error={errors.description}
+            displayName='Link'
+            error={errors.link}
             touched={touched.description}
-            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: false }}
-          />
-          <Input
-            displayName='Location'
-            error={errors.location}
-            touched={touched.location}
-            input={{ type: 'text', name:'location', id:'location', value: values.location, onChange: handleChange, onBlur: handleBlur, required: true }}
-          />
-          <Input
-            displayName='Date'
-            error={errors.date}
-            touched={touched.date}
-            input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}
-          />
-          <Input
-            displayName='Time Start'
-            error={errors.time_start}
-            touched={touched.time_start}
-            input={{ type: 'time', name:'time_start', id:'time_start', value: values.time_start, onChange: handleChange, onBlur: handleBlur, required: true }}
-          />
-          <Input
-            displayName='Time End'
-            error={errors.time_end}
-            touched={touched.time_end}
-            input={{ type: 'time', name:'time_end', id:'time_end', value: values.time_end, onChange: handleChange, onBlur: handleBlur, required: false }}
+            input={{ type: 'text', name:'link', id:'link', value: values.link, onChange: handleChange, onBlur: handleBlur, required: false }}
           />
         </div>
         <Button type='submit' text='Submit' disabled={isSubmitting} />
@@ -139,7 +106,7 @@ function Event() {
   useEffect(() => {
     const fetchData = async (pageNum = page) => {
       setLoading(true)
-      const { data, count, error } = await eventService.getPage({
+      const { data, count, error } = await navigationLinksService.getPage({
         page: pageNum,
         pageSize: PER_PAGE,
       })
@@ -150,7 +117,7 @@ function Event() {
       setLoading(false)
     }
     fetchData(page)
-    const unsubscribe = eventService.subscribeToChanges(() => fetchData(page))
+    const unsubscribe = navigationLinksService.subscribeToChanges(() => fetchData(page))
     return () => unsubscribe()
   }, [page])
 
@@ -159,8 +126,8 @@ function Event() {
 
     const isInsert = mainModal === 'INSERT'
     const { error } = isInsert ?
-      await eventService.putData(payload) :
-      await eventService.updateData(payload, selectedRecord.id)
+      await navigationLinksService.putData(payload) :
+      await navigationLinksService.updateData(payload, selectedRecord.id)
     
     setSubmitting(false)
     if(error){
@@ -181,7 +148,7 @@ function Event() {
     }).then(async (result) => {
       if(!result.isConfirmed) return
   
-      const { error } = await eventService.deleteData(id)
+      const { error } = await navigationLinksService.deleteData(id)
       if(error){
         toast.error('An error occurred')
         console.error('Error deleting: ', error)
@@ -234,25 +201,21 @@ function Event() {
           <table className={s.dataTable}>
             <thead>
               <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Location</th>
-                <th style={{textAlign: 'end'}}>Date & Time</th>
+                <th>Name</th>
+                <th>Link</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {data.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                  <td colSpan={3} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                 </tr>
               ) : (
                 data.map((row) => (
                   <tr key={row.id}>
-                    <td>{row.title}</td>
-                    <td className={s.descriptionData}>{row.description}</td>
-                    <td>{row.location}</td>
-                    <td className='text-right'>{`${formatDate(row.date)} ${formatTime(row.time_start)}${row.time_end ? ` - ${formatTime(row.time_end)}`: ''}`}</td>
+                    <td>{row.name}</td>
+                    <td className={s.descriptionData}>{row.link}</td>
                     <td>
                       <div>
                         <button
@@ -269,13 +232,13 @@ function Event() {
                         >
                           {editSVG}
                         </button>
-                        <button
+                        {/* <button
                           className={s.deleteBtn}
                           title='Delete'
                           onClick={() => handleDelete(row.id)}
                         >
                           {deleteSVG}
-                        </button>
+                        </button> */}
                       </div>
                     </td>
                   </tr>
@@ -312,12 +275,8 @@ function Event() {
       </section>
       {mainModal && <EventModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
-        'Title': 'title',
-        'Description': 'description',
-        'Location': 'location',
-        'Date': 'date',
-        'Time Start': 'time_start',
-        'Time End': 'time_end',
+        'Name': 'name',
+        'Link': 'link',
       }}}/>}
     </div>
   )

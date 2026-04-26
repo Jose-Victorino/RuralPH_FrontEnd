@@ -27,9 +27,10 @@
 
 @mixin table{
   width: 100%;
+  table-layout: fixed;
 
   th, td{
-    padding: 6px;
+    padding: 6px 10px;
   }
   tr{
     border-bottom: 1px solid base.$gs-w-70;
@@ -43,7 +44,7 @@
   
       &:last-child{
         text-align: end;
-        width: 100px;
+        width: 90px;
       }
     }
   }
@@ -64,10 +65,11 @@
   }
   .descriptionData{
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    text-overflow: ellipsis;
   }
   .checkmarkColumn{
     text-align: center;
@@ -81,6 +83,8 @@
     }
   }
   .deleteBtn, .editBtn, .infoBtn{
+    display: flex;
+
     svg{
       fill: base.$gs-b-70;
       height: 16px;

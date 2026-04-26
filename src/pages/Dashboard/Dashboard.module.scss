@@ -1,13 +1,9 @@
 @use '@/styles/base' as base;
 @use './generalStyles' as c;
+@use 'sass:color';
 
 .container{
   @include c.container;
-}
-
-.moduleLinkList{
-  @include base.grid-repeat-column(auto-fill, 150px);
-  gap: 15px;
 }
 
 .backLink{
@@ -29,33 +25,62 @@
   }
 }
 
-.linkItem{
-  aspect-ratio: 5 / 4;
-  border: 1px solid base.$gs-b-50;
-  border-radius: 6px;
+.mainModuleList{
+  @include base.grid-repeat-column(auto-fill, 150px);
+  grid-auto-rows: 70px;
+  gap: 15px;
 
-  &:hover{
-    color: white;
-    background: base.$primary-light;
-    border-color: base.$primary-light;
-
-    svg{
-      fill: white;
+  .moduleItem{
+    border: 1px solid base.$gs-b-50;
+    border-radius: 3px;
+  
+    &:hover{
+      color: white;
+      background: base.$primary-light;
+      border-color: base.$primary-light;
+  
+      svg{
+        fill: white;
+      }
+    }
+  
+    a{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+      padding: 10px;
+      height: 100%;
+      width: 100%;
+    
+      svg{
+        height: base.$sz-20-24;
+        width: base.$sz-20-24;
+      }
     }
   }
 }
 
-.moduleLink{
+
+.subModuleList{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  height: 100%;
-  width: 100%;
 
-  svg{
-    height: base.$sz-24-28;
-    width: base.$sz-24-28;
+  li{
+    display: flex;
+    border-radius: 3px;
+    
+    &:nth-child(even){
+      background-color: color.mix(hsl(133, 50%, 35%), transparent, $weight: 15%);
+    }
+    a{
+      width: 100%;
+      padding-block: 8px;
+      padding-left: 10px;
+      &:hover{
+        text-decoration: underline;
+        color: base.$link-color;
+      }
+    }
   }
 }

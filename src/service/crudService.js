@@ -147,3 +147,4 @@ export const journeyService = createCRUD('journey', {
   defaultSelect: '*, journey_category(id, name)'
 })
 export const journeyCategoryService = createCRUD('journey_category')
+export const navigationLinksService = createCRUD('navigation_links')
