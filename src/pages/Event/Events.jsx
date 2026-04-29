@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 import { useFormik } from 'formik'
-import { eventService } from '@/service/crudService'
+import { eventHooks } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import EventCard from './EventCard'
@@ -14,24 +13,18 @@ const PAGE_NAME = 'Events'
 function Event() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
   const queryParam = searchParams.get('query') ?? ''
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true)
-      const { data, error } = await eventService.search({
-        query: queryParam,
-        columns: ['title', 'description'],
-      })
-      if(!error) setData(data)
-      setLoading(false)
+  eventHooks.subscribe()
+
+  const { data: { data: eventData = [] } = {}, isLoading, isPending } = eventHooks.getAll({
+    search: {
+      query: queryParam,
+      columns: ['title'],
     }
-    fetchData()
-  }, [queryParam])
+  })
 
   const handleSearch = ({ searchQuery }) => {
     const trimmed = searchQuery.trim()
@@ -61,7 +54,7 @@ function Event() {
   )
 
   const renderContent = () => {
-    if(loading){
+    if(isLoading || isPending){
       return (
         <div className='container flex-col gap-20'>
           <Loader />
@@ -72,14 +65,14 @@ function Event() {
     if(queryParam){
       return (
         <div className='container flex-col gap-20'>
-          {renderEventList(data, 'No events found')}
+          {renderEventList(eventData, 'No events found')}
         </div>
       )
     }
 
     const now = new Date()
-    const upcomingEvents = data.filter(event => new Date(event.date) >= now)
-    const pastEvents = data.filter(event => new Date(event.date) < now)
+    const upcomingEvents = eventData.filter(event => new Date(event.date) >= now)
+    const pastEvents = eventData.filter(event => new Date(event.date) < now)
 
     return (
       <>

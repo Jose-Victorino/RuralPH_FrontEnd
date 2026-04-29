@@ -4,10 +4,10 @@ import { formatDate, scrollReset } from '@/library/Util'
 
 import s from './Post.module.scss'
 
-function RecentPost({ posts }) {
-  const firstJourney = posts.shift()
-  const nextThree = posts.slice(0, 3)
-  const remaining = posts.slice(3)
+function Post({ posts }) {
+  const [firstJourney, ...restPosts] = posts
+  const nextThree = restPosts.slice(0, 3)
+  const remaining = restPosts.slice(3)
   
   return (
     <>
@@ -63,4 +63,4 @@ function RecentPost({ posts }) {
   )
 }
 
-export default RecentPost
+export default Post

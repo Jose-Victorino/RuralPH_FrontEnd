@@ -8,7 +8,7 @@
   width: 1180px;
   max-width: calc(100% - 30px);
   margin-inline: auto;
-  padding: 20px 0 60px;
+  padding: 20px 0 90px;
 }
 
 @mixin form{
@@ -29,7 +29,7 @@
   width: 100%;
 
   th, td{
-    padding: 6px;
+    padding: 6px 10px;
   }
   tr{
     border-bottom: 1px solid base.$gs-w-70;
@@ -43,23 +43,16 @@
   
       &:last-child{
         text-align: end;
-        width: 100px;
+        min-width: 50px;
       }
     }
   }
-  tbody{
-    tr{
-      &:hover{
-        background: color.adjust(base.$gs-b-100, $alpha: - 0.95);
-      }
-      &:last-child{
-        border-width: 0;
-      }
+  tbody tr{
+    &:hover{
+      background: color.adjust(base.$gs-b-100, $alpha: - 0.95);
     }
-    td:last-child div{
-      display: flex;
-      justify-content: end;
-      gap: 10px;
+    &:last-child{
+      border-width: 0;
     }
   }
   .descriptionData{

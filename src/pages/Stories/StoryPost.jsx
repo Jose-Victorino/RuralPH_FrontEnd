@@ -1,34 +1,21 @@
-import { useState, useEffect, Fragment } from 'react'
-import { useNavigate, Link, useParams } from 'react-router'
-import { storyService } from '@/service/crudService'
-import cn from 'classnames'
+import { Link, useParams } from 'react-router'
+import { storyHooks } from '@/service/crudService'
 
 import Navigation from '@/components/Navigation/Navigation'
 import Footer from '@/components/Footer/Footer'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
-import Button from '@/components/Button/Button'
-import { formatDate } from '@/library/Util'
+import { formatDate, scrollReset } from '@/library/Util'
 
 import Loader from '@/components/Loader/Loader'
 
 import s from './Stories.module.scss'
 
-const PAGE_NAME = 'Story'
-
 function StoryPost() {
   const { storyId } = useParams()
-  const [storyData, setStoryData] = useState(null)
-  const [loading, setLoading] = useState(true)
+  
+  const { data: { data: storyData = {} } = {}, isLoading, isPending } = storyHooks.getById(storyId)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await storyService.getById(storyId)
-      if(!error) setStoryData(data)
-      setLoading(false)
-    }
-    
-    fetchData()
-  }, [storyId])
+  useDocumentTitle(`${storyData ? `${storyData.title} | ` : ''}Rural Rising PH`)
 
   return (
     <>
@@ -41,7 +28,7 @@ function StoryPost() {
             </svg>
             All Stories
           </Link>
-          {loading ? <Loader /> :
+          {(isLoading || isPending) ? <Loader /> :
             storyData ?
               <div className='flex-col gap-20'>
                 <div>

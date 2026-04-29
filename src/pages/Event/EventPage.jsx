@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
 import { Link, useParams } from'react-router'
-import { eventService } from '@/service/crudService'
+import { eventHooks } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { formatTime, scrollReset } from '@/library/Util'
@@ -13,18 +12,12 @@ const PAGE_NAME = 'Events'
 
 function EventPage() {
   const { eventId } = useParams()
-  const [eventData, setEventData] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await eventService.getById(eventId)
-      if(!error) setEventData(data)
-      setLoading(false)
-    }
-    
-    fetchData()
-  }, [eventId])
+  
+  eventHooks.subscribe()
+  
+  const { data: { data: eventData = {} } = {}, isLoading, isPending } = eventHooks.getById(eventId)
+  
+  useDocumentTitle(`${eventData?.title ?? PAGE_NAME} | Rural Rising PH`)
 
   const date = new Date(eventData?.date)
   const exactDate = `${date.toLocaleDateString('en-US', {
@@ -35,8 +28,6 @@ function EventPage() {
     weekday: 'long'
   })})`
   
-  useDocumentTitle(`${eventData?.title ?? PAGE_NAME} | Rural Rising PH`)
-  
   return (
     <section>
       <div className='container flex-col gap-10 pad-block-40'>
@@ -46,7 +37,7 @@ function EventPage() {
           </svg>
           All Events
         </Link>
-        {loading ? <Loader /> : (
+        {(isLoading || isPending) ? <Loader /> : (
           <>
             <div className={s.info}>
               {eventData ? (

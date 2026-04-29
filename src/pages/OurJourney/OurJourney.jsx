@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react'
 import { useParallax } from 'react-scroll-parallax'
-import { journeyService } from '@/service/crudService'
+import { journeyHooks } from '@/service/crudService'
 import cn from 'classnames'
 
 import Loader from '@/components/Loader/Loader'
@@ -17,20 +16,11 @@ import s from './OurJourney.module.scss'
 const PAGE_NAME = 'Our Journey'
 
 function OurJourney() {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
-
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await journeyService.getAll()
-      if(!error) setData(data)
-      setLoading(false)
-    }
+  journeyHooks.subscribe(['journey_category'])
 
-    fetchData()
-  }, [])
+  const { data: { data: journeyData = [] } = {}, isLoading, isPending } = journeyHooks.getAll()
 
   const { ref: imgBgRef } = useParallax({
     onProgressChange: (progress) => {
@@ -45,11 +35,11 @@ function OurJourney() {
     <>
       <section>
         <div className='container flex-col gap-20 pad-block-20' style={{minHeight: '60vh'}}>
-        {loading ? <Loader />
-        : data.length > 0 ?
+        {(isLoading || isPending) ? <Loader />
+        : journeyData.length > 0 ?
           <>
             <Top />
-            <Post posts={data}/>
+            <Post posts={journeyData}/>
           </>
         : <p className='text-center'>No post available</p>
         }

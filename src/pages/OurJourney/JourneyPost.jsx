@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react'
 import { Link, useParams } from'react-router'
-import { useGlobal } from '@/context/GlobalContext'
-import { journeyService } from '@/service/crudService'
+import { journeyHooks } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import Loader from '@/components/Loader/Loader'
@@ -16,36 +14,31 @@ import linkedin from '@/assets/svg/linkedin.svg'
 
 const PAGE_NAME = 'Our Journey'
 
-function Post() {
+function JourneyPost() {
   const { postId } = useParams()
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const [recentPosts, setRecentPosts] = useState([])
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const [{ data: post, error }, { data: recent }] = await Promise.all([
-        journeyService.getById(postId),
-        journeyService.getRecent(postId),
-      ])
+  const { data: { data: journeyData = {} } = {}, isLoading, isPending } = journeyHooks.getById(postId)
+  const { data: { data: recentPosts = [] } = {} } = journeyHooks.getRecent(postId)
 
-      if (!error) setData(post)
-      setRecentPosts(recent ?? [])
-      setLoading(false)
-    }
-
-    fetchData()
-  }, [postId])
-
-  return (loading ?
+  if(isLoading || isPending) return (
     <section>
       <div className='container pad-block-20'>
         <Loader />
       </div>
-    </section> :
-    data ?
+    </section>
+  )
+
+  if(!journeyData) return (
+    <section>
+      <div className='container pad-block-20 text-center'>
+        <p>Post not found</p>
+      </div>
+    </section>
+  )
+
+  return (
     <>
       <section>
         <div className="container flex-col gap-10 pad-block-20">
@@ -59,8 +52,8 @@ function Post() {
           </div>
           <div className={s.header}>
             <div>
-              <h3 className='textGreen'>{data.title}</h3>
-              <p>{formatDate(data.created_at)}</p>
+              <h3 className='textGreen'>{journeyData.title}</h3>
+              <p>{formatDate(journeyData.created_at)}</p>
             </div>
             <ul className='flex a-end gap-10'>
               <li className='flex'>
@@ -82,40 +75,37 @@ function Post() {
           </div>
           <hr />
           <div className={s.imageCont}>
-            <img className={s.img} src={data.image_path} loading='lazy' alt={data.title} />
+            <img className={s.img} src={journeyData.image_path} loading='lazy' alt={journeyData.title} />
           </div>
           <div>
-            <p className='display-description'>{data.description}</p>
+            <p className='display-description'>{journeyData.description}</p>
           </div>
         </div>
       </section>
-      <section>
-        <div className="container flex-col gap-10 pad-block-50">
-          <h3>Recent Posts</h3>
-          <ul className={s.postList}>
-            {recentPosts.map((row) => (
-              <li key={row.id} className={s.postItem}>
-                <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
-                  <div className={s.imageCont}>
-                    <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
-                  </div>
-                  <div className={s.content}>
-                    <h5>{row.title}</h5>
-                    <p>{formatDate(row.created_at)}</p>
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-    </> :
-    <section>
-      <div className='container pad-block-20 text-center'>
-        <p>Post not found</p>
-      </div>
-    </section>
+      {recentPosts.length > 0 &&
+        <section>
+          <div className="container flex-col gap-10 pad-block-50">
+            <h3>Recent Posts</h3>
+            <ul className={s.postList}>
+              {recentPosts.map((row) => (
+                <li key={row.id} className={s.postItem}>
+                  <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
+                    <div className={s.imageCont}>
+                      <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
+                    </div>
+                    <div className={s.content}>
+                      <h5>{row.title}</h5>
+                      <p>{formatDate(row.created_at)}</p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      }
+    </>
   )
 }
 
-export default Post
+export default JourneyPost

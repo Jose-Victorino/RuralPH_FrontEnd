@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { newsService } from '@/service/crudService'
+import { useState } from 'react'
+import { newsHooks } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
@@ -11,29 +11,21 @@ const PAGE_NAME = 'In The News'
 
 function News() {
   const [open, setOpen] = useState(false)
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await newsService.getAll()
-      if(!error) setData(data)
-      setLoading(false)
-    }
 
-    fetchData()
-  }, [])
+  newsHooks.subscribe()
+
+  const { data: { data: newsData = [] } = {}, isLoading, isPending } = newsHooks.getAll()
 
   return (
     <section className='pad-block-50'>
       <div className='container flex-col gap-10'>
         <h3>Watch Our Latest Videos</h3>
-        {loading ? <Loader />
-        : data.length > 0 ? (
+        {(isLoading || isPending) ? <Loader />
+        : newsData.length > 0 ? (
           <ul className={s.gridList}>
-            {data.map((news) => (
+            {newsData.map((news) => (
               <li key={news.id} className={s.listItem}>
                 <button className={s.thumbnailCont} onClick={() => setOpen(news.video_id)}>
                   <img src={news.thumbnail_url} alt="thumbnail" />

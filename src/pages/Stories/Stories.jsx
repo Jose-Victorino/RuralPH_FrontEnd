@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
-import { useNavigate, Link } from 'react-router'
-import { storyService } from '@/service/crudService'
+import { useState, useRef, useCallback } from 'react'
+import { Link } from 'react-router'
+import { storyHooks } from '@/service/crudService'
 import cn from 'classnames'
 
 import Navigation from '@/components/Navigation/Navigation'
@@ -62,66 +62,52 @@ const StoryMedia = ({media}) => {
 }
 
 function Stories() {
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
-  const [loadingMore, setLoadingMore] = useState(false)
-  const [_, setPage] = useState(1)
-  const [hasMore, setHasMore] = useState(true)
+  const [page, setPage] = useState(1)
   const observerRef = useRef(null)
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  const fetchPage = useCallback(async (pageNum) => {
-    const isFirst = pageNum === 1
-    isFirst ? setLoading(true) : setLoadingMore(true)
+  const { data: result, isLoading, isFetching, isError, refetch } = storyHooks.getAll(
+    { page: 1, pageSize: page * PAGE_SIZE },
+    { placeholderData: (prev) => prev },
+  )
 
-    const { data: newData, count, error } = await storyService.getPage({ page: pageNum, pageSize: PAGE_SIZE })
+  const allData = result?.data ?? []
+  const hasMore = allData.length < (result?.count ?? 0)
 
-    if(error){
-      setError('Failed to load stories. Please try again.')
-    } else{
-      setData(prev => isFirst ? newData : [...prev, ...newData])
-      setHasMore(pageNum * PAGE_SIZE < count)
-    }
-
-    isFirst ? setLoading(false) : setLoadingMore(false)
-  }, [])
-  useEffect(() => {
-    fetchPage(1)
-  }, [fetchPage])
+  const handleRetry = () => {
+    setPage(1)
+    refetch()
+  }
 
   const sentinelRef = useCallback((node) => {
     if(observerRef.current) observerRef.current.disconnect()
     if(!node) return
 
     observerRef.current = new IntersectionObserver((entries) => {
-      if(entries[0].isIntersecting && hasMore && !loadingMore) {
-        setPage(prev => {
-          const next = prev + 1
-          fetchPage(next)
-          return next
-        })
-      }
+      if(entries[0].isIntersecting && hasMore && !isFetching)
+        setPage(prev => prev + 1)
     })
 
     observerRef.current.observe(node)
-  }, [hasMore, loadingMore, fetchPage])
+  }, [hasMore, isFetching])
   
+  const loadingMore = isFetching && page > 1
+
   return (
     <>
       <Navigation />
       <main style={{ minHeight: '80vh', paddingTop: 'var(--navigation-height, 110px)'}}>
         <section className='pad-block-50'>
           <div className={cn(s.container, 'flex-col gap-20')}>
-            {loading ? <Loader /> : error ? (
+            {isLoading ? <Loader /> : isError ? (
               <div className={cn('flex-col a-center gap-10', s.errorState)}>
-                <p>{error}</p>
-                <Button text='Try Again' onClick={() => fetchPage(1)} span />
+                <p>{isError}</p>
+                <Button text='Try Again' onClick={handleRetry} span />
               </div>
             ) :
               <>
-                {data.map((story) =>
+                {allData.map((story) =>
                   <div data-ros='fade-up' key={story.id} className={cn('flex-col', s.storyItem)}>
                     <div className='flex-col gap-10 pad-15'>
                       <Link to={`/stories/${story.id}`} onClick={() => scrollReset()}>
@@ -137,7 +123,7 @@ function Stories() {
                 )}
                 {loadingMore && <Loader />}
                 {hasMore && <div ref={sentinelRef} style={{height: '40vh'}} />}
-                {!hasMore && data.length > 0 &&
+                {!hasMore && allData.length > 0 &&
                   <p className='text-center' style={{height: 160}}>No more stories</p>
                 }
               </>

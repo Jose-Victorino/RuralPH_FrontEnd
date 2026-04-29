@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext } from 'react'
 import { Navigate, useSearchParams } from 'react-router'
-import { supabase } from '@/supabase-client'
+import { supabase } from '@/service/crudService'
 
 const AuthContext = createContext()
 const appURL = import.meta.env.VITE_APP_URL

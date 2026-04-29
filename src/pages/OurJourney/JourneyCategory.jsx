@@ -1,38 +1,27 @@
-import { useState, useEffect } from 'react'
 import { Link, useParams } from'react-router'
-import { journeyService } from '@/service/crudService'
+import { journeyHooks } from '@/service/crudService'
 
 import Loader from '@/components/Loader/Loader'
 import Top from './Top'
 
-import { wordCap, scrollReset } from '@/library/Util'
+import { scrollReset } from '@/library/Util'
 
 import s from './JourneyCategory.module.scss'
 
 function JourneyCategory() {
   const { categoryId } = useParams()
-  const [data, setData] = useState([])
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const { data, error } = await journeyService.getAllByColumn({params: { column: 'category_id', value: categoryId}})
-      if(!error) setData(data)
-      setLoading(false)
-    }
-
-    fetchData()
-  }, [categoryId])
+  const { data: { data: journeyData = [] } = {}, isLoading, isPending } = journeyHooks.getAll({ filters: [{ column: 'category_id', value: categoryId }] })
 
   return (
     <section>
       <div className='container flex-col gap-20 pad-block-20'>
-      {loading ? <Loader />
-      : data.length > 0 ?
+      {(isLoading || isPending) ? <Loader />
+      : journeyData.length > 0 ?
         <>
           <Top />
           <ul data-ros='fade-down' className={s.postList}>
-            {data.map((row) =>
+            {journeyData.map((row) =>
               <li key={row.id}>
                 <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
                   <div className={s.imageCont}>
