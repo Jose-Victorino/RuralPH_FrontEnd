@@ -42,7 +42,7 @@ function Login() {
       if(res.success) navigate('/dashboard')
       if(res.error) setError(res.error)
     } catch (error) {
-      setError('an error occured: ', error)
+      setError('an error occured: ')
     } finally {
       setLoading(false)
     }
@@ -56,7 +56,6 @@ function Login() {
     validationSchema,
     onSubmit
   })
-  
   return (
     <>
       <form className={s.form} onSubmit={handleSubmit}>
@@ -71,7 +70,7 @@ function Login() {
               <img src={showPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
             </button>
           </div>
-          {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
+          {errors.password && <span className={s.errorMsg}>{String(errors.password)}</span>}
           {error && <span className={s.errorMsg}>{error}</span>}
         </div>
         <div className={s.bottom}>

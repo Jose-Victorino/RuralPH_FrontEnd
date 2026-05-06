@@ -1,5 +1,3 @@
-import React from 'react'
-
 import s from './Loader.module.scss'
 
 function Loader() {

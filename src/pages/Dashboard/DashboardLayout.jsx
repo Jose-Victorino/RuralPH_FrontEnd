@@ -10,7 +10,7 @@ function DashboardLayout() {
   const navigate = useNavigate()
   const [openMenu, setOpenMenu] = useState(false)
   const { signOut } = UserAuth()
-  const menuRef = useRef()
+  const menuRef = useRef(null)
 
   useClickOutside(menuRef, () => setOpenMenu(false), openMenu)
 

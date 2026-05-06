@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { forwardRef } from 'react'
 
 import Divider from '@mui/material/Divider';

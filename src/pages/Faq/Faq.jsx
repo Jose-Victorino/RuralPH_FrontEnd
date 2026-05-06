@@ -69,7 +69,7 @@ const faqs = [
     content: (
       <p>
         We currently have a total of 3 locations. To learn more about our locations{' '}
-        <Link className='baseLink'>click here.</Link>
+        <Link to='/location' className='baseLink'>click here.</Link>
       </p>
     )
   },

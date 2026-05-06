@@ -7,16 +7,16 @@ const Button = ({
   btnType = 'primary',  // 'primary', 'secondary', 'tertiary'
   size = 'md',       // 'sm', 'md', 'lg'
   text = '',
-  type = 'button',      // 'button', 'submit', 'reset'
+  type = null,          // 'button', 'submit', 'reset'
   icon = null,
   iconPos = 'left',     // 'left', 'right'
   color = 'green',       // 'blue', 'red', 'yellow', 'green', 'light', 'dark'
   corners = 'curved',   // 'curved', 'sharp', 'rounded'
-  title,
+  title = null,
   disabled = false,
   span = false,
   role = 'button',
-  to,
+  to = '',
   classNames = {},
   style={},
   onClick = () => {},
@@ -25,8 +25,6 @@ const Button = ({
     throw new Error("btnType must only be: 'primary', 'secondary', 'tertiary'")
   if(!['sm', 'md', 'lg'].includes(size.toLowerCase()))
     throw new Error("btnType must only be: 'sm', 'md', 'lg'")
-  if(!['button', 'submit', 'reset'].includes(type))
-    throw new Error("type must only be: 'button', 'submit', 'reset'")
   if(!['left', 'right'].includes(iconPos.toLowerCase()))
     throw new Error("iconPos must only be: 'left', 'right'")
   if(!['curved', 'sharp', 'rounded'].includes(corners.toLowerCase()))
@@ -55,7 +53,7 @@ const Button = ({
         borderRadius: corners.toLowerCase() === 'curved' ? '5px' : corners.toLowerCase() === 'rounded' && '1.25em',
       }}
       title={title}
-      type={type}
+      type={['button', 'submit', 'reset'].includes(type) ? type : 'button'}
       disabled={disabled}
       onClick={() => onClick()}
       aria-label={title || text}

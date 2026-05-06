@@ -166,7 +166,6 @@
   left: 0;
   z-index: 60;
   display: none;
-  grid-template-rows: max-content 1fr max-content;
   // gap: 25px;
   height: 100vh;
   height: 100dvh;
@@ -220,8 +219,6 @@
   }
 
   .mobileNav{
-    display: grid;
-    
     &.open{
       transform: translateX(0%);
     }

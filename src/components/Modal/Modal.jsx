@@ -21,7 +21,7 @@ function Modal({
     const scrollbarWidth = window.innerWidth - documentElement.clientWidth
     const hasVerticalScrollbar = scrollbarWidth > 0
 
-    root.inert = 'true'
+    root.inert = true
     body.style.overflow = 'hidden'
     documentElement.style.overflow = 'hidden'
     
@@ -31,7 +31,7 @@ function Modal({
     }
     
     return () => {
-      root.inert = ''
+      root.inert = null
       body.style.overflow = prevBodyOverflow
       documentElement.style.overflow = prevElOverflow
       body.style.paddingRight = prevPadding
@@ -60,7 +60,7 @@ function Modal({
         className={`${s.modalContainer} modal-container`}
         style={{ height, width }}
         role="document"
-        tabIndex="-1"
+        tabIndex={-1}
       >
         <div className={s.header} style={{ justifyContent: title ? 'space-between' : 'right' }}>
           {title &&

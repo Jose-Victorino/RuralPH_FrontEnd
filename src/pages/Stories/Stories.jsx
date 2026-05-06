@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef } from 'react'
 import { Link } from 'react-router'
 import { storyHooks } from '@/service/crudService'
 import cn from 'classnames'
@@ -80,7 +80,7 @@ function Stories() {
     refetch()
   }
 
-  const sentinelRef = useCallback((node) => {
+  const sentinelRef = (node) => {
     if(observerRef.current) observerRef.current.disconnect()
     if(!node) return
 
@@ -90,7 +90,7 @@ function Stories() {
     })
 
     observerRef.current.observe(node)
-  }, [hasMore, isFetching])
+  }
   
   const loadingMore = isFetching && page > 1
 

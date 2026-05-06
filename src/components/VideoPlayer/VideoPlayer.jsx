@@ -27,7 +27,7 @@ function VideoPlayer({onClose, videoId}) {
     const scrollbarWidth = window.innerWidth - documentElement.clientWidth
     const hasVerticalScrollbar = scrollbarWidth > 0
 
-    root.inert = 'true'
+    root.inert = true
     body.style.overflow = 'hidden'
     documentElement.style.overflow = 'hidden'
     
@@ -37,7 +37,7 @@ function VideoPlayer({onClose, videoId}) {
     }
     
     return () => {
-      root.inert = ''
+      root.inert = null
       body.style.overflow = prevBodyOverflow
       documentElement.style.overflow = prevElOverflow
       body.style.paddingRight = prevPadding
@@ -58,8 +58,8 @@ function VideoPlayer({onClose, videoId}) {
           className={s.video}
           src={`https://player.vimeo.com/video/${videoId}`}
           allow="autoplay fullscreen"
-          webkitallowfullscreen="true"
-          mozallowfullscreen="true"
+          // webkitallowfullscreen="true"
+          // mozallowfullscreen="true"
         />
       </article>
     </div>,

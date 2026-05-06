@@ -42,7 +42,7 @@ function SignUp() {
       const res = await SignUpNewUser(email, password)
       if(res.success) navigate('/dashboard')
     } catch (error) {
-      setError('an error occured: ', error)
+      setError('an error occured: ')
     } finally {
       setLoading(false)
     }
@@ -75,7 +75,7 @@ function SignUp() {
               <img src={showPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
             </button>
           </div>
-          {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
+          {errors.password && <span className={s.errorMsg}>{String(errors.password)}</span>}
           {error && <span className={s.errorMsg}>{error}</span>}
         </div>
         <Button

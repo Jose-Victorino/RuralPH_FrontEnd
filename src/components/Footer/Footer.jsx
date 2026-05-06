@@ -6,8 +6,6 @@ import Button from '@/components/Button/Button'
 
 import s from './Footer.module.scss'
 
-import logoPng from '/logo.png'
-
 function Footer() {
   
   return (
@@ -15,7 +13,7 @@ function Footer() {
       <div className='container'>
         <div className={s.top}>
             <div className={s.content}>
-              <img src={logoPng} className={s.logo} alt="logo" />
+              <img src="/logo.png" className={s.logo} alt="logo" />
               <p>Harnessing the full potential of the countryside to ensure food security, achieve environmental sustainability, and drive economic opportunity.</p>
               <Button
                 text='Become a Member'

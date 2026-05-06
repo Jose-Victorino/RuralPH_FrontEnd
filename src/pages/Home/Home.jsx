@@ -42,13 +42,13 @@ const VIDEOS = [
 ]
 
 function Home() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState('')
   
   useDocumentTitle('Rural Rising PH')
   
   return (
     <>
-      {open !== false && <VideoPlayer onClose={() => setOpen(false)} videoId={open} />}
+      {open !== '' && <VideoPlayer onClose={() => setOpen('')} videoId={open} />}
       <section className={s.hero}>
         <div className='container flex a-center' style={{height: '100%'}}>
           <video

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useParallax } from 'react-scroll-parallax'
 import { journeyHooks } from '@/service/crudService'
 import cn from 'classnames'

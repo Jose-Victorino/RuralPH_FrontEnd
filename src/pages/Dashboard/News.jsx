@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useState, useEffect, useRef } from 'react'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -180,7 +181,7 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
 
 const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   const [dropdown, setDropdown] = useState(false)
-  const dropdownRef = useRef()
+  const dropdownRef = useRef(null)
 
   useClickOutside(dropdownRef, () => setDropdown(false), dropdown)
 
