@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["vite/client"],
     "moduleResolution": "bundler",
     "paths": {
       "@/*": ["./src/*"],

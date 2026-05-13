@@ -228,7 +228,7 @@ function News() {
   
   newsHooks.subscribe()
 
-  const { data: { data: newsData = [], count } = {}, isLoading, isPending } = newsHooks.getAll({
+  const { data: { data: newsData = [], count } = {}, isLoading, isError, error, refetch } = newsHooks.getAll({
     page,
     pageSize: PER_PAGE,
   })
@@ -312,61 +312,66 @@ function News() {
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
-      <section className={s.actionHeader}>
-        <Button
-          text={`Add ${wordCap(TABLE_NAME)}`}
-          icon={addSVG}
-          span
-          onClick={openCreateModal}
-        />
-      </section>
-      <section className='flex-col gap-20'>
-        {(isLoading || isPending) ? <Loader /> : (
-          <table className={s.dataTable}>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th className={s.checkmarkColumn}>Video Attached</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {newsData.length === 0 ?
-                <tr>
-                  <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
-                </tr>
-              : newsData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
-              }
-            </tbody>
-          </table>
-        )}
-        <div className={s.pagination}>
-          <button
-            onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-          >
-            {arrowLeft}
-          </button>
-          <span>Page</span>
-          <select
-            name='page'
-            value={page}
-            onChange={(e) => setPage(Number(e.target.value))}
-          >
-            {Array.from({ length: totalPages }, (_, i) => (
-              <option key={i} value={i + 1}>{i + 1}</option>
-            ))}
-          </select>
-          <span>{`of ${totalPages}`}</span>
-          <button
-            onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-          >
-            {arrowRight}
-          </button>
-        </div>
-      </section>
+      {(isError && !isLoading)
+        ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => refetch()}>Try again</button></p>
+        : <>
+          <section className={s.actionHeader}>
+            <Button
+              text={`Add ${wordCap(TABLE_NAME)}`}
+              icon={addSVG}
+              span
+              onClick={openCreateModal}
+            />
+          </section>
+          <section className='flex-col gap-20'>
+            {isLoading ? <Loader /> : (
+              <table className={s.dataTable}>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th className={s.checkmarkColumn}>Video Attached</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {newsData.length === 0 ?
+                    <tr>
+                      <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                    </tr>
+                  : newsData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
+                  }
+                </tbody>
+              </table>
+            )}
+            <div className={s.pagination}>
+              <button
+                onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+              >
+                {arrowLeft}
+              </button>
+              <span>Page</span>
+              <select
+                name='page'
+                value={page}
+                onChange={(e) => setPage(Number(e.target.value))}
+              >
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <option key={i} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+              <span>{`of ${totalPages}`}</span>
+              <button
+                onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={page === totalPages}
+              >
+                {arrowRight}
+              </button>
+            </div>
+          </section>
+        </>
+      }
       {mainModal && <NewsModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
         'Title': 'title',

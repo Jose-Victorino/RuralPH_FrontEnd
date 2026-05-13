@@ -100,3 +100,12 @@
     }
   }
 }
+
+@mixin refetch-btn{
+  width: fit-content;
+  color: base.$secondary-color;
+
+  &:hover{
+    text-decoration: underline;
+  }
+}

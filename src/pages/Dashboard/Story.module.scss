@@ -46,6 +46,10 @@
   }
 }
 
+.tryAgainBtn{
+  @include c.refetch-btn;
+}
+
 .pagination{
   @include c.pagination;
 }

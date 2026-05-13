@@ -72,7 +72,7 @@ const CategoryModal = ({ setCategoryModal }) => {
   
   journeyCategoryHooks.subscribe()
 
-  const { data: { data: categoryData = [] } = {}, isLoading, isPending } = journeyCategoryHooks.getAll()
+  const { data: { data: categoryData = [] } = {}, isLoading, isError, error, refetch } = journeyCategoryHooks.getAll()
 
   const handleAdd = async () => {
     const trimmed = newName.trim()
@@ -140,6 +140,73 @@ const CategoryModal = ({ setCategoryModal }) => {
     if(e.key === 'Escape') handleEditCancel()
   }
 
+  const LoadData = () => {
+    if(isLoading) return <Loader />
+
+    if(isError) return <p className='text-center'>An error has occured.</p>
+
+    if(!categoryData.length) return <p className='text-center'>No categories found.</p>
+
+    return (
+      <ul className={s.categoryList}>
+        {categoryData.map((cat) => (
+          <li key={cat.id}>
+            {editingId === cat.id ? (
+              <>
+                <input
+                  className={s.categoryInput}
+                  type='text'
+                  value={editingName}
+                  autoFocus
+                  onChange={(e) => setEditingName(e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e, () => handleEditSave(cat.id))}
+                />
+                <div className='flex a-center gap-5'>
+                  <button
+                    className={s.greenBtn}
+                    title='Save'
+                    onClick={() => handleEditSave(cat.id)}
+                  >
+                    {checkSVG}
+                  </button>
+                  <button
+                    className={s.redBtn}
+                    title='Cancel'
+                    onClick={handleEditCancel}
+                  >
+                    {xSVG}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <>
+                <span className={s.categoryName}>
+                  {cat.name}
+                </span>
+                <div className='flex a-center gap-5'>
+                  <button
+                    className={s.blueBtn}
+                    title='Edit'
+                    onClick={() => handleEditStart(cat)}
+                  >
+                    {editSVG}
+                  </button>
+                  <button
+                    className={s.redBtn}
+                    title='Delete'
+                    onClick={() => handleDelete(cat.id)}
+                  >
+                    {deleteSVG}
+                  </button>
+                </div>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+
   return (
     <Modal
       onClose={() => setCategoryModal(false)}
@@ -164,66 +231,7 @@ const CategoryModal = ({ setCategoryModal }) => {
             onClick={handleAdd}
           />
         </div>
-        {(isLoading || isPending) ? <Loader /> : (
-          <ul className={s.categoryList}>
-            {categoryData.length === 0 ? <li className='text-center'>No categories found</li>
-            : categoryData.map((cat) => (
-                <li key={cat.id}>
-                  {editingId === cat.id ? (
-                    <>
-                      <input
-                        className={s.categoryInput}
-                        type='text'
-                        value={editingName}
-                        autoFocus
-                        onChange={(e) => setEditingName(e.target.value)}
-                        onKeyDown={(e) => handleKeyDown(e, () => handleEditSave(cat.id))}
-                      />
-                      <div className='flex a-center gap-5'>
-                        <button
-                          className={s.greenBtn}
-                          title='Save'
-                          onClick={() => handleEditSave(cat.id)}
-                        >
-                          {checkSVG}
-                        </button>
-                        <button
-                          className={s.redBtn}
-                          title='Cancel'
-                          onClick={handleEditCancel}
-                        >
-                          {xSVG}
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <span className={s.categoryName}>
-                        {cat.name}
-                      </span>
-                      <div className='flex a-center gap-5'>
-                        <button
-                          className={s.blueBtn}
-                          title='Edit'
-                          onClick={() => handleEditStart(cat)}
-                        >
-                          {editSVG}
-                        </button>
-                        <button
-                          className={s.redBtn}
-                          title='Delete'
-                          onClick={() => handleDelete(cat.id)}
-                        >
-                          {deleteSVG}
-                        </button>
-                      </div>
-                    </>
-                  )}
-                </li>
-              ))
-            }
-          </ul>
-        )}
+        <LoadData />
       </div>
     </Modal>
   )
@@ -325,7 +333,7 @@ function Journey() {
   
   journeyHooks.subscribe(['journey_category'])
 
-  const { data: { data: journeyData = [], count } = {}, isLoading, isPending } = journeyHooks.getAll({
+  const { data: { data: journeyData = [], count } = {}, isLoading, isError, error, refetch } = journeyHooks.getAll({
     page,
     pageSize: PER_PAGE,
   })
@@ -409,68 +417,73 @@ function Journey() {
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
-      <section className='flex gap-10'>
-        <Button
-          text={`Add ${wordCap(TABLE_NAME)}`}
-          icon={addSVG}
-          span
-          onClick={openCreateModal}
-        />
-        <Button
-          btnType='secondary'
-          text='Manage Categories'
-          span
-          onClick={() => setCategoryModal(true)}
-        />
-      </section>
-      <section className='flex-col gap-20'>
-        {(isLoading || isPending) ? <Loader /> : (
-          <table className={s.dataTable}>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Category</th>
-                <th>Description</th>
-                <th className={s.checkmarkColumn}>Image Attached</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {journeyData.length === 0 ?
-                <tr>
-                  <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
-                </tr>
-              : journeyData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
-              }
-            </tbody>
-          </table>
-        )}
-        <div className={s.pagination}>
-          <button
-            onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-            disabled={page === 1}
-          >
-            {arrowLeft}
-          </button>
-          <span>Page</span>
-          <select
-            name='page'
-            value={page}
-            onChange={(e) => setPage(Number(e.target.value))}
-          >
-            {Array.from({ length: totalPages }, (_, i) => (
-              <option key={i} value={i + 1}>{i + 1}</option>
-            ))}
-          </select>
-          <span>{`of ${totalPages}`}</span>
-          <button
-            onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
-            disabled={page === totalPages}
-          >
-            {arrowRight}
-          </button>
-        </div>
-      </section>
+      {(isError && !isLoading)
+        ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => refetch()}>Try again</button></p>
+        : <>
+          <section className='flex gap-10'>
+            <Button
+              text={`Add ${wordCap(TABLE_NAME)}`}
+              icon={addSVG}
+              span
+              onClick={openCreateModal}
+            />
+            <Button
+              btnType='secondary'
+              text='Manage Categories'
+              span
+              onClick={() => setCategoryModal(true)}
+            />
+          </section>
+          <section className='flex-col gap-20'>
+            {isLoading ? <Loader /> : (
+              <table className={s.dataTable}>
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th className={s.checkmarkColumn}>Image Attached</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {journeyData.length === 0 ?
+                    <tr>
+                      <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                    </tr>
+                  : journeyData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
+                  }
+                </tbody>
+              </table>
+            )}
+            <div className={s.pagination}>
+              <button
+                onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+                disabled={page === 1}
+              >
+                {arrowLeft}
+              </button>
+              <span>Page</span>
+              <select
+                name='page'
+                value={page}
+                onChange={(e) => setPage(Number(e.target.value))}
+              >
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <option key={i} value={i + 1}>{i + 1}</option>
+                ))}
+              </select>
+              <span>{`of ${totalPages}`}</span>
+              <button
+                onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={page === totalPages}
+              >
+                {arrowRight}
+              </button>
+            </div>
+          </section>
+        </>
+      }
       {mainModal && <JourneyModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
       {categotyModal && <CategoryModal setCategoryModal={setCategoryModal}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {

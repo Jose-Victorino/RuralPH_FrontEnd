@@ -15,12 +15,12 @@ export const createCRUD = (
   const base = supabase.from(tableName)
 
   return {
-    getAll: async ({ select = defaultSelect, filters = [], search = { query: '', columns: [] }, order = { column: 'id', ascending: false }, page = null, pageSize = 10 } = {}) => {
+    getAll: async ({ select = defaultSelect, filters = {}, search = { query: '', columns: [] }, order = { column: 'id', ascending: false }, page = null, pageSize = 10 } = {}) => {
       let req = base
         .select(select, page ? { count: 'exact' } : undefined)
         .order(order.column, { ascending: order.ascending })
-      
-      filters.forEach(({ column, value }) => req = req.eq(column, value))
+
+      req = req.match(filters)
 
       if(search.query && search.columns.length > 0){
         const orFilter = search.columns.map(col => `${col}.ilike.%${search.query}%`).join(',')
@@ -42,8 +42,8 @@ export const createCRUD = (
       const result = await base
         .select(select)
         .eq('id', id)
-        .single()
-      
+        .maybeSingle()
+
       if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
       return result
     },

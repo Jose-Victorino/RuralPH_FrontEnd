@@ -19,17 +19,25 @@ function JourneyPost() {
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
   
-  const { data: { data: journeyData = {} } = {}, isLoading, isPending } = journeyHooks.getById(postId)
+  const { data: { data: journeyData } = {}, isLoading, isError, error } = journeyHooks.getById(postId)
   const { data: { data: recentPosts = [] } = {} } = journeyHooks.getRecent(postId)
 
-  if(isLoading || isPending) return (
+  if(isLoading) return (
     <section>
       <div className='container pad-block-20'>
         <Loader />
       </div>
     </section>
   )
-
+  
+  if(isError) return (
+    <section>
+      <div className='container pad-block-20 text-center'>
+        <p>{error.message}</p>
+      </div>
+    </section>
+  )
+  
   if(!journeyData) return (
     <section>
       <div className='container pad-block-20 text-center'>

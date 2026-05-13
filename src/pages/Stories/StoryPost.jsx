@@ -13,9 +13,34 @@ import s from './Stories.module.scss'
 function StoryPost() {
   const { storyId } = useParams()
   
-  const { data: { data: storyData = {} } = {}, isLoading, isPending } = storyHooks.getById(storyId)
+  const { data: { data: storyData = {} } = {}, isLoading, isError, error } = storyHooks.getById(storyId)
 
   useDocumentTitle(`${storyData ? `${storyData.title} | ` : ''}Rural Rising PH`)
+
+  const LoadData = () => {
+    if(isLoading) return <Loader />
+
+    if(isError) return <p>{error.message}</p>
+
+    if(!storyData.length) return <p>Post no found</p>
+
+    return (
+      <div className='flex-col gap-20'>
+        <div>
+          <h4>{storyData.title}</h4>
+          <p className={s.date}>{formatDate(storyData.created_at)}</p>
+        </div>
+        <p className='display-description'>{storyData.description}</p>
+        <ul className={s.mediaList}>
+          {storyData.story_media.map((media) =>
+            <li key={media.id}>
+              <img src={media.media_path} alt="Story Media" />
+            </li>
+          )}
+        </ul>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -28,24 +53,7 @@ function StoryPost() {
             </svg>
             All Stories
           </Link>
-          {(isLoading || isPending) ? <Loader /> :
-            storyData ?
-              <div className='flex-col gap-20'>
-                <div>
-                  <h4>{storyData.title}</h4>
-                  <p className={s.date}>{formatDate(storyData.created_at)}</p>
-                </div>
-                <p className='display-description'>{storyData.description}</p>
-                <ul className={s.mediaList}>
-                  {storyData.story_media.map((media) =>
-                    <li key={media.id}>
-                      <img src={media.media_path} alt="Story Media" />
-                    </li>
-                  )}
-                </ul>
-              </div>
-            : <p>Story not found</p>
-          }
+          <LoadData />
         </section>
       </main>
       <Footer />

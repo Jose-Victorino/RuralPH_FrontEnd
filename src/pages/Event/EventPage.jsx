@@ -15,7 +15,7 @@ function EventPage() {
   
   eventHooks.subscribe()
   
-  const { data: { data: eventData = {} } = {}, isLoading, isPending } = eventHooks.getById(eventId)
+  const { data: { data: eventData = {} } = {}, isLoading, isError, error } = eventHooks.getById(eventId)
   
   useDocumentTitle(`${eventData?.title ?? PAGE_NAME} | Rural Rising PH`)
 
@@ -37,7 +37,8 @@ function EventPage() {
           </svg>
           All Events
         </Link>
-        {(isLoading || isPending) ? <Loader /> : (
+        {isLoading ? <Loader />
+        : isError ? <p className='text-center'>{error.message}</p> :
           <>
             <div className={s.info}>
               {eventData ? (
@@ -73,7 +74,7 @@ function EventPage() {
               }
             </div>
           </>
-        )}
+        }
       </div>
     </section>
   )

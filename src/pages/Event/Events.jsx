@@ -19,7 +19,7 @@ function Event() {
 
   eventHooks.subscribe()
 
-  const { data: { data: eventData = [] } = {}, isLoading, isPending } = eventHooks.getAll({
+  const { data: { data: eventData = [] } = {}, isLoading, isError, error } = eventHooks.getAll({
     search: {
       query: queryParam,
       columns: ['title'],
@@ -54,10 +54,18 @@ function Event() {
   )
 
   const renderContent = () => {
-    if(isLoading || isPending){
+    if(isLoading){
       return (
         <div className='container flex-col gap-20'>
           <Loader />
+        </div>
+      )
+    }
+
+    if(isError){
+      return (
+        <div className='container flex-col gap-20'>
+          <p className='text-center'>{error.message}</p>
         </div>
       )
     }

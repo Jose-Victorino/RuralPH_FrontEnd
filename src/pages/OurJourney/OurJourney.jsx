@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { useParallax } from 'react-scroll-parallax'
 import { journeyHooks } from '@/service/crudService'
 import cn from 'classnames'
@@ -21,7 +20,7 @@ function OurJourney() {
 
   journeyHooks.subscribe(['journey_category'])
 
-  const { data: { data: journeyData = [] } = {}, isLoading, isPending } = journeyHooks.getAll()
+  const { data: { data: journeyData = [] } = {}, isLoading, isError, error } = journeyHooks.getAll()
 
   const { ref: imgBgRef } = useParallax({
     onProgressChange: (progress) => {
@@ -32,18 +31,26 @@ function OurJourney() {
     },
   })
 
+  const LoadData = () => {
+    if(isLoading) return <Loader />
+
+    if(isError) return <p className='text-center'>{error.message}</p>
+
+    if(!journeyData.length) return <p className='text-center'>No post available</p>
+
+    return (
+      <>
+        <Top />
+        <Post posts={journeyData}/>
+      </>
+    )
+  }
+
   return (
     <>
       <section>
         <div className='container flex-col gap-20 pad-block-20' style={{minHeight: '60vh'}}>
-        {(isLoading || isPending) ? <Loader />
-        : journeyData.length > 0 ?
-          <>
-            <Top />
-            <Post posts={journeyData}/>
-          </>
-        : <p className='text-center'>No post available</p>
-        }
+          <LoadData />
         </div>
       </section>
       <section>
@@ -55,6 +62,7 @@ function OurJourney() {
       </section>
       <section className={s.movement}>
         <img
+          // @ts-ignore
           ref={imgBgRef}
           className={s.ctaBgImg}
           src={CTAbg}
