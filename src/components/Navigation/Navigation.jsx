@@ -37,7 +37,7 @@ const Socmed = () =>(
 
 function Navigation() {
   const { pathname } = useLocation()
-  const [menuVisible, setMenuVisible] = useState(false)
+  const [menuVisible, setMenuVisible] = useState(true)
   const [subnavOpen, setSubnavOpen] = useState(false)
   const [atTop, setAtTop] = useState(() => {
     if(typeof window === 'undefined') return true
@@ -58,7 +58,9 @@ function Navigation() {
   }, [pathname])
   
   const closeMenu = () => setMenuVisible(false)
-  const openMenu = () => setMenuVisible(true)
+  const openMenu = () => {setMenuVisible(true);
+     console.log('open');
+  }
   const closeSubnav = () => setSubnavOpen(false)
   const openSubnav = () => setSubnavOpen(true)
 

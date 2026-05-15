@@ -39,6 +39,7 @@ const StoryMedia = ({media}) => {
   const moreMedia = Math.max(media.length - 4, 0)
   const imgContainerStyles = media.length === 1 ? {
     gridColumn: 'span 2',
+    minHeight: 360,
     maxHeight: 430,
   } : {
     aspectRatio: 1,

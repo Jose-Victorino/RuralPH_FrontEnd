@@ -4,7 +4,7 @@ import { wordCap } from '@/library/Util'
 
 import s from './Input.module.scss'
 
-function Input({ input: { type = '', name = '', id = '', value = null, onChange = null, onBlur = null, required = false, ...rest } = {}, displayName, error, touched }) {
+function Input({ input: { type = '', name = '', id = '', onChange = null, onBlur = null, required = false, ...rest } = {}, displayName, error, touched }) {
 
   return (
     <div className={cn('flex-col', s.inputCont)}>

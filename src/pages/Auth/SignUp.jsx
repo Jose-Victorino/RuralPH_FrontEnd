@@ -32,16 +32,17 @@ function SignUp() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [showPassword, setShowPassword] = useState(false) 
-  const { SignUpNewUser } = UserAuth()
+  const { signUpNewUser } = UserAuth()
 
   const onSubmit = async (values) => {
     const { email, password } = values
     setLoading(true)
-    
-    try {
-      const res = await SignUpNewUser(email, password)
+    console.log(values)
+    try{
+      const res = await signUpNewUser(email, password)
       if(res.success) navigate('/dashboard')
     } catch (error) {
+      console.log(error)
       setError('an error occured: ')
     } finally {
       setLoading(false)
@@ -83,6 +84,7 @@ function SignUp() {
           text={(isSubmitting && loading) ? 'Loading...' : 'Sign up'}
           color='green'
           disabled={isSubmitting}
+          onClick={() => onSubmit(values)}
         />
       </form>
       <div className={s.alt}>

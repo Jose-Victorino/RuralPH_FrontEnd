@@ -16,13 +16,14 @@ function StoryPost() {
   const { data: { data: storyData = {} } = {}, isLoading, isError, error } = storyHooks.getById(storyId)
 
   useDocumentTitle(`${storyData ? `${storyData.title} | ` : ''}Rural Rising PH`)
+  console.log(storyData, error);
 
   const LoadData = () => {
     if(isLoading) return <Loader />
 
     if(isError) return <p>{error.message}</p>
 
-    if(!storyData.length) return <p>Post no found</p>
+    if(!Object.keys(storyData).length) return <p className='text-center'>Story not found</p>
 
     return (
       <div className='flex-col gap-20'>

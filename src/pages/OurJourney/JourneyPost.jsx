@@ -38,7 +38,7 @@ function JourneyPost() {
     </section>
   )
   
-  if(!journeyData) return (
+  if(!Object.keys(journeyData).length) return (
     <section>
       <div className='container pad-block-20 text-center'>
         <p>Post not found</p>
@@ -63,7 +63,7 @@ function JourneyPost() {
               <h3 className='textGreen'>{journeyData.title}</h3>
               <p>{formatDate(journeyData.created_at)}</p>
             </div>
-            <ul className='flex a-end gap-10'>
+            {/* <ul className='flex a-end gap-10'>
               <li className='flex'>
                 <Link to=''>
                   <img src={facebook} height='24' width='24' loading='lazy' alt="Facebook" />
@@ -79,7 +79,7 @@ function JourneyPost() {
                   <img src={linkedin} height='24' width='24' loading='lazy' alt="Linkedin" />
                 </Link>
               </li>
-            </ul>
+            </ul> */}
           </div>
           <hr />
           <div className={s.imageCont}>

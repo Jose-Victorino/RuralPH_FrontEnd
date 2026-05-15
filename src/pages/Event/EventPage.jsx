@@ -41,7 +41,7 @@ function EventPage() {
         : isError ? <p className='text-center'>{error.message}</p> :
           <>
             <div className={s.info}>
-              {eventData ? (
+              {Object.keys(eventData).length ? (
                 <>
                   <h3>{eventData.title}</h3>
                   <div className='flex gap-10'>
