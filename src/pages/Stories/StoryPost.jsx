@@ -16,7 +16,6 @@ function StoryPost() {
   const { data: { data: storyData = {} } = {}, isLoading, isError, error } = storyHooks.getById(storyId)
 
   useDocumentTitle(`${storyData ? `${storyData.title} | ` : ''}Rural Rising PH`)
-  console.log(storyData, error);
 
   const LoadData = () => {
     if(isLoading) return <Loader />

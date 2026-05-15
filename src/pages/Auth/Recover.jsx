@@ -4,11 +4,11 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 import { UserAuth, useRecoverySession } from '@/context/AuthContext'
+import { toast } from 'react-toastify'
 
 import Button from '@/components/Button/Button'
 
 import s from './Recover.module.scss'
-import { toast } from 'react-toastify'
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()

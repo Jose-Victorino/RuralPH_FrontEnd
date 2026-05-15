@@ -4,6 +4,7 @@ import { UserAuth } from '@/context/AuthContext'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
+import { toast } from 'react-toastify'
 
 import Button from '@/components/Button/Button'
 
@@ -13,8 +14,6 @@ import eyeIcon from 'svg/eye.svg'
 import eyeSlashIcon from 'svg/eye-slash.svg'
 
 const validationSchema = Yup.object().shape({
-  firstName: Yup.string().required('First name is required').min(2, 'First name must be at least 2 characters'),
-  lastName: Yup.string().required('Last name is required').min(2, 'Last name must be at least 2 characters'),
   email: Yup.string().email('Invalid email address').required('Email is required'),
   password: Yup.string()
     .min(8, 'Password must be 8 characters minimum')
@@ -22,8 +21,6 @@ const validationSchema = Yup.object().shape({
     .matches(/[A-Z]/, 'Password requires an uppercase letter'),
     // .matches(/[0-9]/, 'Password requires a number')
     // .matches(/[^a-zA-Z0-9]/, 'Password requires a symbol')
-  phoneNumber: Yup.string().required('Phone number is required').matches(/^[0-9]{11,}$/, 'Phone number must be at least 11 digits'),
-  birthday: Yup.string().required(),
 })
 
 function SignUp() {
@@ -37,13 +34,16 @@ function SignUp() {
   const onSubmit = async (values) => {
     const { email, password } = values
     setLoading(true)
-    console.log(values)
     try{
       const res = await signUpNewUser(email, password)
-      if(res.success) navigate('/dashboard')
-    } catch (error) {
-      console.log(error)
-      setError('an error occured: ')
+
+      if(res.success){
+        toast.success('A confirmation email has been sent.')
+        navigate('/auth/login', { replace: true })
+      }
+      if(res.error) setError(res.error)
+    } catch (error){
+      setError('an error occured')
     } finally {
       setLoading(false)
     }
@@ -65,10 +65,6 @@ function SignUp() {
       <form className={s.form} onSubmit={handleSubmit}>
         <h4 className='mb-15'>Sign up</h4>
         <div className='flex-col gap-15'>
-          <div className='flex gap-15'>
-            <input className={s.txtField} type='text' name='firstName' placeholder='First Name' value={values.firstName} onChange={handleChange} onBlur={handleBlur} required/>
-            <input className={s.txtField} type='text' name='lastName' placeholder='Last Name' value={values.lastName} onChange={handleChange} onBlur={handleBlur} required/>
-          </div>
           <input className={s.txtField} type='email' name='email' placeholder='Email' value={values.email} onChange={handleChange} onBlur={handleBlur} required/>
           <div className='pos-r'>
             <input className={s.txtField} type={showPassword ? 'text' : 'password'} name='password' placeholder='Password' value={values.password} onChange={handleChange} onBlur={handleBlur} required/>

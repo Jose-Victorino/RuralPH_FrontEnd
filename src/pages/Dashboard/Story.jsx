@@ -51,11 +51,11 @@ const PER_PAGE = 10
 
 const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
   const initialValues = mainModal === 'UPDATE' && selectedRecord
-  ? generateValues(selectedRecord)
-  : emptyFormValues
+    ? generateValues(selectedRecord)
+    : emptyFormValues
 
   const { values, setFieldValue, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
-    initialValues: initialValues,
+    initialValues,
     validationSchema: schema,
     enableReinitialize: true,
     onSubmit: handleModalSubmit
@@ -133,7 +133,7 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
     <tr>
       <td>{row.title}</td>
       <td className={s.descriptionData}>{row.description}</td>
-      <td className='text-right'>{row.story_media.length}</td>
+      <td className='text-right'>{row?.story_media?.length}</td>
       <td className='text-right'>{formatDate(row.created_at)}</td>
       <td>
         <div className='pos-r flex j-center a-center'>
@@ -183,12 +183,14 @@ function Story() {
   const totalPages = Math.ceil(count / PER_PAGE) || 1
 
   const handleModalSubmit = async (values, { setSubmitting }) => {
-    const storyPayload = {...generatePayload(values), created_at: new Date()}
+    const today = new Date().toISOString().split('T')[0]
+    const storyPayload = {...generatePayload(values), created_at: today}
     const mediaPaths = values.media.filter((m) => m !== '')
 
     const isInsert = mainModal === 'INSERT'
     let isError = null
-    try {
+  
+    try{
       if(isInsert){
         const { data: story, error: storyError } = await putData.mutateAsync(storyPayload)
         if(!storyError && mediaPaths.length > 0){
@@ -223,7 +225,7 @@ function Story() {
           isError = storyError
         }
       }
-    } catch (error) {
+    } catch(error){
       isError = error
     }
     

@@ -40,6 +40,7 @@ const schema = Yup.object({
 const emptyFormValues = {
   title: '',
   description: '',
+  category_id: '',
   image_path: '',
 }
 const inputNames = Object.keys(emptyFormValues)
@@ -60,7 +61,7 @@ const generatePayload = (record) => {
 const TABLE_NAME = 'journey'
 const PER_PAGE = 10
 
-const CategoryModal = ({ setCategoryModal }) => {
+const CategoryModal = ({ setCategoryModal, categoryData }) => {
   const putData = journeyCategoryHooks.put()
   const updateData = journeyCategoryHooks.update()
   const deleteData = journeyCategoryHooks.delete()
@@ -71,8 +72,6 @@ const CategoryModal = ({ setCategoryModal }) => {
   const [isAdding, setIsAdding] = useState(false)
   
   journeyCategoryHooks.subscribe()
-
-  const { data: { data: categoryData = [] } = {}, isLoading, isError, error, refetch } = journeyCategoryHooks.getAll()
 
   const handleAdd = async () => {
     const trimmed = newName.trim()
@@ -141,10 +140,6 @@ const CategoryModal = ({ setCategoryModal }) => {
   }
 
   const LoadData = () => {
-    if(isLoading) return <Loader />
-
-    if(isError) return <p className='text-center'>An error has occured.</p>
-
     if(!categoryData.length) return <p className='text-center'>No categories found.</p>
 
     return (
@@ -237,10 +232,13 @@ const CategoryModal = ({ setCategoryModal }) => {
   )
 }
 
-const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
+const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit, categoryData }) => {  
   const initialValues = mainModal === 'UPDATE' && selectedRecord
-  ? generateValues(selectedRecord)
-  : emptyFormValues
+    ? generateValues(selectedRecord)
+    : {
+      ...emptyFormValues,
+      category_id: categoryData?.[0]?.id ?? ''
+    }
 
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -269,6 +267,16 @@ const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubm
             touched={touched.description}
             input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
           />
+          <div className={s.selectCont}>
+            <label htmlFor='category'>Category<span className={s.inputRequired}>*</span></label>
+            <select name='category_id' id='category' className={s.select} value={values.category_id} onChange={handleChange} onBlur={handleBlur} required>
+              {categoryData.length &&
+                categoryData.map(c =>
+                  <option key={c.id} value={c.id}>{c.name}</option>
+                )
+              }
+            </select>
+          </div>
           <Input
             displayName='Image Link'
             error={errors.image_path}
@@ -291,7 +299,7 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   return (
     <tr>
       <td>{row.title}</td>
-      <td>{wordCap(row.journey_category.name.replace('_', ' '))}</td>
+      <td>{wordCap(row?.journey_category?.name?.replace('_', ' ') ?? '')}</td>
       <td className={s.descriptionData}>{row.description}</td>
       <td className={s.checkmarkData}>{row.image_path && checkSVG}</td>
       <td>
@@ -332,8 +340,9 @@ function Journey() {
   useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
   
   journeyHooks.subscribe(['journey_category'])
-
-  const { data: { data: journeyData = [], count } = {}, isLoading, isError, error, refetch } = journeyHooks.getAll({
+  
+  const { data: { data: categoryData = [] } = {}, isLoading: catLoading, isError: catIsError, error: catError } = journeyCategoryHooks.getAll()
+  const { data: { data: journeyData = [], count } = {}, isLoading: journeyIsLoading, isError: journeyIsError, error: journeyError, refetch: journeyRefetch } = journeyHooks.getAll({
     page,
     pageSize: PER_PAGE,
   })
@@ -417,7 +426,7 @@ function Journey() {
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
-      {(isError && !isLoading)
+      {(catIsError && !catLoading)
         ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => refetch()}>Try again</button></p>
         : <>
           <section className='flex gap-10'>
@@ -435,7 +444,7 @@ function Journey() {
             />
           </section>
           <section className='flex-col gap-20'>
-            {isLoading ? <Loader /> : (
+            {catLoading ? <Loader /> : (
               <table className={s.dataTable}>
                 <thead>
                   <tr>
@@ -484,8 +493,8 @@ function Journey() {
           </section>
         </>
       }
-      {mainModal && <JourneyModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
-      {categotyModal && <CategoryModal setCategoryModal={setCategoryModal}/>}
+      {mainModal && <JourneyModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit, categoryData}}/>}
+      {categotyModal && <CategoryModal setCategoryModal={setCategoryModal} categoryData={categoryData}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
         'Title': 'title',
         'Category': 'journey_category.name',

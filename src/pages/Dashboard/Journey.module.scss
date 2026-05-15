@@ -82,3 +82,17 @@
     padding: 0.25em;
   }
 }
+
+.selectCont{
+  display: flex;
+  flex-direction: column;
+
+  .inputRequired{
+    color: red;
+    line-height: 1;
+  }
+  select{
+    @include base.input;
+    padding: 6px;
+  }
+}
