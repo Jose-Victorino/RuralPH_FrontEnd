@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
 import { wordCap } from '@/library/Util'
-import { journeyHooks, journeyCategoryHooks } from '@/service/crudService'
+import { journeyHooks } from '@/service/crudService'
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Loader from '@/components/Loader/Loader'
@@ -14,7 +14,6 @@ import InformationModal from '../InformationModal'
 import ActionDropdown from '../ActionDropdown'
 
 import JourneyModal from './Journey.modal'
-import CategoryModal from './Category.modal'
 
 import s from './Journey.module.scss'
 
@@ -35,7 +34,6 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   return (
     <tr>
       <td>{row.title}</td>
-      <td>{wordCap(row?.journey_category?.name?.replace('_', ' ') ?? '')}</td>
       <td className={s.descriptionData}>{row.description}</td>
       <td className={s.checkmarkData}>{row.image_path && checkSVG}</td>
       <td>
@@ -66,16 +64,14 @@ function Journey() {
 
   const [infoModal, setInfoModal] = useState(false)
   const [mainModal, setMainModal] = useState('')
-  const [categotyModal, setCategoryModal] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [page, setPage] = useState(1)
   
   useDocumentTitle(`${wordCap(TABLE_NAME)} | Dashboard | Rural Rising PH`)
   
-  journeyHooks.subscribe(['journey_category'])
+  journeyHooks.subscribe()
   
-  const { data: { data: categoryData = [] } = {}, isLoading: catLoading, isError: catIsError } = journeyCategoryHooks.getAll()
-  const { data: { data: journeyData = [], count } = {}, refetch: journeyRefetch } = journeyHooks.getAll({
+  const { data: { data: journeyData = [], count } = {}, isLoading, isError, refetch } = journeyHooks.getAll({
     page,
     pageSize: PER_PAGE,
   })
@@ -132,8 +128,8 @@ function Journey() {
           path: `/dashboard/${TABLE_NAME}`,
         }
       ]}/>
-      {(catIsError && !catLoading)
-        ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => journeyRefetch()}>Try again</button></p>
+      {(isError && !isLoading)
+        ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => refetch()}>Try again</button></p>
         : <>
           <section className='flex gap-10'>
             <Button
@@ -141,19 +137,13 @@ function Journey() {
               icon={addSVG}
               onClick={openCreateModal}
             />
-            <Button
-              btnType='secondary'
-              text='Manage Categories'
-              onClick={() => setCategoryModal(true)}
-            />
           </section>
           <section className='flex-col gap-20'>
-            {catLoading ? <Loader /> : (
+            {isLoading ? <Loader /> : (
               <table className={s.dataTable}>
                 <thead>
                   <tr>
                     <th>Title</th>
-                    <th>Category</th>
                     <th>Description</th>
                     <th className={s.checkmarkColumn}>Image Attached</th>
                     <th></th>
@@ -197,11 +187,9 @@ function Journey() {
           </section>
         </>
       }
-      {mainModal && <JourneyModal {...{mainModal, onClose: () => closeModal(), selectedRecord, categoryData}}/>}
-      {categotyModal && <CategoryModal onClose={() => setCategoryModal(false)} categoryData={categoryData}/>}
+      {mainModal && <JourneyModal {...{mainModal, onClose: () => closeModal(), selectedRecord}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
         'Title': 'title',
-        'Category': 'journey_category.name',
         'Description': 'description',
         'Image': 'image_path',
       }}}/>}

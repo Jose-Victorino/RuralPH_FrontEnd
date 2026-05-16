@@ -15,7 +15,6 @@ import s from './Journey.module.scss'
 const emptyFormValues = {
   title: '',
   description: '',
-  category_id: '',
   image_path: '',
 }
 
@@ -46,16 +45,13 @@ const validationSchema = Yup.object({
   image_path: Yup.string().required('image is required'),
 })
 
-const JourneyModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
+const JourneyModal = ({ mainModal, onClose, selectedRecord }) => {
   const putData = journeyHooks.put()
   const updateData = journeyHooks.update()
 
   const initialValues = mainModal === 'UPDATE' && selectedRecord
     ? generateValues(selectedRecord)
-    : {
-      ...emptyFormValues,
-      category_id: categoryData?.[0]?.id ?? ''
-    }
+    : emptyFormValues
 
   const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: initialValues,
@@ -104,16 +100,6 @@ const JourneyModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
             type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
             displayName='Description' error={errors.description} touched={touched.description}
           />
-          <div className={s.selectCont}>
-            <label htmlFor='category'>Category<span className={s.inputRequired}>*</span></label>
-            <select name='category_id' id='category' className={s.select} value={values.category_id} onChange={handleChange} onBlur={handleBlur} required>
-              {categoryData.length &&
-                categoryData.map(c =>
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                )
-              }
-            </select>
-          </div>
           <Input
             type='text' name='image_path' value={values.image_path} onChange={handleChange} onBlur={handleBlur} required
             displayName='Image Link' error={errors.image_path} touched={touched.image_path}

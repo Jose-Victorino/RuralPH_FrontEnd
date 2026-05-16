@@ -119,8 +119,5 @@ export const storyHooks   = createCRUDHooks(storyService, 'story')
 export const storyMediaService = createCRUD('story_media')
 export const storyMediaHooks   = createCRUDHooks(storyMediaService, 'story_media')
 
-export const journeyService = createCRUD('journey', { defaultSelect: '*, journey_category(id, name)' })
+export const journeyService = createCRUD('journey')
 export const journeyHooks   = createCRUDHooks(journeyService, 'journey')
-
-export const journeyCategoryService = createCRUD('journey_category')
-export const journeyCategoryHooks   = createCRUDHooks(journeyCategoryService, 'journey_category')

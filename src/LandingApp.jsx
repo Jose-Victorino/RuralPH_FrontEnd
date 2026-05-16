@@ -6,9 +6,7 @@ import Home from '@/pages/Home/Home'
 import AboutUs from '@/pages/AboutUs/AboutUs'
 import Faq from '@/pages/Faq/Faq'
 const News = lazy(() => import('@/pages/News/News'))
-import OurJourney from '@/pages/OurJourney/OurJourney'
 const JourneyPost = lazy(() => import('@/pages/OurJourney/JourneyPost'))
-const JourneyCategory = lazy(() => import('@/pages/OurJourney/JourneyCategory'))
 const Events = lazy(() => import('@/pages/Event/Events'))
 const EventPage = lazy(() => import('@/pages/Event/EventPage'))
 const Stories = lazy(() => import('@/pages/Stories/Stories'))
@@ -25,9 +23,7 @@ function LandingApp() {
         <Route path='*' element={<Navigate to='/' />}/>
         <Route index element={<Home />}/>
         <Route path='about-us' element={<AboutUs />}/>
-        <Route path='our-journey' element={<OurJourney />}/>
         <Route path='our-journey/p/:postId' element={<JourneyPost />}/>
-        <Route path='our-journey/c/:categoryId' element={<JourneyCategory />}/>
         <Route path='faqs' element={<Faq />}/>
         <Route path='in-the-news' element={<News />}/>
         <Route path='events' element={<Events />}/>

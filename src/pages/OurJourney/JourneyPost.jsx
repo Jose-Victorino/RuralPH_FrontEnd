@@ -2,15 +2,10 @@ import { Link, useParams } from'react-router'
 import { journeyHooks } from '@/service/crudService'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
+import { formatDate, scrollReset } from '@/library/Util'
 import Loader from '@/components/Loader/Loader'
 
-import { formatDate, scrollReset } from '@/library/Util'
-
 import s from './JourneyPost.module.scss'
-
-import facebook from '@/assets/svg/facebook.svg'
-import xTwitter from '@/assets/svg/x-twitter.svg'
-import linkedin from '@/assets/svg/linkedin.svg'
 
 const PAGE_NAME = 'Our Journey'
 
@@ -63,23 +58,6 @@ function JourneyPost() {
               <h3 className='textGreen'>{journeyData.title}</h3>
               <p>{formatDate(journeyData.created_at)}</p>
             </div>
-            {/* <ul className='flex a-end gap-10'>
-              <li className='flex'>
-                <Link to=''>
-                  <img src={facebook} height='24' width='24' loading='lazy' alt="Facebook" />
-                </Link>
-              </li>
-              <li className='flex'>
-                <Link to=''>
-                  <img src={xTwitter} height='24' width='24' loading='lazy' alt="X" />
-                </Link>
-              </li>
-              <li className='flex'>
-                <Link to=''>
-                  <img src={linkedin} height='24' width='24' loading='lazy' alt="Linkedin" />
-                </Link>
-              </li>
-            </ul> */}
           </div>
           <hr />
           <div className={s.imageCont}>

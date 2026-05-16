@@ -134,9 +134,6 @@ function Navigation() {
                       <NavLink to='/about-us' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>About us</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/our-journey' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
-                    </li>
-                    <li>
                       <NavLink to='/faqs' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>FAQs</NavLink>
                     </li>
                     <li>
@@ -191,9 +188,6 @@ function Navigation() {
             </li>
             <li>
               <NavLink to='https://ruriclub.com/' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Shop</NavLink>
-            </li>
-            <li>
-              <NavLink to='/our-journey' onClick={() => {scrollReset();closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Our Journey</NavLink>
             </li>
             <li>
               <NavLink to='/faqs' onClick={() => {scrollReset(); closeMenu()}} className={({ isActive }) => cn({ [s.active]: isActive })}>FAQs</NavLink>

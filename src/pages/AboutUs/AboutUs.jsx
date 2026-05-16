@@ -1,5 +1,4 @@
 import cn from 'classnames'
-import { useParallax } from 'react-scroll-parallax'
 
 import Button from '@/components/Button/Button'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
@@ -8,29 +7,20 @@ import s from './AboutUs.module.scss'
 
 import spousesImg from 'uploads/rural-philippines-e1682368256444.png'
 import mainAboutImg from 'uploads/angel-locsin.jpg'
-import CTAbg from 'uploads/CTA-bg.jpg'
+import OurJourney from '../OurJourney/OurJourney'
 
 const PAGE_NAME = 'About Us'
 
 function AboutUs() {
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  const { ref: imgBgRef } = useParallax({
-    onProgressChange: (progress) => {
-      const el = imgBgRef.current
-      if (!el) return
-      const p = Math.min(1, Math.max(0, progress))
-      el.style.objectPosition = `50% ${p * 100}%`
-    },
-  })
-
   return (
     <>
-      <section className='pad-block-100'>
-        <div className="container flex-col gap-30">
+      <section className='pad-block-40'>
+        <div className='container flex-col gap-30'>
           <div className='flex-col gap-20'>
             <div className={s.left}>
-              <img data-ros='fade-right' className={s.img} src={mainAboutImg} height='400' loading="lazy" alt='img'/>
+              <img data-ros='fade-right' className={s.img} src={mainAboutImg} height='400' loading='lazy' alt='img'/>
               <ul data-ros='fade-left' className={s.statsList}>
                 <li>
                   <h5>5+</h5>
@@ -61,6 +51,10 @@ function AboutUs() {
               <p>We do weekly Rescue Buys in towns and cities all over the country. RuRi operates a Vegetable Rescue Center in Baguio City, and three distribution hubs in the NCR. These are RuRi North at Congressional Avenue., Quezon City and RuRi South at the Alabang Town Center, Muntinlupa, and at Avida Towers Centera in Mandaluyong.</p>
             </div>
           </div>
+        </div>
+      </section>
+      <section className='pad-block-40'>
+        <div className='container flex-col gap-30'>
           <div className='res-flex-row'>
             <div data-ros='fade-right' className='flex-col gap-15'>
               <p>The conversations at RuRi are led by spouses Ace and Andie Estrada of Baguio City.</p>
@@ -68,20 +62,15 @@ function AboutUs() {
                 <li>+40k Members</li>
                 <li>175,000 Followers on our Facebook page</li>
               </ul>
-              <p>You can send inquiries to <a href="mailto:info@ruralrisingph.com">info@ruralrisingph.com</a></p>
+              <p>You can send inquiries to <a href='mailto:info@ruralrisingph.com'>info@ruralrisingph.com</a></p>
               <p>RuRi is working to erect vegetable tramlines in Benguet, create a water and forest conservation project in Nueva Ecija, and establish community libraries in various farmer communities. It is also working to establish a processing and packaging facility for rescued produce, and the country’s first Rescue Kitchen. We welcome offers of help in whatever form it comes if it would help the farmers and create small but impactful change in the countryside.</p>
             </div>
-            <img data-ros='fade-left' className={s.img} loading="lazy" src={spousesImg} alt='img'/>
+            <img data-ros='fade-left' className={s.img} loading='lazy' src={spousesImg} alt='img'/>
           </div>
         </div>
       </section>
-      <section className={s.imgBg}>
-        <img
-          ref={imgBgRef}
-          className={s.ctaBgImg}
-          src={CTAbg}
-          alt='CTA background'
-        />
+      <OurJourney />
+      <section className={s.parallaxCont}>
         <div data-ros='fade-down' className={cn(s.ctaContainer, 'flex j-center a-center')}>
           <div className='flex-wrap gap-15'>
             <Button

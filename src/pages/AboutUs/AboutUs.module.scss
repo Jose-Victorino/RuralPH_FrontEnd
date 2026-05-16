@@ -23,29 +23,33 @@
   gap: 15px 30px;
 }
 
-.imgBg{
-  height: 500px;
-  overflow: hidden;
+.parallaxCont{
+  background-image: url('uploads/CTA-bg.jpg');
   position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  height: 400px;
+
+  &::before{
+    content: '';
+    background-color: hsla(0, 0%, 0%, 0.2);
+    position: absolute;
+    inset: 0;
+  }
+
+  @media(max-width: 560px){
+    background-attachment: unset;
+    height: 260px;
+  }
+
+  .ctaContainer{
+    position: absolute;
+    inset: 0;
+    padding-inline: 15px;
+  }
 }
 
-.ctaBgImg{
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 0%;
-  pointer-events: none;
-}
-
-.ctaContainer{
-  background: hsla(0, 0%, 0%, 0.2);
-  position: absolute;
-  inset: 0;
-  padding-inline: 15px;
-}
 
 @media(max-width: 1200px){
   .left{

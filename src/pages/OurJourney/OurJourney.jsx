@@ -1,87 +1,96 @@
-import { useParallax } from 'react-scroll-parallax'
+import { Link } from'react-router'
 import { journeyHooks } from '@/service/crudService'
-import cn from 'classnames'
-
-import Loader from '@/components/Loader/Loader'
-import Button from '@/components/Button/Button'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
-import Post from './Post'
-import Top from './Top'
-
-import CTAbg from 'uploads/CTA-bg.jpg'
+import { formatDate, scrollReset } from '@/library/Util'
+import Loader from '@/components/Loader/Loader'
 
 import s from './OurJourney.module.scss'
 
 const PAGE_NAME = 'Our Journey'
 
+function Post({ posts }) {
+  const [firstJourney, ...restPosts] = posts
+  const nextThree = restPosts.slice(0, 3)
+  const remaining = restPosts.slice(3)
+  
+  return (
+    <>
+      <h4 data-ros='fade-right'>Our Journey</h4>
+      <div className='flex gap-20 w-100'>
+        <div data-ros='fade-right' className={s.mainPost}>
+          <Link to={`/our-journey/p/${firstJourney.id}`} onClick={() => scrollReset()}>
+            <div className={s.imageCont}>
+              <img className={s.img} src={firstJourney.image_path} loading='lazy' alt={firstJourney.title} />
+            </div>
+            <div>
+              <h5>{firstJourney.title}</h5>
+              <p>{formatDate(firstJourney.created_at)}</p>
+            </div>
+          </Link>
+        </div>
+        <ul data-ros='fade-left' className={s.recentPostList}>
+          {nextThree.map((row) => (
+            <li key={row.id}>
+              <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
+                <div className={s.imageCont}>
+                  <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
+                </div>
+                <div className={s.details}>
+                  <h5>{row.title}</h5>
+                  <p>{formatDate(row.created_at)}</p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {remaining.length > 0 &&
+        <div>
+          <ul className={s.postList}>
+            {remaining.map((row) =>
+              <li key={row.id}>
+                <Link to={`/our-journey/p/${row.id}`} onClick={() => scrollReset()}>
+                  <div className={s.imageCont}>
+                    <img className={s.img} src={row.image_path} loading='lazy' alt={row.title} />
+                  </div>
+                  <div className={s.content}>
+                    <h5>{row.title}</h5>
+                    <p>{formatDate(row.created_at)}</p>
+                  </div>
+                </Link>
+              </li>
+            )}
+          </ul>
+        </div>
+      }
+    </>
+  )
+}
+
 function OurJourney() {
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  journeyHooks.subscribe(['journey_category'])
-
   const { data: { data: journeyData = [] } = {}, isLoading, isError, error } = journeyHooks.getAll()
-
-  const { ref: imgBgRef } = useParallax({
-    onProgressChange: (progress) => {
-      const el = imgBgRef.current
-      if (!el) return
-      const p = Math.min(1, Math.max(0, progress))
-      el.style.objectPosition = `50% ${p * 100}%`
-    },
-  })
-
-  const LoadData = () => {
-    if(isLoading) return <Loader />
-
-    if(isError) return <p className='text-center'>{error.message}</p>
-
-    if(!journeyData.length) return <p className='text-center'>No post available</p>
-
-    return (
-      <>
-        <Top />
-        <Post posts={journeyData}/>
-      </>
-    )
-  }
 
   return (
     <>
-      <section>
+      <section className='pad-block-40'>
         <div className='container flex-col gap-20 pad-block-20' style={{minHeight: '60vh'}}>
-          <LoadData />
+          {isLoading ? <Loader /> :
+            isError ?
+              <p className='text-center'>{error.message}</p> :
+            !journeyData.length ?
+              <p className='text-center'>No post available</p> :
+              <Post posts={journeyData}/>
+          }
         </div>
       </section>
-      <section>
-        <div data-ros='fade-down' className="container flex-col gap-15 pad-block-50 text-center">
+      <section className='pad-block-40'>
+        <div data-ros='fade-down' className="container flex-col gap-15 text-center">
           <h3 className='textGreen'>Growing Together for a Sustainable Future</h3>
           <h5>Mission, history, farmer spotlights, and BTS.</h5>
           <p>Learn & Explore <br /> Tips, Recipes, and Resources</p>
-        </div>
-      </section>
-      <section className={s.movement}>
-        <img
-          // @ts-ignore
-          ref={imgBgRef}
-          className={s.ctaBgImg}
-          src={CTAbg}
-          alt='CTA background'
-        />
-        <div data-ros='fade-down' className={cn(s.ctaContainer, 'flex j-center a-center')}>
-          <div className='flex-col a-center gap-10'>
-            <div className={s.content}>
-              <h3>Be Part of the Movement</h3>
-              <p>Discover how your support makes a difference. Join Ruri Club today and help us empower farmers and build a sustainable future.</p>
-            </div>
-            <Button
-              text='Join Ruri Club'
-              color='yellow'
-              size='lg'
-              role='link'
-              to='https://ruriclub.com/pages/membership'
-            />
-          </div>
         </div>
       </section>
     </>

@@ -1,38 +1,86 @@
 @use '@/styles/base' as base;
 
+.imageCont{
+  @include base.thumbnailCont;
+}
+
 .img{
   @include base.img;
 }
 
-.movement{
-  height: 400px;
-  overflow: hidden;
-  position: relative;
+.mainPost{
+  flex-grow: 15;
 }
 
-.ctaBgImg{
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 0%;
-  pointer-events: none;
-}
-
-.ctaContainer{
-  background: hsla(0, 0%, 0%, 0.2);
-  position: absolute;
-  inset: 0;
-  padding-inline: 15px;
-}
-
-.content{
-  color: white;
+.recentPostList{
   display: flex;
   flex-direction: column;
-  max-width: 600px;
-  gap: 5px;
-  text-align: center;
+  gap: 20px;
+  flex-grow: 1;
+
+  li{
+    a{
+      display: flex;
+      gap: 15px;
+    }
+    
+    .imageCont{
+      width: 250px;
+    }
+  
+    .details{
+      max-width: 200px;
+  
+      h5, p{
+        text-wrap: auto;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+.mainPost, .recentPostList{
+  p, h5{
+    white-space: nowrap;
+  }
+  h5{
+    color: base.$primary-color;
+  }
+}
+
+.postList{
+  @include base.grid-repeat-column(auto-fill, 300px);
+  gap: 20px;
+
+  li{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    
+    p, h5{
+      white-space: nowrap;
+    }
+    h5{
+      color: base.$primary-color;
+    }
+  }
+  .img{
+    aspect-ratio: 1.75;
+  }
+}
+
+@media(max-width: 1200px){
+  .recentPosts, .recentPostList a{
+    flex-direction: column;
+  }
+  .recentPostList{
+    flex-direction: row;
+    
+    li{
+      width: 100%;
+    }
+  }
+  .imageCont{
+    width: 100%;
+  }
 }
