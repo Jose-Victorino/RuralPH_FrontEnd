@@ -1,5 +1,6 @@
-// @ts-nocheck
-import { forwardRef } from 'react'
+import { useRef } from 'react'
+
+import useClickOutside from '@/hooks/useClickOutside';
 
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
@@ -11,28 +12,27 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ActionDropdown = forwardRef(function ActionDropdown(
-  { onInfo, onEdit, onDelete, onClose },
-  ref
-) {
+function ActionDropdown({ onInfo, onEdit, onDelete, onClose }) {
+  const dropdownRef = useRef(null)
+  
+  useClickOutside(dropdownRef, onClose)
+
   const handleInfo = () => {
-    onInfo?.()
-    onClose?.()
+    onInfo()
+    onClose()
   }
-
   const handleEdit = () => {
-    onEdit?.()
-    onClose?.()
+    onEdit()
+    onClose()
   }
-
   const handleDelete = () => {
-    onDelete?.()
-    onClose?.()
+    onDelete()
+    onClose()
   }
 
   return (
     <div
-      ref={ref}
+      ref={dropdownRef}
       style={{
         position: 'absolute',
         bottom: 0,
@@ -44,20 +44,20 @@ const ActionDropdown = forwardRef(function ActionDropdown(
     >
       <Paper sx={{ width: 'fit-content' }}>
         <MenuList>
-          <MenuItem onClick={handleInfo}>
+          <MenuItem onClick={() => handleInfo()}>
             <ListItemIcon>
               <VisibilityIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>View</ListItemText>
           </MenuItem>
-          <MenuItem onClick={handleEdit}>
+          <MenuItem onClick={() => handleEdit()}>
             <ListItemIcon>
               <EditIcon fontSize="small" />
             </ListItemIcon>
             <ListItemText>Edit</ListItemText>
           </MenuItem>
           <Divider />
-          <MenuItem onClick={handleDelete}>
+          <MenuItem onClick={() => handleDelete()}>
             <ListItemIcon>
               <DeleteIcon fontSize="small" />
             </ListItemIcon>
@@ -67,6 +67,6 @@ const ActionDropdown = forwardRef(function ActionDropdown(
       </Paper>
     </div>
   )
-})
+}
 
 export default ActionDropdown

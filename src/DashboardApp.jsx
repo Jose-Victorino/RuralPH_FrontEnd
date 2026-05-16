@@ -3,10 +3,10 @@ import { Routes, Route, Navigate } from 'react-router'
 
 import DashboardLayout from '@/pages/Dashboard/DashboardLayout'
 import Dashboard from '@/pages/Dashboard/Dashboard'
-const DashboardEvent = lazy(() => import('@/pages/Dashboard/Event'))
-const DashboardNews = lazy(() => import('@/pages/Dashboard/News'))
-const DashboardJourney = lazy(() => import('@/pages/Dashboard/Journey'))
-const DashboardStory = lazy(() => import('@/pages/Dashboard/Story'))
+const DashboardEvent = lazy(() => import('@/pages/Dashboard/Event/Event'))
+const DashboardNews = lazy(() => import('@/pages/Dashboard/News/News'))
+const DashboardJourney = lazy(() => import('@/pages/Dashboard/Journey/Journey'))
+const DashboardStory = lazy(() => import('@/pages/Dashboard/Story/Story'))
 
 function DashboardApp() {
   return (

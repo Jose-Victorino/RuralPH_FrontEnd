@@ -1,23 +1,18 @@
-// @ts-nocheck
-import { useRef, useState } from 'react'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
+import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
-import useClickOutside from '@/hooks/useClickOutside'
 
 import { formatDate, formatTime, wordCap } from '@/library/Util'
 import { eventHooks } from '@/service/crudService'
-
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import Loader from '@/components/Loader/Loader'
 import Button from '@/components/Button/Button'
-import Modal from '@/components/Modal/Modal'
-import Input from '@/components/Input/Input'
-import Breadcrumbs from './Breadcrumbs'
-import InformationModal from './InformationModal'
-import ActionDropdown from './ActionDropdown'
+import Breadcrumbs from '../Breadcrumbs'
+import InformationModal from '../InformationModal'
+import ActionDropdown from '../ActionDropdown'
+
+import EventModal from './Event.modal'
 
 import s from './Event.module.scss'
 
@@ -28,97 +23,11 @@ const arrowRight = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"
 const today = new Date()
 today.setHours(0, 0, 0, 0)
 
-const schema = Yup.object({
-  title: Yup.string().required('Title is required'),
-  description: Yup.string(),
-  location: Yup.string().required('Location is required'),
-  date: Yup.date().required('Date is required'),
-  //.min(today, 'Date must be today or onwards')
-  time_start: Yup.string().required('Start time is required'),
-  time_end: Yup.string(),
-})
-const emptyFormValues = {
-  title: '',
-  description: '',
-  location: '',
-  date: '',
-  time_start: '',
-  time_end: '',
-}
-const inputNames = Object.keys(emptyFormValues)
-
-const generateValues = (record) => {
-  return inputNames.reduce((prev, cur) => ({
-    ...prev,
-    [cur]: record?.[cur] ?? ''
-  }), {})
-}
-const generatePayload = (record) => {
-  return inputNames.reduce((prev, cur) => ({
-    ...prev,
-    [cur]: record?.[cur] || null
-  }), {})
-}
-
-const TABLE_NAME = 'event'
+export const TABLE_NAME = 'event'
 const PER_PAGE = 10
-
-const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit }) => {
-  const initialValues = mainModal === 'UPDATE' && selectedRecord
-  ? generateValues(selectedRecord)
-  : emptyFormValues
-
-  const { values, errors, touched, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
-    initialValues: initialValues,
-    validationSchema: schema,
-    enableReinitialize: true,
-    onSubmit: handleModalSubmit
-  })
-
-  return (
-    <Modal
-      onClose={() => setMainModal(false)}
-      width='480px'
-      height='620px'
-    >
-      <form className={s.form} onSubmit={handleSubmit}>
-        <div>
-          <Input
-            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Title' error={errors.title} touched={touched.title}
-          />
-          <Input
-            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur}
-            displayName='Description' error={errors.description} touched={touched.description}
-          />
-          <Input
-            type='text' name='location' value={values.location} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Location' error={errors.location} touched={touched.location}
-          />
-          <Input
-            type='date' name='date' value={values.date} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Date' error={errors.date} touched={touched.date}
-          />
-          <Input
-            type='time' name='time_start' value={values.time_start} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Time  Start'error={errors.time_start} touched={touched.time_start}
-          />
-          <Input
-            type='time' name='time_end' value={values.time_end} onChange={handleChange} onBlur={handleBlur}
-            displayName='Time End' error={errors.time_end} touched={touched.time_end}
-          />
-        </div>
-        <Button type='submit' text='Submit' disabled={isSubmitting} />
-      </form>
-    </Modal>
-  )
-}
 
 const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   const [dropdown, setDropdown] = useState(false)
-  const dropdownRef = useRef(null)
-
-  useClickOutside(dropdownRef, () => setDropdown(false), dropdown)
 
   return (
     <tr>
@@ -137,7 +46,6 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
           </button>
           {dropdown &&
             <ActionDropdown
-              ref={dropdownRef}
               onInfo={() => openInfoModal(row)}
               onEdit={() => openEditModal(row)}
               onDelete={() => handleDelete(row.id)}
@@ -151,12 +59,10 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
 }
 
 function Event() {
-  const putData = eventHooks.put()
-  const updateData = eventHooks.update()
   const deleteData = eventHooks.delete()
 
   const [infoModal, setInfoModal] = useState(false)
-  const [mainModal, setMainModal] = useState(false)
+  const [mainModal, setMainModal] = useState('')
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [page, setPage] = useState(1)
   
@@ -164,40 +70,12 @@ function Event() {
 
   eventHooks.subscribe()
 
-  const { data: { data: eventData = [], count } = {}, isLoading, isError, error, refetch } = eventHooks.getAll({
+  const { data: { data: eventData = [], count } = {}, isLoading, isError, refetch } = eventHooks.getAll({
     page,
     pageSize: PER_PAGE,
   })
 
   const totalPages = Math.ceil(count / PER_PAGE) || 1
-
-  const handleModalSubmit = async (values, { setSubmitting }) => {
-    const payload = generatePayload(values)
-
-    const isInsert = mainModal === 'INSERT'
-    let isError = false
-    let errorMessage = ''
-
-    if(isInsert){
-      putData.mutate(payload)
-      isError = putData.isError
-      errorMessage = putData.error?.message
-    }
-    else{
-      updateData.mutate({ payload, id: selectedRecord.id })
-      isError = updateData.isError
-      errorMessage = updateData.error?.message
-    }
-    
-    setSubmitting(false)
-    if(isError){
-      toast.error('An error occurred')
-      console.error(`Error ${isInsert ? 'adding' : 'updating'} on ${TABLE_NAME}: `, errorMessage)
-      return
-    }
-    toast.success(`${TABLE_NAME} has been ${isInsert ? 'added' : 'updated'}`)
-    closeModal()
-  }
 
   const handleDelete = async (id) => {
     Swal.fire({
@@ -207,7 +85,8 @@ function Event() {
       confirmButtonText: 'Delete',
     }).then(async (result) => {
       if(!result.isConfirmed) return
-  
+
+      // @ts-ignore
       deleteData.mutate({ value: id })
       if(deleteData.isError){
         toast.error('An error occurred')
@@ -233,7 +112,7 @@ function Event() {
   }
   const closeModal = () => {
     setSelectedRecord(null)
-    setMainModal(null)
+    setMainModal('')
   }
 
   return (
@@ -308,7 +187,7 @@ function Event() {
           </section>
         </>
       }
-      {mainModal && <EventModal {...{mainModal, setMainModal, selectedRecord, handleModalSubmit}}/>}
+      {mainModal && <EventModal {...{mainModal, onClose: () => closeModal(), selectedRecord}}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
         'Title': 'title',
         'Description': 'description',

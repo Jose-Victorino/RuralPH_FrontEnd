@@ -1,0 +1,22 @@
+@use '@/styles/base' as base;
+
+.loader{
+  --loader-color: #0071e2;
+  position: relative;
+  font-size: base.$sz-14-16;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  width: fit-content;
+  border: 3px solid hsla(0, 0%, 100%, 0.5);
+  border-top-color: var(--loader-color);
+  animation: circular-moving 0.5s ease-in-out infinite;
+}
+
+@keyframes circular-moving{
+  0%{
+    transform: rotate(0);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
