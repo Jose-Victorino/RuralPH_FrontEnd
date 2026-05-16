@@ -70,16 +70,12 @@ const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='Title'
-            error={errors.title}
-            touched={touched.title}
-            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur }}
+            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur}
+            displayName='Title' error={errors.title} touched={touched.title}
           />
           <Input
-            displayName='Description'
-            error={errors.description}
-            touched={touched.description}
-            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Description' error={errors.description} touched={touched.description}
           />
           <div className='flex-col gap-10'>
             <div>
@@ -90,7 +86,6 @@ const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
                 icon={addSVG}
                 onClick={() => setFieldValue('media', [...values.media, ''])}
                 disabled={values.media.length >= 10}
-                span
               />
             </div>
             {touched.media && errors.media && <span>{errors.media}</span>}
@@ -117,7 +112,7 @@ const StoryModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
             }
           </div>
         </div>
-        <Button type='submit' text='Submit' disabled={isSubmitting} />
+        <Button type='submit' text='Submit' disabled={isSubmitting} span />
       </form>
     </Modal>
   )
@@ -300,7 +295,6 @@ function Story() {
             <Button
               text={`Add ${wordCap(TABLE_NAME)}`}
               icon={addSVG}
-              span
               onClick={openCreateModal}
             />
           </section>

@@ -66,6 +66,7 @@ function ForgotPassword() {
         type='submit'
         text={isLoading ? 'Loading...' : 'Confirm'}
         color='green'
+        span
         disabled={isLoading || isSubmitting}
       />
     </form>

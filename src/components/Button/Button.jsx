@@ -49,7 +49,7 @@ const Button = ({
       )}
       style={{
         ...style,
-        width: span ? 'fit-content' : '100%',
+        width: span ? '100%' : 'fit-content',
         borderRadius: corners.toLowerCase() === 'curved' ? '5px' : corners.toLowerCase() === 'rounded' && '1.25em',
       }}
       title={title}

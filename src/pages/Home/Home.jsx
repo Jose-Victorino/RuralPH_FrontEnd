@@ -70,7 +70,6 @@ function Home() {
               text='Join Ruri Club'
               color='yellow'
               size='lg'
-              span
               role='link'
               to='https://ruriclub.com/pages/membership'
             />
@@ -160,7 +159,6 @@ function Home() {
             <Button
               text='Make a Donation through CAF'
               color='yellow'
-              span
               role='link'
               style={{alignSelf: 'center'}}
               to='https://cafa.iphiview.com/cafa/AccountInformation/tabid/495/dispatch/accountselection_id$450980_hash$424008be42b633899ebd723198fc60651f28573a/Default.aspx'
@@ -185,7 +183,6 @@ function Home() {
             <Button
               text='Explore Camp Mingan'
               color='yellow'
-              span
               role='link'
               to='https://campmingan.com/'
             />
@@ -257,7 +254,6 @@ function Home() {
           <Button
             text='View More'
             color='yellow'
-            span
             role='link'
             style={{alignSelf: 'center'}}
             to='/in-the-news'

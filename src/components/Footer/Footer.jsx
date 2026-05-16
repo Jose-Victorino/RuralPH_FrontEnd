@@ -17,7 +17,6 @@ function Footer() {
               <p>Harnessing the full potential of the countryside to ensure food security, achieve environmental sustainability, and drive economic opportunity.</p>
               <Button
                 text='Become a Member'
-                span
                 role='link'
                 color='yellow'
                 to='https://ruriclub.com/pages/membership'

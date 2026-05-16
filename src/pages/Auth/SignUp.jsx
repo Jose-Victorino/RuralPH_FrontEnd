@@ -79,6 +79,7 @@ function SignUp() {
           type='submit'
           text={(isSubmitting && loading) ? 'Loading...' : 'Sign up'}
           color='green'
+          span
           disabled={isSubmitting}
           onClick={() => onSubmit(values)}
         />

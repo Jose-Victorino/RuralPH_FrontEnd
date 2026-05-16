@@ -221,7 +221,6 @@ const CategoryModal = ({ setCategoryModal, categoryData }) => {
           <Button
             text='Add'
             icon={addSVG}
-            span
             disabled={isAdding}
             onClick={handleAdd}
           />
@@ -256,16 +255,12 @@ const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubm
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='Title'
-            error={errors.title}
-            touched={touched.title}
-            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur }}
+            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur}
+            displayName='Title' error={errors.title} touched={touched.title}
           />
           <Input
-            displayName='Description'
-            error={errors.description}
-            touched={touched.description}
-            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Description' error={errors.description} touched={touched.description}
           />
           <div className={s.selectCont}>
             <label htmlFor='category'>Category<span className={s.inputRequired}>*</span></label>
@@ -278,13 +273,11 @@ const JourneyModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubm
             </select>
           </div>
           <Input
-            displayName='Image Link'
-            error={errors.image_path}
-            touched={touched.image_path}
-            input={{ type: 'text', name:'image_path', id:'image_path', value: values.image_path, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='text' name='image_path' value={values.image_path} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Image Link' error={errors.image_path} touched={touched.image_path}
           />
         </div>
-        <Button type='submit' text='Submit' disabled={isSubmitting} />
+        <Button type='submit' text='Submit' disabled={isSubmitting} span />
       </form>
     </Modal>
   )
@@ -433,13 +426,11 @@ function Journey() {
             <Button
               text={`Add ${wordCap(TABLE_NAME)}`}
               icon={addSVG}
-              span
               onClick={openCreateModal}
             />
             <Button
               btnType='secondary'
               text='Manage Categories'
-              span
               onClick={() => setCategoryModal(true)}
             />
           </section>

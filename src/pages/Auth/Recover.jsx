@@ -71,6 +71,7 @@ function Recover() {
         <p className={s.hint}>This link is invalid or has expired. Request a new reset from the forgot password page.</p>
         <Button
           text='Forgot password'
+          span
           onClick={() => navigate('/auth/forgot-password')}
         />
       </div>
@@ -96,6 +97,7 @@ function Recover() {
           type='submit'
           text={loading ? 'Loading...' : 'Reset Password'}
           color='green'
+          span
           disabled={loading || isSubmitting}
         />
       </div>

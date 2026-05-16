@@ -78,7 +78,6 @@ function OurJourney() {
               text='Join Ruri Club'
               color='yellow'
               size='lg'
-              span
               role='link'
               to='https://ruriclub.com/pages/membership'
             />

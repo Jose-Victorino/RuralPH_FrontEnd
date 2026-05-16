@@ -51,12 +51,12 @@ function ContactUs() {
           <form data-ros='fade-down' className={s.form} onSubmit={handleSubmit}>
             <h5>We love to hear from you</h5>
             <div className='flex-col gap-20'>
-              <Input displayName='Name' touched={touched.name} error={errors.name} input={{type: 'text', name:'name', id:'name', value: values.name, onChange: handleChange, onBlur: handleBlur, required: true}}/>
-              <Input displayName='Email' touched={touched.email} error={errors.email} input={{type: 'email', name:'email', id:'email', value: values.email, onChange: handleChange, onBlur: handleBlur, required: true}}/>
-              <Input displayName='Phone' touched={touched.phone} error={errors.phone} input={{type: 'text', name:'phone', id:'phone', value: values.phone, onChange: handleChange, onBlur: handleBlur, required: true}}/>
-              <Input displayName='Message' touched={touched.message} error={errors.message} input={{type: 'textarea', name:'message', id:'message', value: values.message, onChange: handleChange, onBlur: handleBlur, required: true}}/>
+              <Input type='text' name='name' value={values.name} displayName='Name' touched={touched.name} error={errors.name} onChange={handleChange} onBlur={handleBlur} required/>
+              <Input type='email' name='email' value={values.email} displayName='Email' touched={touched.email} error={errors.email} onChange={handleChange} onBlur={handleBlur} required/>
+              <Input type='text' name='phone' value={values.phone} displayName='Phone' touched={touched.phone} error={errors.phone} onChange={handleChange} onBlur={handleBlur} required/>
+              <Input type='textarea' name='message' value={values.message} displayName='Message' touched={touched.message} error={errors.message} onChange={handleChange} onBlur={handleBlur} required/>
             </div>
-            <Button type='submit' text='Submit' disabled={isSubmitting}/>
+            <Button type='submit' text='Submit' span disabled={isSubmitting}/>
           </form>
         </div>
       </section>

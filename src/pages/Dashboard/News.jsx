@@ -145,22 +145,16 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='Title'
-            error={errors.title}
-            touched={touched.title}
-            input={{ type: 'text', name: 'title', id: 'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Title' error={errors.title} touched={touched.title}
           />
           <Input
-            displayName='Description'
-            error={errors.description}
-            touched={touched.description}
-            input={{ type: 'textarea', name: 'description', id: 'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Description' error={errors.description} touched={touched.description}
           />
           <Input
-            displayName='Video Link'
-            error={errors.video_url}
-            touched={touched.video_url}
-            input={{ type: 'text', name: 'video_url', id: 'video_url', placeholder: 'vimeo.com/xxxxxxxxx', value: values.video_url, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='text' name='video_url' placeholder='vimeo.com/xxxxxxxxx' value={values.video_url} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Video Link' error={errors.video_url} touched={touched.video_url}
           />
           {isFetchingThumbnail ? <Loader />
           : values.thumbnail_url ? (
@@ -172,7 +166,7 @@ const NewsModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit 
           <input type="hidden" name="video_id" value={values.video_id} />
           <input type="hidden" name="thumbnail_url" value={values.thumbnail_url} />
         </div>
-        <Button type='submit' text='Submit' disabled={isSubmitting} />
+        <Button type='submit' text='Submit' disabled={isSubmitting} span />
       </form>
       {/* {playerState && <VideoPlayer onClose={() => setPlayerState(false)} videoId={playerState}/>} */}
     </Modal>
@@ -319,7 +313,6 @@ function News() {
             <Button
               text={`Add ${wordCap(TABLE_NAME)}`}
               icon={addSVG}
-              span
               onClick={openCreateModal}
             />
           </section>

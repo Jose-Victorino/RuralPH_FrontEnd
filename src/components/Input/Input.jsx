@@ -4,14 +4,19 @@ import { wordCap } from '@/library/Util'
 
 import s from './Input.module.scss'
 
-function Input({ input: { type = '', name = '', id = '', onChange = null, onBlur = null, required = false, ...rest } = {}, displayName, error, touched }) {
+function Input(props) {
+  const { error, touched, id, displayName, type, required = false, span, ...rest } = props
+
+  const inputId = id ?? props.name
 
   return (
     <div className={cn('flex-col', s.inputCont)}>
-      <label htmlFor={id} style={{ lineHeight: '1.5' }}>{wordCap(displayName || id.replace('_', ' '))} {required && <span className={s.inputRequired}>*</span>}</label>
+      {displayName &&
+        <label htmlFor={inputId} style={{ lineHeight: '1.5' }}>{wordCap(displayName)} {required && <span className={s.inputRequired}>*</span>}</label>
+      }
       {type === 'textarea'
-        ? <textarea name={name} id={id} required={required} onChange={onChange} onBlur={onBlur} {...rest}/>
-        : <input type={type} name={name} id={id} required={required} onChange={onChange} onBlur={onBlur} {...rest}/>
+        ? <textarea id={inputId} required={required} {...rest}/>
+        : <input type={type} id={inputId} required={required} {...rest}/>
       }
       {error && touched && <span className={s.errorMsg}>{error}</span>}
     </div>

@@ -84,34 +84,28 @@ const EventModal = ({ mainModal, setMainModal, selectedRecord, handleModalSubmit
       <form className={s.form} onSubmit={handleSubmit}>
         <div>
           <Input
-            displayName='Title'error={errors.title}
-            touched={touched.title}
-            input={{ type: 'text', name:'title', id:'title', value: values.title, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Title' error={errors.title} touched={touched.title}
           />
           <Input
-            displayName='Description'error={errors.description}
-            touched={touched.description}
-            input={{ type: 'textarea', name:'description', id:'description', value: values.description, onChange: handleChange, onBlur: handleBlur, required: false }}
+            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur}
+            displayName='Description' error={errors.description} touched={touched.description}
           />
           <Input
-            displayName='Location'error={errors.location}
-            touched={touched.location}
-            input={{ type: 'text', name:'location', id:'location', value: values.location, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='text' name='location' value={values.location} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Location' error={errors.location} touched={touched.location}
           />
           <Input
-            displayName='Date'error={errors.date}
-            touched={touched.date}
-            input={{ type: 'date', name:'date', id:'date', value: values.date, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='date' name='date' value={values.date} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Date' error={errors.date} touched={touched.date}
           />
           <Input
-            displayName='Time Start'error={errors.time_start}
-            touched={touched.time_start}
-            input={{ type: 'time', name:'time_start', id:'time_start', value: values.time_start, onChange: handleChange, onBlur: handleBlur, required: true }}
+            type='time' name='time_start' value={values.time_start} onChange={handleChange} onBlur={handleBlur} required
+            displayName='Time  Start'error={errors.time_start} touched={touched.time_start}
           />
           <Input
-            displayName='Time End'error={errors.time_end}
-            touched={touched.time_end}
-            input={{ type: 'time', name:'time_end', id:'time_end', value: values.time_end, onChange: handleChange, onBlur: handleBlur, required: false }}
+            type='time' name='time_end' value={values.time_end} onChange={handleChange} onBlur={handleBlur}
+            displayName='Time End' error={errors.time_end} touched={touched.time_end}
           />
         </div>
         <Button type='submit' text='Submit' disabled={isSubmitting} />
@@ -261,7 +255,6 @@ function Event() {
             <Button
               text={`Add ${wordCap(TABLE_NAME)}`}
               icon={addSVG}
-              span
               onClick={openCreateModal}
             />
           </section>

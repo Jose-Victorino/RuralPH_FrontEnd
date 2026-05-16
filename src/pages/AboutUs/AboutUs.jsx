@@ -88,7 +88,6 @@ function AboutUs() {
               style={{flexGrow: '1'}}
               color='yellow'
               role='link'
-              span
               text='Become a Member'
               to='https://ruriclub.com/pages/membership'
             />
@@ -96,7 +95,6 @@ function AboutUs() {
               style={{flexGrow: '1'}}
               color='yellow'
               role='link'
-              span
               text='Join our FB Group'
               to='https://facebook.com/groups/RuRiPh'
             />
@@ -104,7 +102,6 @@ function AboutUs() {
               style={{flexGrow: '1'}}
               color='yellow'
               role='link'
-              span
               text='Watch us on Youtube'
               to='https://www.youtube.com/@ruralrisingphilippines1993'
             />
@@ -112,7 +109,6 @@ function AboutUs() {
               style={{flexGrow: '1'}}
               color='yellow'
               role='link'
-              span
               text='Shop for Products'
               to='https://ruriclub.com/'
             />

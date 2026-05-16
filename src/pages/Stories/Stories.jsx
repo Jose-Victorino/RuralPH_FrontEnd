@@ -104,7 +104,7 @@ function Stories() {
             {isLoading ? <Loader /> : isError ? (
               <div className={cn('flex-col a-center gap-10', s.errorState)}>
                 <p>{isError}</p>
-                <Button text='Try Again' onClick={handleRetry} span />
+                <Button text='Try Again' onClick={handleRetry} />
               </div>
             ) :
               <>

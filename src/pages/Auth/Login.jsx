@@ -82,6 +82,7 @@ function Login() {
           type='submit'
           text={(isSubmitting && loading) ? 'Loading...' : 'Login'}
           color='green'
+          span
           disabled={isSubmitting}
         />
       </form>
