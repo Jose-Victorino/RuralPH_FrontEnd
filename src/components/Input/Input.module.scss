@@ -3,10 +3,6 @@
 .inputCont{
   flex-grow: 1;
 
-  label{
-    font-size: base.$sz-12-14;
-    line-height: 1;
-  }
   input, select, textarea{
     @include base.input;
     @include base.input-hide-spinner;

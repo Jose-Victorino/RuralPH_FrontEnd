@@ -3,9 +3,9 @@
 @use "sass:map";
 @use "sass:meta";
 
-$font1: 'lucida grande', sans-serif;
-$font2: 'Lato', sans-serif;
-$font3: 'Poppins', sans-serif;
+$font2: 'lucida grande', sans-serif;
+$font1: 'Lato', sans-serif;
+$font3: 'Outfit', sans-serif;
 //geist
 
 // Size Clamps (560px - 720px)
@@ -21,9 +21,9 @@ $sz-12-14: clamp(12px, 0.3125rem + 1.25vw, 14px);
 $sz-10-12: clamp(10px, 0.1875rem + 1.25vw, 12px);
 
 // grayscale palette
-$gs-w-100: hsl(214, 15%, 98%);
-$gs-w-90:  hsl(214, 12%, 95%);
-$gs-w-80:  hsl(214, 12%, 92%);
+$gs-w-100: hsl(214, 11%, 98%);
+$gs-w-90:  hsl(214, 9%, 95%);
+$gs-w-80:  hsl(214, 9%, 92%);
 $gs-w-70:  hsl(214, 9%, 87%);
 $gs-w-60:  hsl(214, 7%, 76%);
 $gs-w-50:  hsl(214, 6%, 63%);
@@ -36,13 +36,10 @@ $gs-b-80:  hsl(214, 6%, 13%);
 $gs-b-90:  hsl(214, 8%, 10%);
 $gs-b-100: hsl(214, 15%, 6%);
 
-$temp-color-fill: linear-gradient(120deg, $gs-w-70 30%, $gs-w-80 100%);
-$shadow: 0 0 10px 2px hsla(0, 0%, 0%, 0.05);
-
 // solid colors
 $primary-color: hsl(133, 50%, 35%);
 $secondary-color: hsl(38, 95%, 52%);
-$cream: hsl(50, 27%, 96%);
+$cream: hsl(50, 37%, 93%);
 
 $primary-light: color.adjust($primary-color, $lightness: 10%);
 $primary-dark: color.adjust($primary-color, $lightness: -5%);
@@ -50,22 +47,17 @@ $primary-darker: color.adjust($primary-color, $lightness: -15%);
 $secondary-light: color.adjust($secondary-color, $lightness: 10%);
 $secondary-dark: color.adjust($secondary-color, $lightness: -5%);
 
+$primary-gradient: linear-gradient(140deg,
+  color.scale($primary-color, $lightness: -32%) 30%,
+  color.scale($primary-color, $lightness: -27%) 100%
+);
+$temp-color-fill: linear-gradient(120deg, $gs-w-70 30%, $gs-w-80 100%);
+$shadow: 0 0 10px 2px hsla(0, 0%, 0%, 0.05);
+
 $success-color: hsl(120, 52%, 56%);
 $warning-color: hsl(50, 87%, 56%);
 $error-color: hsl(0, 65%, 51%);
 $link-color: hsl(211, 100%, 50%);
-
-@mixin pos-absolute-y-center(){
-  position: absolute;
-  bottom: 50%;
-  transform: translateY(50%);
-}
-
-@mixin pos-absolute-x-center() {
-  position: absolute;
-  right: 50%;
-  transform: translateX(50%);
-}
 
 @mixin pos-absolute-center() {
   position: absolute;
@@ -127,6 +119,7 @@ $link-color: hsl(211, 100%, 50%);
   gap: 20px;
 
   img{
+    background-image: $temp-color-fill;
     object-fit: cover;
     aspect-ratio: 1.75;
     width: 100%;
@@ -143,7 +136,10 @@ $link-color: hsl(211, 100%, 50%);
   }
 
   .content{
-    background-color: white;
+    background-image: linear-gradient(135deg,
+      color.scale($gs-w-100) 30%,
+      color.scale($gs-w-90) 100%
+    );
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -158,17 +154,21 @@ $link-color: hsl(211, 100%, 50%);
 }
 
 @mixin thumbnailCont{
-  background: $temp-color-fill;
   display: flex;
-  aspect-ratio: 1.75;
+  justify-content: center;
   border-radius: 10px;
   cursor: pointer;
 }
 
 @mixin img{
+  background: $temp-color-fill;
   object-fit: cover;
+  height: 420px;
   border-radius: 10px;
-  width: 100%;
+
+  @media (max-width: 1200px) {
+    max-width: 100%;
+  }
 }
 
 @mixin errorMsg{

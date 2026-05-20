@@ -1,11 +1,14 @@
 @use '@/styles/base' as base;
 
-.imageCont{
-  @include base.thumbnailCont;
+.img{
+  background: base.$temp-color-fill;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 10px;
 }
 
-.img{
-  @include base.img;
+.imageCont{
+  @include base.thumbnailCont;
 }
 
 .mainPost{
@@ -18,15 +21,15 @@
   gap: 20px;
   flex-grow: 1;
 
+  .imageCont{
+    width: 250px;
+  }
   li{
     a{
       display: flex;
       gap: 15px;
     }
     
-    .imageCont{
-      width: 250px;
-    }
   
     .details{
       max-width: 200px;
@@ -70,7 +73,7 @@
 }
 
 @media(max-width: 1200px){
-  .recentPosts, .recentPostList a{
+  .journeyPosts, .recentPosts, .recentPostList a{
     flex-direction: column;
   }
   .recentPostList{
@@ -79,8 +82,14 @@
     li{
       width: 100%;
     }
+    .imageCont{
+      width: unset;
+    }
   }
   .imageCont{
     width: 100%;
+  }
+  .img{
+    height: 380px;
   }
 }

@@ -12,15 +12,18 @@ function Footer() {
     <footer className={cn(s.footer, 'container-parent')}>
       <div className='container'>
         <div className={s.top}>
-            <div className={s.content}>
-              <img src="/logo.png" className={s.logo} alt="logo" />
-              <p>Harnessing the full potential of the countryside to ensure food security, achieve environmental sustainability, and drive economic opportunity.</p>
-              <Button
-                text='Become a Member'
-                role='link'
-                color='yellow'
-                to='https://ruriclub.com/pages/membership'
-              />
+          <div className='flex-col a-center gap-10 text-center'>
+            <img src="/logo.png" className={s.logo} alt="logo" />
+            <p>West Triangle, 79 Sgt. Esguerra Ave, Diliman, Quezon City, 1103 Metro Manila</p>
+          </div>
+          <div className='flex-col a-center gap-10 text-center'>
+            <p style={{maxWidth: 600}}>Harnessing the full potential of the countryside to ensure food security, achieve environmental sustainability, and drive economic opportunity.</p>
+            <Button
+              text='Become a Member'
+              role='link'
+              color='yellow'
+              to='https://ruriclub.com/pages/membership'
+            />
           </div>
         </div>
         <div className={s.bottom}>

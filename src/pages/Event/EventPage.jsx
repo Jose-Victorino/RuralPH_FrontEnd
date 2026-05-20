@@ -13,8 +13,6 @@ const PAGE_NAME = 'Events'
 function EventPage() {
   const { eventId } = useParams()
   
-  eventHooks.subscribe()
-  
   const { data: { data: eventData = {} } = {}, isLoading, isError, error } = eventHooks.getById(eventId)
   
   useDocumentTitle(`${eventData?.title ?? PAGE_NAME} | Rural Rising PH`)
@@ -66,7 +64,7 @@ function EventPage() {
             <div>
               {eventData &&
                 <>
-                  <h5>Details</h5>
+                  <h4>Details</h4>
                   {eventData.description &&
                     <p className='display-description'>{eventData.description}</p>
                   }

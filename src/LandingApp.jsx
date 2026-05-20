@@ -6,7 +6,7 @@ import Home from '@/pages/Home/Home'
 import AboutUs from '@/pages/AboutUs/AboutUs'
 import Faq from '@/pages/Faq/Faq'
 const News = lazy(() => import('@/pages/News/News'))
-const JourneyPost = lazy(() => import('@/pages/OurJourney/JourneyPost'))
+const JourneyPost = lazy(() => import('@/pages/AboutUs/JourneyPost'))
 const Events = lazy(() => import('@/pages/Event/Events'))
 const EventPage = lazy(() => import('@/pages/Event/EventPage'))
 const Stories = lazy(() => import('@/pages/Stories/Stories'))

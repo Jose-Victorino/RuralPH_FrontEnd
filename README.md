@@ -22,78 +22,70 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 
 
 **Font Style & Typography**
-- They want a font style similar to Monotype Montserrat mas bold, bigger, and easier to read.
-- Adjust the overall font sizes para mas readable especially sa mobile and tablet view.
-- Capitalize each word properly sa headings/titles.
-- Highlight important words or phrases especially sa Stories section.
-- Ang peg nila is parang magazine/blog style na may emphasized or highlighted words para mas engaging basahin.
-- Improve spacing between texts and sections para hindi dikit-dikit tingnan.
+- [x] They want a font style similar to Monotype Montserrat mas bold, bigger, and easier to read.
+- [x] Adjust the overall font sizes para mas readable especially sa mobile and tablet view.
+- [x] Capitalize each word properly sa headings/titles.
+- [ ] Ang peg nila is parang magazine/blog style na may emphasized or highlighted words para mas engaging basahin.
+- [x] Improve spacing between texts and sections para hindi dikit-dikit tingnan.
 
 **Navigation**
-- [ ] Menu bar should hide while scrolling sa mobile.
+- [x] Menu bar should hide while scrolling sa mobile.
 - [ ] Change the color of the menu bar. **`preference?`**
-- [ ] Some elements/navigation should stay stationary kapag needed.
-- [ ] Ilagay yung Shop sa pinakadulo ng navigation/menu.
-- [ ] Shop should open in a new tab.
+- [ ] Some elements/navigation should stay stationary if needed.
+- [x] Ilagay yung Shop sa pinakadulo ng navigation/menu.
+- [x] Shop should open in a new tab.
 
 **Footer**
-- Add the complete address sa footer section.
+- [x] Add the complete address sa footer section.
 
 **Mobile Responsiveness**
-- The website should be responsive and optimized for:
+- [ ] The website should be responsive and optimized for:
   - Android
   - iOS
   - Tablets
   - iPads
-  
-- Dapat maayos yung layout sa lahat ng devices and hindi nasisira yung alignment.
-
 - On mobile view:
-  - The logo should be centered instead of nasa gilid
-  - Make sure hindi maliit yung logo and very visible/readable pa din
-  - Adjust the logo size properly para standout pa din siya kahit mobile view
-  - Adjust the top and bottom spacing para mas balanced and hindi mukhang masyadong malayo yung logo
-- The menu bar should automatically hide when scrolling sa mobile view.
+  - [x] The logo should be centered instead of nasa gilid
+  - [x] Make sure hindi maliit yung logo and very visible/readable pa din
+  - [x] Adjust the logo size properly para standout pa din siya kahit mobile view
+  - [x] Adjust the top and bottom spacing para mas balanced and hindi mukhang masyadong malayo yung logo
 
 **Layout & Design**
-- Adjust the size of pictures and text para mas readable and mas balanced tingnan.
-- Apply gradient backgrounds kasi they mentioned na masyadong maraming white sa current design.
-- As much as possible avoid plain white-heavy layouts.
-- Do not use a plain white and orange combination only.
-- Adjust the color palette/theme para mas modern and visually appealing.
-- Adjust the color/design of the menu bar para bagay sa overall theme.
-- Make sure readable yung text and hindi masakit sa eyes.
-- Add proper spacing sa sections and components.
-
-**Stories / Blog Section**
-- Highlight the Stories section since isa siya sa main features ng website.
-- They want it to feel more like a modern blog or magazine style.
-- Add a sidebar with:
-  - Date filter (prio)
-  - Search filter
-
-- Important texts/words sa stories should have highlights/emphasis.
-- Add preview-style buttons/features for stories.
+- [x] Adjust the size of pictures and text para mas readable and mas balanced tingnan.
+- [ ] Apply gradient backgrounds.
+- [ ] Adjust the color palette/theme para mas modern and visually appealing.
+- [ ] As much as possible avoid plain white-heavy layouts.
+- [ ] Do not use a plain white and orange combination only.
+- [ ] Adjust the color/design of the menu bar para bagay sa overall theme.
+- [ ] Make sure readable yung text and hindi masakit sa eyes.
+- [x] Add proper spacing sa sections and components.
 
 **About Us / Our Journey**
 - [x] Remove categories in `Our Journey`.
 - [x] Merge `Our Journey` & `About Us`.
 - [ ] Make the section cleaner and more organized.
 
+**Stories / Blog Section**
+- [ ] Highlight the Stories section since isa siya sa main features ng website.
+- [ ] They want it to feel more like a modern blog or magazine style.
+- Add a sidebar with:
+  - [ ] Date filter (prio)
+  - [ ] Search filter
+- [ ] Important texts/words sa stories should have highlights/emphasis.
+- [ ] Add preview-style buttons/features for stories.
+
 **Story Creation / CMS Features**
 - Bigger and more spacious yung story creation/editor area.
 - Add Feature:
-  - Save as Draft
-  - Hide feature
-  - Unlisted visibility option for selected groups of people only
-  - Add tags (#capecod #atcaperod)
-  - Add types/categories to the posts
-  - Add archiving/unlisted/hiding features
-  - Make the editor easier to use and mas readable.
+  - [ ] Unlisted visibility option for selected groups of people only
+  - [ ] Add "Save as draft" feature
+  - [ ] Add tags (e.g. #capecod #atcaperod)
+  - [ ] Add types/categories to the posts
+  - [ ] Add Hiding feature
+  - [ ] Add archiving/hiding feature
 
 
 ## Features
-
 - Modern landing pages and informational sections
 - Story listing and story post pages
 - Event page experience

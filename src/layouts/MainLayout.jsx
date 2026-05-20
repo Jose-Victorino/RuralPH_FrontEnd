@@ -11,8 +11,8 @@ function MainLayout() {
     <>
       <Navigation />
       <main
-        className='container-parent'
-        style={{ minHeight: '80vh', paddingTop: isHome ? 0 : 'var(--navigation-height, 110px)'}}
+        className='container-parent w-100'
+        style={{ minHeight: '80vh', overflowX: 'hidden', paddingTop: isHome ? 0 : 'var(--navigation-height, 110px)'}}
       >
         <Outlet />
       </main>

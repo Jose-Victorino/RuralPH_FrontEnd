@@ -17,9 +17,9 @@ $colors: (
 );
 
 $size: (
-  "sm": clamp(0.625em, 0.1875rem + 1.25vw, 0.75em),
-  "md": clamp(0.75em, -0.25rem + 2.8571vw, 1em),
-  "lg": clamp(1em, 0.125rem + 2.5vw, 1.25em),
+  "sm": clamp(12px, 0.1875rem + 1.25vw, 14px),
+  "md": clamp(14px, -0.25rem + 2.8571vw, 18px),
+  "lg": clamp(18px, 0.125rem + 2.5vw, 24px),
 );
 
 @each $name, $value in $colors{

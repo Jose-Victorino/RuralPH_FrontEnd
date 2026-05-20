@@ -1,5 +1,6 @@
 import cn from 'classnames'
 
+import OurJourney from './OurJourney'
 import Button from '@/components/Button/Button'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
@@ -7,7 +8,6 @@ import s from './AboutUs.module.scss'
 
 import spousesImg from 'uploads/rural-philippines-e1682368256444.png'
 import mainAboutImg from 'uploads/angel-locsin.jpg'
-import OurJourney from '../OurJourney/OurJourney'
 
 const PAGE_NAME = 'About Us'
 
@@ -16,9 +16,9 @@ function AboutUs() {
 
   return (
     <>
-      <section className='pad-block-40'>
+      <section className='pad-block-80'>
         <div className='container flex-col gap-30'>
-          <div className='flex-col gap-20'>
+          <div className='flex-col gap-30'>
             <div className={s.left}>
               <img data-ros='fade-right' className={s.img} src={mainAboutImg} height='400' loading='lazy' alt='img'/>
               <ul data-ros='fade-left' className={s.statsList}>
@@ -45,7 +45,7 @@ function AboutUs() {
               </ul>
             </div>
             <div data-ros='fade-down' className='flex-col gap-10'>
-              <h4>Achieving <span className='textGreen'>Rural Prosperity</span></h4>
+              <h3>Achieving <span className='textGreen'>Rural Prosperity</span></h3>
               <p>Rural Rising Philippines (RuRi) is a collective, non-profit grassroots effort to help distressed Filipino farmers get back on their feet and feed the nation with pride. It aims to do this by doing “Rescue Buys” in areas where there is an over-production of fruits and vegetables, and by paying the farmers above-farm gate prices. RuRi then distributes the rescued produce to its members at below-bagsakan prices. The farmers win and so do the consumers. All fruits and vegetables that are not claimed within 48 hours are automatically donated to hungry communities in the NCR and to various community pantries. No produce goes to waste.</p>
               <p>We believe that when farmers are paid the right price, they have a chance at achieving rural prosperity; that by giving members access to fresh and cheap produce, they would share what they cannot consume to the needy or perhaps create a profitable reseller business; that by channeling all unclaimed or unsold produce to residents in economically depressed communities, their lives are sustained, their souls given hope.</p>
               <p>We do weekly Rescue Buys in towns and cities all over the country. RuRi operates a Vegetable Rescue Center in Baguio City, and three distribution hubs in the NCR. These are RuRi North at Congressional Avenue., Quezon City and RuRi South at the Alabang Town Center, Muntinlupa, and at Avida Towers Centera in Mandaluyong.</p>
@@ -53,7 +53,7 @@ function AboutUs() {
           </div>
         </div>
       </section>
-      <section className='pad-block-40'>
+      <section className='pad-block-80'>
         <div className='container flex-col gap-30'>
           <div className='res-flex-row'>
             <div data-ros='fade-right' className='flex-col gap-15'>
@@ -63,9 +63,11 @@ function AboutUs() {
                 <li>175,000 Followers on our Facebook page</li>
               </ul>
               <p>You can send inquiries to <a href='mailto:info@ruralrisingph.com'>info@ruralrisingph.com</a></p>
-              <p>RuRi is working to erect vegetable tramlines in Benguet, create a water and forest conservation project in Nueva Ecija, and establish community libraries in various farmer communities. It is also working to establish a processing and packaging facility for rescued produce, and the country’s first Rescue Kitchen. We welcome offers of help in whatever form it comes if it would help the farmers and create small but impactful change in the countryside.</p>
+              <p>RuRi is working to erect vegetable tramlines in Benguet, create a water and forest conservation project in Nueva Ecija, and establish community libraries in various farmer communities. It is also working to establish a processing and packaging facility for rescued produce, and the country's first Rescue Kitchen. We welcome offers of help in whatever form it comes if it would help the farmers and create small but impactful change in the countryside.</p>
             </div>
-            <img data-ros='fade-left' className={s.img} loading='lazy' src={spousesImg} alt='img'/>
+            <div data-ros='fade-left' className={s.thumbnailCont}>
+              <img data-ros='fade-left' className={s.img} loading='lazy' src={spousesImg} alt='img'/>
+            </div>
           </div>
         </div>
       </section>

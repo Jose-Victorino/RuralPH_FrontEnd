@@ -23,7 +23,7 @@ function EventCard(event) {
       <Link to={`/events/${event.id}`} onClick={() => scrollReset()}>
         <DateBanner date={date} />
         <div className='flex-col gap-5'>
-          <h6>{event.title}</h6>
+          <h5>{event.title}</h5>
           <div className='flex gap-10 a-center'>
             <img className={s.icon} src={calendar} alt="calendar" />
             <p className={s.date}>{exactDate}</p>

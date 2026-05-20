@@ -28,7 +28,7 @@ const VIDEOS = [
   {
     id: 2,
     title: 'An Angel visits the farmers of Licab',
-    description: 'Follow Rural Rising’s inspiring story of how they joined forces with Angel Locsin to bring aid and hope to the farmers of Licab. See how you can get involved and make a difference now.',
+    description: "Follow Rural Rising's inspiring story of how they joined forces with Angel Locsin to bring aid and hope to the farmers of Licab. See how you can get involved and make a difference now.",
     videoId: '627961587',
     thumbnailLink: 'https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1270279023-2b4eb3835e4d089bdcf0c5ebb5647e57b0b37c35269b0b3c3_295x166%3Fregion%3Dus&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png',
   },
@@ -63,8 +63,8 @@ function Home() {
           <div data-ros='fade-right' className={s.content}>
             <div className='flex-col gap-10'>
               <h1>Growing Together</h1>
-              <h2>Fresh, Local Produce That Supports Filipino Farmers</h2>
-              <p>By choosing Ruri, you’re not just buying fresh, seasonal produce—you’re supporting sustainable farming and empowering rural communities. Together, we’re growing a brighter future for Filipino agriculture.</p>
+              <h2>Fresh, local produce that supports Filipino farmers</h2>
+              <p>By choosing Ruri, you're not just buying fresh, seasonal produce—you're supporting sustainable farming and empowering rural communities. Together, we're growing a brighter future for Filipino agriculture.</p>
             </div>
             <Button
               text='Join Ruri Club'
@@ -112,7 +112,7 @@ function Home() {
       <section className='pad-block-100'>
         <div className='container res-flex-row'>
           <div data-ros='fade-right' className='flex-col gap-15'>
-            <h4>Mutual Accountability</h4>
+            <h3>Mutual Accountability</h3>
             <p>In low-income countries such as the Philippines, investment in agriculture has been proven to have a greater impact on poverty reduction than in any other sector. This is because it offers the most direct way for rural workers to benefit from their main assets: land and labor.</p>
             <p>Development cooperation focusing on rural development is a very important component for poverty reduction for the following reasons:</p>
             <ul className='list-disc'>
@@ -128,8 +128,8 @@ function Home() {
       </section>
       <section className='pad-block-100'>
         <div className='container res-flex-row'>
-          <div>
-            <img data-ros='fade-right' className={s.img} loading="lazy" src={spousesImg} alt='img'/>
+          <div data-ros='fade-right' className={s.thumbnailCont}>
+            <img className={s.img} loading="lazy" src={spousesImg} alt='img'/>
           </div>
           <div data-ros='fade-left' className='flex-col gap-15'>
             <p>Farmers have to contend with a general dearth of resources or knowledge to invest in the land, inability to effectively cope with conflicts and climate change, reluctance to embrace new technologies that would unlock new markets that would boost their productivity and income.</p>
@@ -139,19 +139,19 @@ function Home() {
       </section>
       <section className='pad-block-100'>
         <div className={"container flex-col gap-30"}>
-          <h2 data-ros='fade-down' className='text-center'>Be Part of the Story</h2>
+          <h2 data-ros='fade-down' className='text-center'>Be part of the story</h2>
           <div className='res-flex-row'>
             <div data-ros='fade-right'>
-              <h5>Misson</h5>
+              <h3>Misson</h3>
               <p>To enhance the economic viability of local agriculture by removing the layers of middlemen between producers and consumers through fair and sustainable market practice.</p>
             </div>
             <div data-ros='fade-left'>
-              <h5>Vision</h5>
+              <h3>Vision</h3>
               <p>To become the biggest community-supported agriculture organization in the world.</p>
             </div>
           </div>
           <div data-ros='fade-up' className='flex-col gap-10'>
-            <h5>Transparency</h5>
+            <h3>Transparency</h3>
             <p>RuRi is a Validated Organization of global grant-making organization Charities Aid Foundation (CAF) America.</p>
             <p>RuRi accepts donations that will help sustain the ongoing Rescue Buys, to acquire additional food processing and preservation equipment, and for training more farmers on sustainable and regenerative agriculture. We welcome opportunities to partner with companies, schools  organizations on CSR/ESG/Sustainability.</p>
             <p>We are happy to accept donations via GCash (09175017787 Armando II), Bank Transfer  United Bank, Maginhawa Branch, Account No 545-11-000128-5, Rural Rising Inc.)</p>
@@ -173,13 +173,13 @@ function Home() {
           </svg>
         </div>
         <div className='container res-flex-row'>
-          <div>
-            <img data-ros='fade-right' className={s.img} src={campMingan} alt="Camp Mingan" />
+          <div data-ros='fade-right' className={s.thumbnailCont}>
+            <img className={s.img} src={campMingan} alt="Camp Mingan" />
           </div>
           <div data-ros='fade-left' className='flex-col gap-15'>
-            <h2 className='lh-1'><span className='textYellow'>Discover Camp Mingan:</span> Where Nature and Community Thrive</h2>
-            <p>A conservation park that’s transforming rural communities through sustainable practices, environmental stewardship, and collaborative action.</p>
-            <p>At Rural Rising, we’re proud to bring Camp Mingan to life—a space where conservation meets community. Through sustainable agriculture, service-learning programs, and community partnerships, Camp Mingan is creating opportunities for farmers, families, and future generations. Join us in building a brighter, more sustainable future.</p>
+            <h2 className='lh-1'><span className='textYellow'>Discover Camp Mingan:</span> where nature and community thrive</h2>
+            <p>A conservation park that's transforming rural communities through sustainable practices, environmental stewardship, and collaborative action.</p>
+            <p>At Rural Rising, we're proud to bring Camp Mingan to life—a space where conservation meets community. Through sustainable agriculture, service-learning programs, and community partnerships, Camp Mingan is creating opportunities for farmers, families, and future generations. Join us in building a brighter, more sustainable future.</p>
             <Button
               text='Explore Camp Mingan'
               color='yellow'
@@ -203,7 +203,7 @@ function Home() {
                 <div className={s.overlay} />
                 <img className={s.img} src={Marketplace} alt='Marketplace'/>
                 <div className={s.approachesInner}>
-                  <h5>Marketplace</h5>
+                  <h4>Marketplace</h4>
                   <Link to='https://ruriclub.com/'>Learn More</Link>
                 </div>
               </li>
@@ -211,7 +211,7 @@ function Home() {
                 <div className={s.overlay} />
                 <img className={s.img} src={resources} alt='Resources'/>
                 <div className={s.approachesInner}>
-                  <h5>Resources</h5>
+                  <h4>Resources</h4>
                   <Link to='/about-us' onClick={() => scrollReset()}>Learn More</Link>
                 </div>
               </li>
@@ -219,16 +219,16 @@ function Home() {
                 <div className={s.overlay} />
                 <img className={s.img} src={capacityBuilding} alt='Capacity Building'/>
                 <div className={s.approachesInner}>
-                  <h5>Capacity Building</h5>
-                  <Link to='/our-journey' onClick={() => scrollReset()}>Learn More</Link>
+                  <h4>Capacity Building</h4>
+                  <Link to='/about-us' onClick={() => scrollReset()}>Learn More</Link>
                 </div>
               </li>
               <li data-ros='flip-left'>
                 <div className={s.overlay} />
                 <img className={s.img} src={tourism} alt='Tourism'/>
                 <div className={s.approachesInner}>
-                  <h5>Tourism</h5>
-                  <Link to='/our-journey' onClick={() => scrollReset()}>Learn More</Link>
+                  <h4>Tourism</h4>
+                  <Link to='/about-us' onClick={() => scrollReset()}>Learn More</Link>
                 </div>
               </li>
             </ul>

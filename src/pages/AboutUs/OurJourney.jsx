@@ -6,6 +6,7 @@ import { formatDate, scrollReset } from '@/library/Util'
 import Loader from '@/components/Loader/Loader'
 
 import s from './OurJourney.module.scss'
+import cn from 'classnames'
 
 const PAGE_NAME = 'Our Journey'
 
@@ -16,8 +17,8 @@ function Post({ posts }) {
   
   return (
     <>
-      <h4 data-ros='fade-right'>Our Journey</h4>
-      <div className='flex gap-20 w-100'>
+      <h3 data-ros='fade-right'>Our Journey</h3>
+      <div className={cn('flex gap-30 w-100', s.journeyPosts)}>
         <div data-ros='fade-right' className={s.mainPost}>
           <Link to={`/our-journey/p/${firstJourney.id}`} onClick={() => scrollReset()}>
             <div className={s.imageCont}>
@@ -88,8 +89,8 @@ function OurJourney() {
       </section>
       <section className='pad-block-40'>
         <div data-ros='fade-down' className="container flex-col gap-15 text-center">
-          <h3 className='textGreen'>Growing Together for a Sustainable Future</h3>
-          <h5>Mission, history, farmer spotlights, and BTS.</h5>
+          <h2 className='textGreen'>Growing Together for a Sustainable Future</h2>
+          <h4>Mission, history, farmer spotlights, and BTS.</h4>
           <p>Learn & Explore <br /> Tips, Recipes, and Resources</p>
         </div>
       </section>

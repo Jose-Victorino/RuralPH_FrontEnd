@@ -110,7 +110,6 @@
 }
 .pos-a{
   position: absolute;
-  z-index: 10;
 }
 
 .flex{
@@ -167,13 +166,13 @@
   container: res-row / inline-size;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap, 20px);
+  gap: var(--gap, 30px);
 
   & > * {
-    flex: 1 1 calc((100% / var(--cols, 3)) - var(--gap, 20px));
+    flex: 1 1 calc((100% / var(--cols, 3)) - var(--gap, 30px));
   }
 
-  @container res-row (max-width: 780px) {
+  @container res-row (max-width: 1200px) {
     & > * {
       flex-basis: 100%;
     }
@@ -187,18 +186,34 @@
 }
 
 
-.list-disc{
-  list-style-type: disc;
-  padding-left: 15px;
-}
-
 .lh-1{
   line-height: 1;
 }
 
-.baseLink{
-  color: base.$link-color;
+.list-unordered{
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.list-ordered{
+  list-style: decimal;
+  padding-left: 20px; 
+}
+
+.text-underline{
   text-decoration: underline;
+}
+
+.text-strikethrough{
+  text-decoration: line-through;
+}
+
+.text-link{
+  color: base.$link-color;
+
+  &:hover{
+    text-decoration: underline;
+  }
 }
 
 .text-left{
@@ -209,10 +224,6 @@
 }
 .text-center{
   text-align: center;
-}
-
-.display-description{
-  white-space: pre-wrap;
 }
 
 @for $i from 1 through 20{

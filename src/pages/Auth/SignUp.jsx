@@ -43,8 +43,9 @@ function SignUp() {
       }
       if(res.error) setError(res.error)
     } catch (error){
+      console.error(error)
       setError('an error occured')
-    } finally {
+    } finally{
       setLoading(false)
     }
   }

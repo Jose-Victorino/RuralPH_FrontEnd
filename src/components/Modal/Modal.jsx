@@ -39,10 +39,12 @@ function Modal({
   }, [])
   
   const handleMouseDown = (e) => {
+    e.stopPropagation()
     startedInside.current = e.target.closest('.modal-container') !== null
   }
 
   const handleMouseUp = (e) => {
+    e.stopPropagation()
     const endedInside = e.target.closest('.modal-container') !== null
     if (!startedInside.current && !endedInside) {
       onClose()

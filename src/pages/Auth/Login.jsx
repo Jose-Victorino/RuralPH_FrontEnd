@@ -36,14 +36,15 @@ function Login() {
     const { email, password } = values
     setLoading(true)
     
-    try {
+    try{
       const res = await logInUser(email, password)
       
       if(res.success) navigate('/dashboard')
       if(res.error) setError(res.error)
-    } catch (error) {
+    } catch (error){
+      console.error(error)
       setError('an error occured: ')
-    } finally {
+    } finally{
       setLoading(false)
     }
   }

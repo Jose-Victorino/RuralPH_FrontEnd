@@ -23,7 +23,7 @@ const faqs = [
     content: (
       <>
         <p>Rural Rising is a social enterprise dedicated to spurring the rural economy and harnessing the potential of the countryside. It works to bridge the gap between farmers and consumers by providing access to locally grown produce, creating impactful change in rural communities, and investing in agricultural opportunities.</p>
-        <p>The organization’s mission is to support rural Democrats running at the state and local levels with the policies and people their communities need to thrive. Rural Rising provides grant assistance through its Rural Innovation Stronger Economy (RISE) Grants program, which offers funding for projects that create high-wage jobs, accelerate business formation, support industry clusters, and more.</p>
+        <p>The organization's mission is to support rural Democrats running at the state and local levels with the policies and people their communities need to thrive. Rural Rising provides grant assistance through its Rural Innovation Stronger Economy (RISE) Grants program, which offers funding for projects that create high-wage jobs, accelerate business formation, support industry clusters, and more.</p>
         <p>The organization also connects consumers with locally grown produce through its online shop. This helps farmers increase their income by providing them with an additional market for their goods. Additionally, Rural Rising has moved over 2 million kilograms of produce since it was founded in 2018, helping to ensure economic sustainability between farmers and consumers.</p>
       </>
     )
@@ -32,7 +32,7 @@ const faqs = [
     id: 2,
     question: "Are all of your products organic and free of chemicals?",
     content: (
-      <p>Yes, all our products are completely chemical-free. Unlike many imported products available today, we prioritize the exclusion of harmful chemicals and avoid using coatings like ‘light wax’ that are often employed to extend their shelf life.</p>
+      <p>Yes, all our products are completely chemical-free. Unlike many imported products available today, we prioritize the exclusion of harmful chemicals and avoid using coatings like ‘light wax' that are often employed to extend their shelf life.</p>
     )
   },
   {
@@ -41,7 +41,7 @@ const faqs = [
     content: (
       <p>
         You can purchase directly from our online store{' '}
-        <Link className='baseLink' to='http://www.ruriclub.com' onClick={() => scrollReset()}>
+        <Link className='text-link' to='http://www.ruriclub.com' onClick={() => scrollReset()}>
           www.ruriclub.com
         </Link>
       </p>
@@ -69,7 +69,7 @@ const faqs = [
     content: (
       <p>
         We currently have a total of 3 locations. To learn more about our locations{' '}
-        <Link to='/location' className='baseLink'>click here.</Link>
+        <Link to='/location' className='text-link'>click here.</Link>
       </p>
     )
   },
@@ -89,7 +89,7 @@ const faqs = [
       <p>
         You can become a founding member from our online store{' '}
         <Link
-          className='baseLink'
+          className='text-link'
           to="http://www.ruriclub.com/membership"
           onClick={() => scrollReset()}
         >
@@ -115,12 +115,12 @@ function Faq() {
 
   return (
     <section className='pad-block-100'>
-      <div className={cn('container res-flex-row')}>
+      <div className={cn('container res-flex-row gap-20')}>
         <div className='flex-col gap-20'>
           {col1.map((faq) => {
             const isActive = activeBlock === faq.id
             return (
-              <div key={faq.id} data-ros='fade-down' className={cn(s.qnaBlock, {[s.showAccordion]: isActive})}>
+              <div key={faq.id} className={cn(s.qnaBlock, {[s.showAccordion]: isActive})}>
                 <div className={s.header} onClick={() => toggle(faq.id)}>
                   <h5>{faq.question}</h5>
                   <button>{arrow}</button>
@@ -136,7 +136,7 @@ function Faq() {
           {col2.map((faq) => {
             const isActive = activeBlock === faq.id
             return (
-              <div key={faq.id} data-ros='fade-down' className={cn(s.qnaBlock, {[s.showAccordion]: isActive})}>
+              <div key={faq.id} className={cn(s.qnaBlock, {[s.showAccordion]: isActive})}>
                 <div className={s.header} onClick={() => toggle(faq.id)}>
                   <h5>{faq.question}</h5>
                   <button>{arrow}</button>
@@ -152,7 +152,7 @@ function Faq() {
           {col3.map((faq) => {
             const isActive = activeBlock === faq.id
             return (
-              <div key={faq.id} data-ros='fade-down' className={cn(s.qnaBlock, {[s.showAccordion]: isActive})}>
+              <div key={faq.id} className={cn(s.qnaBlock, {[s.showAccordion]: isActive})}>
                 <div className={s.header} onClick={() => toggle(faq.id)}>
                   <h5>{faq.question}</h5>
                   <button>{arrow}</button>

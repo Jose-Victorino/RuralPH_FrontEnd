@@ -2,9 +2,7 @@ import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { GlobalProvider } from '@/context/GlobalContext'
 import { ToastContainer } from 'react-toastify'
-import { ParallaxProvider } from 'react-scroll-parallax'
 
 import Aos from '@/library/Aos'
 
@@ -22,25 +20,21 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>
-    <GlobalProvider>
-      <QueryClientProvider client={queryClient}>
-        <ParallaxProvider>
-          <AuthContextProvider>
-            <ToastContainer
-              autoClose={2000}
-              hideProgressBar
-              newestOnTop
-              pauseOnFocusLoss={false}
-              draggable={false}
-              pauseOnHover={false}
-              theme="colored"
-            />
-            <Aos />
-            <App />
-            {/* <ReactQueryDevtools /> */}
-          </AuthContextProvider>
-        </ParallaxProvider>
-      </QueryClientProvider>
-    </GlobalProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <ToastContainer
+          autoClose={2000}
+          hideProgressBar
+          newestOnTop
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          theme="colored"
+        />
+        <Aos />
+        <App />
+        {/* <ReactQueryDevtools /> */}
+      </AuthContextProvider>
+    </QueryClientProvider>
   </BrowserRouter>,
 )

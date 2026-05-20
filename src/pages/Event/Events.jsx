@@ -17,29 +17,25 @@ function Event() {
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
 
-  eventHooks.subscribe()
-
   const { data: { data: eventData = [] } = {}, isLoading, isError, error } = eventHooks.getAll({
     search: {
       query: queryParam,
       columns: ['title'],
     }
   })
-
-  const handleSearch = ({ searchQuery }) => {
-    const trimmed = searchQuery.trim()
-    navigate(trimmed ? `/events/s/?query=${trimmed}` : '/events')
-  }
   
   const { values, handleChange, handleBlur, handleSubmit } = useFormik({
     initialValues: { searchQuery: queryParam },
     enableReinitialize: true,
-    onSubmit: handleSearch
+    onSubmit: ({ searchQuery }) => {
+      const trimmed = searchQuery.trim()
+      navigate(trimmed ? `/events/s/?query=${trimmed}` : '/events')
+    }
   })
 
   const handleInputChange = (e) => {
     handleChange(e)
-    if (e.target.value === '') {
+    if(e.target.value === ''){
       navigate('/events')
     }
   }
@@ -53,48 +49,33 @@ function Event() {
     </ul>
   )
 
-  const renderContent = () => {
-    if(isLoading){
-      return (
-        <div className='container flex-col gap-20'>
-          <Loader />
-        </div>
-      )
-    }
-
-    if(isError){
-      return (
-        <div className='container flex-col gap-20'>
-          <p className='text-center'>{error.message}</p>
-        </div>
-      )
-    }
-
-    if(queryParam){
-      return (
-        <div className='container flex-col gap-20'>
-          {renderEventList(eventData, 'No events found')}
-        </div>
-      )
-    }
-
-    const now = new Date()
-    const upcomingEvents = eventData.filter(event => new Date(event.date) >= now)
-    const pastEvents = eventData.filter(event => new Date(event.date) < now)
-
+  if(isLoading){
     return (
-      <>
-        <div className='container flex-col gap-20'>
-          <h3>Upcoming Events</h3>
-          {renderEventList(upcomingEvents, 'No upcoming events')}
-        </div>
-        <div className='container flex-col gap-20'>
-          <h3>Past Events</h3>
-          {renderEventList(pastEvents, 'No past events')}
-        </div>
-      </>
+      <div className='container flex-col gap-20'>
+        <Loader />
+      </div>
     )
   }
+
+  if(isError){
+    return (
+      <div className='container flex-col gap-20'>
+        <p className='text-center'>{error.message}</p>
+      </div>
+    )
+  }
+
+  if(queryParam){
+    return (
+      <div className='container flex-col gap-20'>
+        {renderEventList(eventData, 'No events found')}
+      </div>
+    )
+  }
+
+  const now = new Date()
+  const upcomingEvents = eventData.filter(event => new Date(event.date) >= now)
+  const pastEvents = eventData.filter(event => new Date(event.date) < now)
 
   return (
     <>
@@ -107,8 +88,17 @@ function Event() {
           </div>
         </div>
       </section>
-      <section className='flex-col gap-50'>
-        {renderContent()}
+      <section style={{paddingBottom: 40}}>
+        <div className='container flex-col gap-20'>
+          <h3>Upcoming events</h3>
+          {renderEventList(upcomingEvents, 'No upcoming events')}
+        </div>
+      </section>
+      <section className='pad-block-40'>
+        <div className='container flex-col gap-20'>
+          <h3>Past events</h3>
+          {renderEventList(pastEvents, 'No past events')}
+        </div>
       </section>
     </>
   )

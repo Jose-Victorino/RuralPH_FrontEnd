@@ -21,7 +21,7 @@ function PrivacyPolicy() {
             <p>Web Design & Digital Marketing Philippines (“us”, “we”, or “our”) operates the Web Design & Digital Marketing Philippines website (the “Service”).</p>
             <p>This page informs you of our policies regarding the collection, use and disclosure of Personal Information when you use our Service.</p>
             <p>We will not use or share your information with anyone except as described in this Privacy Policy.</p>
-            <p>We use your Personal Information for providing and improving the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible at <Link className='baseLink' to='/' onClick={() => scrollReset()}>ruralrisingph.com</Link></p>
+            <p>We use your Personal Information for providing and improving the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, accessible at <Link className='text-link' to='/' onClick={() => scrollReset()}>ruralrisingph.com</Link></p>
           </div>
           <div className='flex-col gap-10'>
             <h5>Information Collection And Use</h5>
@@ -35,7 +35,7 @@ function PrivacyPolicy() {
           </div>
           <div className='flex-col gap-10'>
             <h5>Log Data</h5>
-            <p>We collect information that your browser sends whenever you visit our Service (“Log Data”). This Log Data may include information such as your computer’s Internet Protocol (“IP”) address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages and other statistics.</p>
+            <p>We collect information that your browser sends whenever you visit our Service (“Log Data”). This Log Data may include information such as your computer's Internet Protocol (“IP”) address, browser type, browser version, the pages of our Service that you visit, the time and date of your visit, the time spent on those pages and other statistics.</p>
           </div>
           <div className='flex-col gap-10'>
             <h5>Service Providers</h5>
@@ -44,11 +44,11 @@ function PrivacyPolicy() {
           </div>
           <div className='flex-col gap-10'>
             <h5>Links To Other Sites</h5>
-            <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party’s site. We strongly advise you to review the Privacy Policy of every site you visit.</p>
+            <p>Our Service may contain links to other sites that are not operated by us. If you click on a third party link, you will be directed to that third party's site. We strongly advise you to review the Privacy Policy of every site you visit.</p>
             <p>We have no control over, and assume no responsibility for the content, privacy policies or practices of any third party sites or services.</p>
           </div>
           <div className='flex-col gap-10'>
-            <h5>Children’s Privacy</h5>
+            <h5>Children's Privacy</h5>
             <p>Our Service does not address anyone under the age of 18 (“Children”).</p>
             <p>We do not knowingly collect personally identifiable information from children under 18. If you are a parent or guardian and you are aware that your child has provided us with Personal Information, please contact us. If we discover that a child under 18 has provided us with Personal Information, we will delete such information from our servers immediately.</p>
           </div>
@@ -63,7 +63,7 @@ function PrivacyPolicy() {
           </div>
           <div className='flex-col gap-10'>
             <h5>Contact Us</h5>
-            <p>If you have any questions about this Privacy Policy, please <Link className='baseLink' to='/contact-us' onClick={() => scrollReset()}>contact us</Link></p>
+            <p>If you have any questions about this Privacy Policy, please <Link className='text-link' to='/contact-us' onClick={() => scrollReset()}>contact us</Link></p>
           </div>
         </div>
       </section>
