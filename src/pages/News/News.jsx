@@ -33,7 +33,7 @@ function News() {
                   </button>
                   <div className={s.content}>
                     <h5>{news.title}</h5>
-                    <p className='display-description'>{news.description}</p>
+                    <p>{news.description}</p>
                   </div>
                 </li>
               ))}

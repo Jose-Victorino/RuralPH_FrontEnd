@@ -8,7 +8,7 @@ function formatValue(path, val) {
   if(Array.isArray(val)){
     return val.length
   }
-  if(path === 'created_at'){
+  if(path.includes('_at')){
     return formatDateTime(val)
   }
   if(path.includes('date')){
@@ -17,6 +17,9 @@ function formatValue(path, val) {
   if(path.includes('time')){
     return formatTime(val)
   }
+  if(path === 'profiles'){
+    return `${val?.first_name} ${val?.last_name}`
+  }
 
   return val
 }
@@ -24,7 +27,7 @@ function formatValue(path, val) {
 const getNestedValue = (obj, path) => path.split('.').reduce((acc, key) => acc?.[key], obj)
 
 function InformationModal({ setInfoModal, selectedRecord, dir }) {
-  if (!selectedRecord) return null
+  if(!selectedRecord) return null
 
   return (
     <Modal

@@ -1,16 +1,16 @@
 import { useRef } from 'react'
 
-import useClickOutside from '@/hooks/useClickOutside';
+import useClickOutside from '@/hooks/useClickOutside'
 
-import Divider from '@mui/material/Divider';
-import Paper from '@mui/material/Paper';
-import MenuList from '@mui/material/MenuList';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Divider from '@mui/material/Divider'
+import Paper from '@mui/material/Paper'
+import MenuList from '@mui/material/MenuList'
+import MenuItem from '@mui/material/MenuItem'
+import ListItemText from '@mui/material/ListItemText'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 function ActionDropdown({ onInfo, onEdit, onDelete, onClose }) {
   const dropdownRef = useRef(null)

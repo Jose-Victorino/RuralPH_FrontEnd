@@ -1,12 +1,11 @@
 @use '@/styles/base' as base;
 @use '../generalStyles' as c;
 
-.thumbnailCont{
-  @include base.thumbnailCont;
-}
-
 .img{
-  @include base.img;
+  background: base.$temp-color-fill;
+  object-fit: cover;
+  border-radius: 10px;
+  width: 100%;
 }
 
 .container{

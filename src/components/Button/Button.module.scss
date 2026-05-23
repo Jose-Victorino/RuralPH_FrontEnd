@@ -81,7 +81,6 @@ $size: (
   border: 1px solid var(--primary-color);
   
   &:disabled{
-    @include setColor($fontColorDisabled);
     opacity: 0.7;
   }
   &:hover:not(:disabled) {
@@ -100,9 +99,9 @@ $size: (
 // link
 .btn-tertiary{
   @include btn-base;
-  color: base.$link-color;
   padding: 0;
   border: 1px solid transparent;
+  @include setColor(base.$link-color);
   
   &:disabled{
     @include setColor($fontColorDisabled);

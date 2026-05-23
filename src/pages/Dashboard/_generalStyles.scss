@@ -16,13 +16,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 15px;
-  height: 100%;
-
-  & > div{
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
+  min-height: 100%;
 }
 
 @mixin table{
@@ -47,26 +41,28 @@
       }
     }
   }
-  tbody tr{
-    &:hover{
-      background: color.adjust(base.$gs-b-100, $alpha: - 0.95);
+  tbody{
+    td:not(:last-child){
+      max-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    &:last-child{
-      border-width: 0;
+    tr{
+      &:hover{
+        background: color.adjust(base.$gs-b-100, $alpha: - 0.95);
+      }
+      &:last-child{
+        border-width: 0;
+      }
     }
-  }
-  .descriptionData{
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
   .checkmarkColumn{
     text-align: center;
   }
   .checkmarkData{
     text-align: center;
+
     svg{
       fill: base.$gs-b-70;
       height: 20px;

@@ -66,7 +66,7 @@ function EventPage() {
                 <>
                   <h4>Details</h4>
                   {eventData.description &&
-                    <p className='display-description'>{eventData.description}</p>
+                    <p>{eventData.description}</p>
                   }
                 </>
               }

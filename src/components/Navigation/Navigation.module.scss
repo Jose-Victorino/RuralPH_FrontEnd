@@ -1,6 +1,7 @@
 @use '@/styles/base' as base;
 
 .navigation{
+  background: base.$primary-dark;
   position: fixed;
   top: 0;
   left: 0;
@@ -31,15 +32,10 @@
 }
 
 .top{
-  background: base.$primary-gradient;
-
   a{
     font-size: base.$sz-12-14;
     padding-block: 0.5em;
   }
-}
-.bottom{
-  background: base.$primary-dark;
 }
 
 .logoWrap{
@@ -209,11 +205,11 @@
   .bottom > div{ position: relative; }
   
   .logoWrap a{ align-self: center; }
-  .logo{ height: 58px; }
+  .logo{ height: 48px; }
 
   .burger{
     display: flex;
-    margin-block: 25px;
+    margin-block: 20px;
   }
 
   .mobileNav{

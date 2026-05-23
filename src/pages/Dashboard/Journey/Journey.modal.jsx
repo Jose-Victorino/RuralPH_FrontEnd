@@ -49,7 +49,8 @@ const JourneyModal = ({ mainModal, onClose, selectedRecord }) => {
   const putData = journeyHooks.put()
   const updateData = journeyHooks.update()
 
-  const initialValues = mainModal === 'UPDATE' && selectedRecord
+  const isUpdate = mainModal === 'UPDATE'
+  const initialValues = isUpdate && selectedRecord
     ? generateValues(selectedRecord)
     : emptyFormValues
 
@@ -59,31 +60,30 @@ const JourneyModal = ({ mainModal, onClose, selectedRecord }) => {
     enableReinitialize: true,
     onSubmit: async (values, { setSubmitting }) => {
       const payload = generatePayload(values)
-  
-      const isInsert = mainModal === 'INSERT'
+
       let isError = false
       let errorMessage = ''
   
-      if(isInsert){
-        // @ts-ignore
-        putData.mutate(payload)
-        isError = putData.isError
-        errorMessage = putData.error?.message
-      }
-      else{
+      if(isUpdate){
         // @ts-ignore
         updateData.mutate({ payload, id: selectedRecord.id })
         isError = updateData.isError
         errorMessage = updateData.error?.message
       }
+      else{
+        // @ts-ignore
+        putData.mutate(payload)
+        isError = putData.isError
+        errorMessage = putData.error?.message
+      }
       
       setSubmitting(false)
       if(isError){
         toast.error('An error occurred')
-        console.error(`Error ${isInsert ? 'adding' : 'updating'} on ${TABLE_NAME}: `, errorMessage)
+        console.error(`Error ${isUpdate ? 'updating' : 'adding'} on ${TABLE_NAME}: `, errorMessage)
         return
       }
-      toast.success(`${TABLE_NAME} has been ${isInsert ? 'added' : 'updated'}`)
+      toast.success(`${TABLE_NAME} has been ${isUpdate ? 'updated' : 'added'}`)
       onClose()
     }
   })
@@ -91,7 +91,7 @@ const JourneyModal = ({ mainModal, onClose, selectedRecord }) => {
   return (
     <Modal onClose={onClose} width='480px' height='620px'>
       <form className={s.form} onSubmit={handleSubmit}>
-        <div>
+        <div className='flex-col gap-10'>
           <Input
             type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur}
             displayName='Title' error={errors.title} touched={touched.title}
@@ -105,7 +105,7 @@ const JourneyModal = ({ mainModal, onClose, selectedRecord }) => {
             displayName='Image Link' error={errors.image_path} touched={touched.image_path}
           />
         </div>
-        <Button type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} span />
+        <Button color='blue' type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} span />
       </form>
     </Modal>
   )

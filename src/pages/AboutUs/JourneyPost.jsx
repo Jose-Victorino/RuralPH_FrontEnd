@@ -64,7 +64,7 @@ function JourneyPost() {
             <img className={s.img} src={journeyData.image_path} loading='lazy' alt={journeyData.title} />
           </div>
           <div>
-            <p className='display-description'>{journeyData.description}</p>
+            <p>{journeyData.description}</p>
           </div>
         </div>
       </section>

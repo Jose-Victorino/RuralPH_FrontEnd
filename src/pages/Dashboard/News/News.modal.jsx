@@ -82,11 +82,12 @@ const getThumbnail = async (videoId) => {
 }
 
 const NewsModal = ({ mainModal, onClose, selectedRecord }) => {
+  const [isFetchingThumbnail, setIsFetchingThumbnail] = useState(false)
   const putData = newsHooks.put()
   const updateData = newsHooks.update()
-  const [isFetchingThumbnail, setIsFetchingThumbnail] = useState(false)
-  
-  const initialValues = mainModal === 'UPDATE' && selectedRecord
+
+  const isUpdate = mainModal === 'UPDATE'
+  const initialValues = isUpdate && selectedRecord
     ? generateValues(selectedRecord)
     : emptyFormValues
 
@@ -98,31 +99,30 @@ const NewsModal = ({ mainModal, onClose, selectedRecord }) => {
     enableReinitialize: true,
     onSubmit: async (values, { setSubmitting }) => {
       const payload = generatePayload(values)
-  
-      const isInsert = mainModal === 'INSERT'
+
       let isError = false
       let errorMessage = ''
       
-      if(isInsert){
-        // @ts-ignore
-        putData.mutate(payload)
-        isError = putData.isError
-        errorMessage = putData.error?.message
-      }
-      else{
+      if(isUpdate){
         // @ts-ignore
         updateData.mutate({ payload, id: selectedRecord.id })
         isError = updateData.isError
         errorMessage = updateData.error?.message
       }
+      else{
+        // @ts-ignore
+        putData.mutate(payload)
+        isError = putData.isError
+        errorMessage = putData.error?.message
+      }
       
       setSubmitting(false)
       if(isError){
         toast.error('An error occurred')
-        console.error(`Error ${isInsert ? 'adding' : 'updating'} on ${TABLE_NAME}: `, errorMessage)
+        console.error(`Error ${isUpdate ? 'updating' : 'adding'} on ${TABLE_NAME}: `, errorMessage)
         return
       }
-      toast.success(`${TABLE_NAME} has been ${isInsert ? 'added' : 'updated'}`)
+      toast.success(`${TABLE_NAME} has been ${isUpdate ? 'updated' : 'added'}`)
       onClose()
     }
   })
@@ -164,7 +164,7 @@ const NewsModal = ({ mainModal, onClose, selectedRecord }) => {
   return (
     <Modal onClose={onClose} width='480px' height='665px'>
       <form className={s.form} onSubmit={handleSubmit}>
-        <div>
+        <div className='flex-col gap-10'>
           <Input
             type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
             displayName='Title' error={errors.title} touched={touched.title}
@@ -180,14 +180,14 @@ const NewsModal = ({ mainModal, onClose, selectedRecord }) => {
           {isFetchingThumbnail ? <Loader />
           : values.thumbnail_url ? (
             // <button className={s.thumbnailCont} onClick={() => setPlayerState(values.video_id)}>
-            <button className={s.thumbnailCont}>
+            <button>
               <img className={s.img} src={values.thumbnail_url} alt="thumbnail" />
             </button>
           ) : null}
           <input type="hidden" name="video_id" value={values.video_id} />
           <input type="hidden" name="thumbnail_url" value={values.thumbnail_url} />
         </div>
-        <Button type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} span />
+        <Button color='blue' type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} span />
       </form>
       {/* {playerState && <VideoPlayer onClose={() => setPlayerState(false)} videoId={playerState}/>} */}
     </Modal>

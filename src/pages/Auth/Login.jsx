@@ -40,10 +40,10 @@ function Login() {
       const res = await logInUser(email, password)
       
       if(res.success) navigate('/dashboard')
-      if(res.error) setError(res.error)
-    } catch (error){
+      if(res.error) setError(res.error.message)
+    } catch(error){
       console.error(error)
-      setError('an error occured: ')
+      setError('an error occured')
     } finally{
       setLoading(false)
     }

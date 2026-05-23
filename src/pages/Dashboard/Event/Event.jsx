@@ -32,7 +32,7 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   return (
     <tr>
       <td>{row.title}</td>
-      <td className={s.descriptionData}>{row.description}</td>
+      <td>{row.description}</td>
       <td>{row.location}</td>
       <td className='text-right'>{`${formatDate(row.date)} ${formatTime(row.time_start)}${row.time_end ? ` - ${formatTime(row.time_end)}`: ''}`}</td>
       <td>
@@ -79,7 +79,7 @@ function Event() {
 
   const handleDelete = async (id) => {
     Swal.fire({
-      title: `Do you want to Delete this ${TABLE_NAME}?`,
+      title: `Do you want to delete this ${TABLE_NAME}?`,
       showDenyButton: true,
       denyButtonText: `Cancel`,
       confirmButtonText: 'Delete',
@@ -130,8 +130,9 @@ function Event() {
       {(isError && !isLoading)
         ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => refetch()}>Try again</button></p>
         : <>
-          <section className={s.actionHeader}>
+          <section>
             <Button
+              color='blue'
               text={`Add ${wordCap(TABLE_NAME)}`}
               icon={addSVG}
               onClick={openCreateModal}
@@ -195,6 +196,7 @@ function Event() {
         'Date': 'date',
         'Time Start': 'time_start',
         'Time End': 'time_end',
+        'Created At': 'created_at',
       }}}/>}
     </div>
   )

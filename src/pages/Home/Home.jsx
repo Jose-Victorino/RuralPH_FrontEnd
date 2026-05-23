@@ -69,7 +69,6 @@ function Home() {
             <Button
               text='Join Ruri Club'
               color='yellow'
-              size='lg'
               role='link'
               to='https://ruriclub.com/pages/membership'
             />

@@ -105,32 +105,42 @@ export function AuthContextProvider({children}) {
     }
   }, [])
 
-  const signUpNewUser = async (email, password) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    })
+  const signUpNewUser = async (first_name, last_name, email, password) => {
+    try{
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            first_name,
+            last_name
+          },
+        },
+      })
+      if(error){
+        console.error('Error on sign up: ', error)
+        return { success: false, error }
+      }
 
-    if(error){
-      console.error('Error on signing up: ', error)
-      return { success: false, error }
+      return { success: true, data }
+    } catch(error){
+      console.error('Error on sign up: ', error)
     }
-    return { success: true, data }
   }
 
   const logInUser = async (email, password) => {
-    try {
+    try{
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
       if(error){
         console.error('Error on login: ', error)
-        return { success: false, error: error.message }
+        return { success: false, error }
       }
       
       return { success: true, data }
-    } catch (error) {
+    } catch(error){
       console.error('Error on login: ', error)
     }
   }
