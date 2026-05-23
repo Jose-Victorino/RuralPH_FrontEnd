@@ -2,8 +2,10 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
+import cn from 'classnames'
 
 import { formatDate, wordCap } from '@/library/Util'
+import { categoryHooks } from '@/service/crudService'
 import { storyHooks } from '@/service/crudService'
 
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
@@ -14,6 +16,7 @@ import InformationModal from '../InformationModal'
 import ActionDropdown from '../ActionDropdown'
 
 import StoryModal from './Story.modal'
+import CategoryModal from './Category.modal'
 
 import s from './Story.module.scss'
 
@@ -29,9 +32,21 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
 
   return (
     <tr>
-      <td>{row.title}</td>
-      <td className={s.descriptionData}>{row.description}</td>
-      <td className='text-right'>{row?.story_media?.length}</td>
+      <td>
+        {row.title}
+      </td>
+      <td>
+        {row.category?.name}
+      </td>
+      <td>
+        <div className='ql-override ql-snow'>
+          <div
+            className={cn('ql-editor', s.descriptionPreview)}
+            dangerouslySetInnerHTML={{ __html: row.description }}
+          />
+        </div>
+      </td>
+      <td className='text-right'>{row?.story_media?.length || 0}</td>
       <td className='text-right'>{formatDate(row.created_at)}</td>
       <td>
         <div className='pos-r flex j-center a-center'>
@@ -61,6 +76,7 @@ function Story() {
 
   const [infoModal, setInfoModal] = useState(false)
   const [mainModal, setMainModal] = useState('')
+  const [categotyModal, setCategoryModal] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null)
   const [page, setPage] = useState(1)
   
@@ -68,16 +84,22 @@ function Story() {
   
   storyHooks.subscribe(['story_media'])
 
+  const { data: { data: categoryData = [] } = {} } = categoryHooks.getAll()
+
   const { data: { data: storyData = [], count } = {}, isLoading, isError, refetch } = storyHooks.getAll({
+    select: '*, story_media(id, media_path), category(name, slug), profiles(first_name, last_name)',
     page,
     pageSize: PER_PAGE,
+    filters: {
+      status: 'published',
+    },
   })
 
   const totalPages = Math.ceil(count / PER_PAGE) || 1
 
   const handleDelete = async (id) => {
     Swal.fire({
-      title: `Do you want to Delete this ${TABLE_NAME}?`,
+      title: `Do you want to delete this ${TABLE_NAME}?`,
       showDenyButton: true,
       denyButtonText: `Cancel`,
       confirmButtonText: 'Delete',
@@ -133,11 +155,18 @@ function Story() {
       {(isError && !isLoading)
         ? <p className='text-center'>An error has occured. <button className={s.tryAgainBtn} onClick={() => refetch()}>Try again</button></p>
         : <>
-          <section className={s.actionHeader}>
+          <section className='flex gap-10'>
             <Button
+              color='blue'
               text={`Add ${wordCap(TABLE_NAME)}`}
               icon={addSVG}
               onClick={openCreateModal}
+              />
+            <Button
+              color='blue'
+              btnType='secondary'
+              text='Manage Categories'
+              onClick={() => setCategoryModal(true)}
             />
           </section>
           <section className='flex-col gap-20'>
@@ -146,6 +175,7 @@ function Story() {
                 <thead>
                   <tr>
                     <th>Title</th>
+                    <th>Category</th>
                     <th>Description</th>
                     <th style={{textAlign: 'end'}}>Media</th>
                     <th style={{textAlign: 'end'}}>Date Posted</th>
@@ -155,7 +185,7 @@ function Story() {
                 <tbody>
                   {storyData.length === 0 ? 
                     <tr>
-                      <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                      <td colSpan={6} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                     </tr>
                   : storyData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
                   }
@@ -190,12 +220,14 @@ function Story() {
           </section>
         </>
       }
-      {mainModal && <StoryModal {...{mainModal, onClose: () => closeModal(), selectedRecord}}/>}
+      {mainModal && <StoryModal {...{mainModal, onClose: () => closeModal(), selectedRecord, categoryData }}/>}
+      {categotyModal && <CategoryModal onClose={() => setCategoryModal(false)} categoryData={categoryData}/>}
       {infoModal && <InformationModal {...{setInfoModal, selectedRecord, dir: {
         'Title': 'title',
-        'Description': 'description',
+        'Category': 'category.name',
         'Media': 'story_media',
-        'Date Posted': 'created_at',
+        'Author': 'profiles',
+        'Date Posted': 'published_at',
       }}}/>}
     </div>
   )

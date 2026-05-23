@@ -2,11 +2,45 @@
 @use 'sass:color';
 
 .container{
-  width: 700px;
-  max-width: calc(100% - 30px);
-  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr 640px 0.75fr;
+  gap: 30px;
 }
 
+.aside{
+  
+}
+.filterOptionList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  li{
+    display: flex;
+
+    button{
+      padding: 0.25em 0.5em;
+      border: 1px solid base.$gs-w-40;
+      border-radius: 3px;
+      
+      &:hover{
+        border-color: base.$gs-b-80;
+      }
+      &.selected{
+        color: base.$primary-light;
+        border-color: base.$primary-light;
+      }
+    }
+  }
+}
+.categoryLabel{
+  background-color: base.$primary-bg;
+  color: base.$primary-light;
+  width: fit-content;
+  padding: 0.125em 0.5em;
+  border-radius: 3px;
+  border: 1px solid base.$primary-border;
+}
 .storyItem{
   border-radius: 6px;
   background: base.$gs-w-100;
@@ -16,6 +50,7 @@
 .date{
   font-size: base.$sz-12-14;
   color: base.$gs-w-40;
+  margin-bottom: 5px;
 }
 
 .imgCont{
@@ -24,13 +59,16 @@
   aspect-ratio: 1.25;
 }
 
-.seeMoreBtn{
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  padding: 0;
+.descriptionClamped {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;   /* adjust number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.showMoreBtn {
   color: base.$secondary-color;
+  align-self: end;
 }
 
 .mediaGrid{

@@ -16,7 +16,9 @@ function MainLayout() {
       >
         <Outlet />
       </main>
-      <Footer />
+      {pathname !== '/story' &&
+        <Footer />
+      }
     </>
   )
 }

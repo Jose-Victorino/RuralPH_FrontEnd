@@ -1,27 +1,40 @@
 import ReactQuill, { Quill } from 'react-quill-new'
 import { MentionBlot, Mention } from 'quill-mention'
-import { useRef } from 'react';
 
-import "quill-mention/dist/quill.mention.css"
+import 'quill-mention/dist/quill.mention.css'
+import { useEffect, useRef } from 'react'
 
-Quill.register({ "blots/mention": MentionBlot, "modules/mention": Mention })
+class HashtagBlot extends MentionBlot {
+  static render(data) {
+    const node = document.createElement('a')
+    node.href = `/story?tag=${data.value}`
+    node.textContent = `#${data.value}`
+    return node
+  }
+}
+Quill.register({ 'blots/mention': HashtagBlot, 'modules/mention': Mention })
 
-const HASHTAG_SUGGESTIONS = ["capecod", "atcaperod"]
+const HASHTAG_SUGGESTIONS = ['capecod', 'atcaperod']
 
+const FONTS = ['lato', 'arial', 'times-new-roman', 'serif', 'monospace']
+const Font = Quill.import('formats/font')
+// @ts-ignore
+Font.whitelist = FONTS
+// @ts-ignore
+Quill.register(Font, true)
+
+// TODO: Add undo & redo
 const modules = {
   toolbar: [
-    [{ header: [false, 1, 2, 3, 4] }],
-    // [{ font: [] }],
-    // [{ size: ["small", false, "large", "huge"] }],
-    ["bold", "italic", "underline", { script: "sub" }, { script: "super" }],
+    // ['undo', 'redo'],
+    [{ font: FONTS }],
+    ['bold', 'italic', 'underline', { script: 'sub' }, { script: 'super' }],
     [{ color: [] }, { background: [] }],
-    [{ align: [] }, { list: "ordered" }, { list: "bullet" }, { indent: "-1" }, { indent: "+1" }],
-    // ["blockquote", "code-block"],
-    // ["link", "image", "video"],
+    [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
   ],
   mention: {
     allowedChars: /^[a-zA-Z0-9_]*$/,
-    mentionDenotationChars: ["#"],
+    mentionDenotationChars: ['#'],
     source(searchTerm, renderList){
       const term = searchTerm.toLowerCase()
       const matches = HASHTAG_SUGGESTIONS
@@ -35,58 +48,57 @@ const modules = {
 
       renderList(matches, searchTerm)
     },
-    renderItem: ({ value }) => `<a href='/story${value}'>#${value}</a>`,
-    showDenotationChar: true,
+    renderItem: ({ value }) => `#${value}`,
+    showDenotationChar: false,
   },
 }
 
 const formats = [
-  "header",
-  // "font",
-  // "size",
-  "bold", "italic", "underline",
-  "strike", "script",
-  "color", "background",
-  "align", "list", "indent",
-  // "blockquote", "code-block",
-  // "link", "image", "video",
-  "mention",
+  'font',
+  'bold', 'italic', 'underline', 'script',
+  'color', 'background',
+  'align', 'list', 'indent',
+  'mention',
 ]
 
-function RichTextEditor({ value, onChange }) {
+const extractHashtags = (editor) => {
+  const ops = editor.getContents().ops
+  const seen = new Set()
+
+  return ops
+    .filter(op => op.insert?.mention !== undefined)
+    .map(op => op.insert.mention.value)
+    .filter(tag => {
+      if(seen.has(tag)) return false
+      seen.add(tag)
+      return true
+    })
+}
+
+function RichTextEditor({ value, onChange, editorKey }) {
   const quillRef = useRef(null)
 
-  const extractHashtags = (quill) => {
-    const seen = new Set()
-    return quill.getContents().ops
-      .filter(op => op.insert?.mention?.denotationChar === "#")
-      .map(op => op.insert.mention.value)
-      .filter(tag => {
-        if(seen.has(tag)) return false
-        seen.add(tag)
-        return true
-      })
-  }
+  useEffect(() => {
+    const editor = quillRef.current?.getEditor()
+    if (!editor) return
+    editor.clipboard.dangerouslyPasteHTML(value.html ?? '')
+  }, [editorKey])
 
-  const handleChange = (html, delta, source, editor) => {
-    const quill = quillRef.current?.getEditor()
-    if(!quill) return
-
-    onChange?.({
-      html: quill.root.innerHTML,
-      hashtags: extractHashtags(quill)
+  const handleChange = (_, __, ___, editor) => {
+    onChange({
+      html: editor.getHTML(),
+      hashtags: extractHashtags(editor)
     })
   }
 
   return (
     <ReactQuill
       ref={quillRef}
-      theme="snow"
+      theme='snow'
       defaultValue={value.html}
       onChange={handleChange}
       modules={modules}
       formats={formats}
-      placeholder='Enter text...'
     />
   )
 }

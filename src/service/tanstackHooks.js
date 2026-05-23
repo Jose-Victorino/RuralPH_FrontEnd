@@ -14,6 +14,12 @@ export const createCRUDHooks = (service, tableName) => {
       queryFn: () => service.getAll(params),
       ...options,
     })
+  const useGetStories = (params = {}, options = {}) =>
+    useQuery({
+      queryKey: keys.lists(params),
+      queryFn: () => service.getStories(params),
+      ...options,
+    })
 
   const useGetById = (id, options = {}) =>
     useQuery({
@@ -31,24 +37,26 @@ export const createCRUDHooks = (service, tableName) => {
       ...options,
     })
 
-  const usePutData = (options = {}) => {
+  const usePutData = (isOptimistic = true, options = {}) => {
     const queryClient = useQueryClient()
     return useMutation({
       mutationFn: (payload) => service.putData(payload),
-      onMutate: async (payload) => {
-        await queryClient.cancelQueries({ queryKey: [tableName] })
-        const previous = queryClient.getQueriesData({ queryKey: [tableName] })
+      ...(isOptimistic ? {
+        onMutate: async (payload) => {
+          await queryClient.cancelQueries({ queryKey: [tableName] })
+          const previous = queryClient.getQueriesData({ queryKey: [tableName] })
 
-        queryClient.setQueriesData({ queryKey: [tableName] }, (old) => {
-          if(!old?.data) return old
-          return { ...old, data: [{ ...payload, id: crypto.randomUUID() }, ...old.data] }
-        })
+          queryClient.setQueriesData({ queryKey: [tableName] }, (old) => {
+            if(!old?.data) return old
+            return { ...old, data: [{ ...payload, id: crypto.randomUUID() }, ...old.data] }
+          })
 
-        return { previous }
-      },
-      onError: (err, _, context) => {
-        context.previous.forEach(([key, value]) => queryClient.setQueryData(key, value))
-      },
+          return { previous }
+        },
+        onError: (err, _, context) => {
+          context.previous.forEach(([key, value]) => queryClient.setQueryData(key, value))
+        }
+      } : {}),
       onSettled: () => queryClient.invalidateQueries({ queryKey: [tableName] }),
       ...options,
     })
@@ -113,6 +121,7 @@ export const createCRUDHooks = (service, tableName) => {
 
   return {
     getAll: useGetAll,
+    getStories: useGetStories,
     getById: useGetById,
     getRecent: useGetRecent,
     put: usePutData,

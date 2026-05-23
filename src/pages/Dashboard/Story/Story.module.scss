@@ -9,6 +9,10 @@
   @include c.form;
 }
 
+.errorMsg{
+  color: base.$error-color;
+}
+
 .dataTable{
   @include c.table;
 
@@ -17,33 +21,95 @@
       width: 25%;
     }
     &:nth-child(2){
-      width: 50%;
-    }
-    &:nth-child(3){
       width: 10%;
     }
+    &:nth-child(3){
+      width: 40%;
+    }
     &:nth-child(4){
+      width: 10%;
+    }
+    &:nth-child(5){
       width: 15%;
     }
   }
 }
 
-.mediaInput{
-  background: hsl(214, 15%, 98%);
-  width: 100%;
-  padding: 0.5em 0.75em;
-  border: 1px solid hsl(214, 9%, 87%);
-  border-radius: 6px;
+:global(.ql-override):global(.ql-snow){
+  overflow: hidden;
+
+  .descriptionPreview {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:global(.ql-editor){
+      padding: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      br{ display: none }
+
+      p, a, li, h1, h2, h3, h4, h5, h6, blockquote{
+        display: inline;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      ol, ul, li{ 
+        padding: 0;
+        margin: 0;
+        list-style: none; 
+        display: inline;
+      }
+
+      & * { &::before, &::after { content: none } }
+    }
+  }
 }
 
-.removeBtn{
-  color: base.$link-color;
-  font-size: base.$sz-12-14;
-  height: fit-content;
+.mediaList{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 
-  &:hover{
-    text-decoration: underline;
+  li{
+    height: 180px;
+    border-radius: 6px;
+    overflow: hidden;
   }
+  img{
+    object-fit: cover;
+    height: 100%;
+  }
+}
+
+.AddMedia{
+  background-color: base.$gs-w-70;
+  aspect-ratio: 1;
+  height: 100%;
+
+  svg{
+    height: 2em;
+    width: 2em;
+  }
+}
+.deleteMediaBtn{
+  position: absolute;
+  top: 0.375em;
+  right: 0.375em;
+  background-color: base.$gs-w-70;
+  display: flex;
+  padding: 0.375em;
+  border-radius: 50%;
+
+  svg{
+    fill: base.$gs-b-90;
+    height: 0.75em;
+    width: 0.75em;
+  }
+
 }
 
 .tryAgainBtn{
@@ -52,4 +118,86 @@
 
 .pagination{
   @include c.pagination;
+}
+
+.categoryList{
+  display: flex;
+  flex-direction: column;
+
+  li{
+    display: flex;
+    gap: 15px;
+    padding-block: 10px;
+
+    &:not(:last-child){
+      border-bottom: 1px solid base.$gs-w-50;;
+    }
+  }
+
+  button{
+    display: flex;
+    padding: 0.5em;
+    border-radius: 6px;
+    height: fit-content;
+
+    svg{
+      fill: white;
+      height: 0.75em;
+      width: 0.75em;
+    }
+
+    &.greenBtn{
+      background-color: base.$primary-color;
+    }
+    &.blueBtn{
+      background-color: base.$link-color;
+    }
+    &.redBtn{
+      background-color: base.$error-color;
+    }
+  }
+  .categoryInput{
+    width: 100%;
+    padding: 0.25em 0.5em;
+    border: none;
+  }
+  .categoryName{
+    width: 100%;
+    padding: 0.25em;
+  }
+}
+
+.selectCont{
+  display: flex;
+  flex-direction: column;
+
+  .inputRequired{
+    color: red;
+    line-height: 1;
+  }
+  select{
+    @include base.input;
+    padding: 6px;
+  }
+}
+
+.draftTable{
+  @include c.table;
+  thead th{
+    &:nth-child(1){
+      width: 20%;
+    }
+    &:nth-child(2){
+      width: 15%;
+    }
+    &:nth-child(3){
+      width: 50%;
+    }
+    &:nth-child(4){
+      width: 15%;
+    }
+    &:nth-child(5){
+      min-width: 50px;
+    }
+  }
 }

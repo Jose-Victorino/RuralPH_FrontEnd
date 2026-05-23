@@ -9,7 +9,10 @@ const ForgotPassword = lazy(() => import('@/pages/Auth/ForgotPassword'))
 const Recover = lazy(() => import('@/pages/Auth/Recover'))
 const SignUp = lazy(() => import('@/pages/Auth/SignUp'))
 
+import "react-quill-new/dist/quill.snow.css"
+import "quill-mention/dist/quill.mention.css"
 import '@/styles/reset.scss'
+import '@/styles/richText.scss'
 
 function App() {
 

@@ -33,9 +33,9 @@ function LandingApp() {
         <Route path='contact-us' element={<ContactUs />}/>
         <Route path='privacy-policy' element={<PrivacyPolicy />}/>
         <Route path='terms-and-conditions' element={<TermsAndConditions />}/>
+        <Route path='story' element={<Stories />}/>
+        <Route path='story/:storyId' element={<StoryPost />}/>
       </Route>
-      <Route path='stories' element={<Stories />}/>
-      <Route path='stories/:storyId' element={<StoryPost />}/>
     </Routes>
   )
 }

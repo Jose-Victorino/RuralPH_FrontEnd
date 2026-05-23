@@ -1,0 +1,78 @@
+@use "sass:map";
+
+.ql-container.ql-snow {
+  font-size: 16px;
+  font-family: 'Lato', sans-serif;
+
+  .ql-editor{
+    padding: 12px;
+    min-height: calc(24px + 1em * 1.5 * 5);
+    max-height: calc(24px + 1em * 1.5 * 10);
+  }
+}
+
+.ql-override .ql-editor{
+  padding: 0;
+}
+
+.ql-snow{
+  .ql-editor .mention {
+    background-color: unset;
+    border-radius: 0;
+    margin: unset;
+    padding: unset;
+    color: hsl(211, 100%, 50%);
+
+    a{
+      color: hsl(211, 100%, 50%);
+    }
+  }
+}
+
+.ql-editor u{
+  text-decoration: underline;
+}
+
+$ql-fonts: (
+  "lato": ("label": "Lato", "family": ("Lato", sans-serif)),
+  "serif": ("label": "Serif", "family": (serif)),
+  "arial": ("label": "Arial", "family": (Arial, sans-serif)),
+  "times-new-roman": ("label": "Times New Roman", "family": ("Times New Roman", serif)),
+  "monospace": ("label": "Monospace", "family": (monospace)),
+);
+
+@each $key, $props in $ql-fonts {
+  $label: map.get($props, "label");
+  $family: map.get($props, "family");
+
+  .ql-snow .ql-picker.ql-font {
+    .ql-picker-label[data-value="#{$key}"]::before,
+    .ql-picker-item[data-value="#{$key}"]::before {
+      content: $label;
+      @if $family { font-family: $family; }
+    }
+  }
+
+  .ql-editor .ql-font-#{$key} {
+    @if $family { font-family: $family; }
+  }
+}
+
+// .ql-mention-list-container{
+//   border-radius: 8px;
+//   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+//   border: none;
+//   width: max-content;
+//   overflow: hidden;
+// }
+
+// .ql-mention-list-item{
+//   padding: 8px 16px;
+//   font-size: 0.9rem;
+//   color: #333;
+// }
+
+// .ql-mention-list-item.selected{
+//   background-color: #e8f4fd;
+//   color: #1a73e8;
+// }

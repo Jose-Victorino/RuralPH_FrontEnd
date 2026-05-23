@@ -30,8 +30,8 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 
 **Navigation**
 - [x] Menu bar should hide while scrolling sa mobile.
-- [ ] Change the color of the menu bar. **`preference?`**
-- [ ] Some elements/navigation should stay stationary if needed.
+- [x] Change the color of the menu bar.
+- [x] Some elements/navigation should stay stationary if needed.
 - [x] Ilagay yung Shop sa pinakadulo ng navigation/menu.
 - [x] Shop should open in a new tab.
 
@@ -45,8 +45,8 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
   - Tablets
   - iPads
 - On mobile view:
-  - [x] The logo should be centered instead of nasa gilid
-  - [x] Make sure hindi maliit yung logo and very visible/readable pa din
+  - [x] The logo should be centered
+  - [x] Make sure hindi maliit yung logo and very visible/readable
   - [x] Adjust the logo size properly para standout pa din siya kahit mobile view
   - [x] Adjust the top and bottom spacing para mas balanced and hindi mukhang masyadong malayo yung logo
 
@@ -70,18 +70,17 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 - [ ] They want it to feel more like a modern blog or magazine style.
 - Add a sidebar with:
   - [ ] Date filter (prio)
-  - [ ] Search filter
-- [ ] Important texts/words sa stories should have highlights/emphasis.
-- [ ] Add preview-style buttons/features for stories.
+  - [x] Search filter
+- [x] Important texts/words sa stories should have highlights/emphasis.
+- [x] Add preview-style buttons/features for stories.
 
 **Story Creation / CMS Features**
 - Bigger and more spacious yung story creation/editor area.
 - Add Feature:
   - [ ] Unlisted visibility option for selected groups of people only
-  - [ ] Add "Save as draft" feature
-  - [ ] Add tags (e.g. #capecod #atcaperod)
-  - [ ] Add types/categories to the posts
-  - [ ] Add Hiding feature
+  - [x] Add "Save as draft" feature
+  - [x] Add tags (e.g. #capecod #atcaperod)
+  - [x] Add types/categories to the posts
   - [ ] Add archiving/hiding feature
 
 
@@ -142,8 +141,7 @@ src/
 ├─ App.jsx
 ├─ DashboardApp.jsx
 ├─ LandingApp.jsx
-├─ main.jsx
-└─ supabase-client.js
+└─ main.jsx
 ```
 
 ## Data Model (Reference)
@@ -163,11 +161,36 @@ src/
 - `time_start` (time)
 - `time_end` (time)
 
+### `News`
+- `id` (PK)
+- `video_id` (string)
+- `title` (string)
+- `description` (string)
+- `thumbnail_url` (string)
+- `video_url` (string)
+- `created_at` (timestamp)
+
+### `Profiles`
+- `id` (uuid)
+- `first_name` (string)
+- `last_name` (string)
+
+### `Category`
+- `id` (PK)
+- `name` (string)
+- `slug` (string)
+
 ### `Story`
 - `id` (PK)
+- `author_id` (FK -> Profiles)
+- `category_id` (FK -> Category)
 - `title` (string)
-- `description` (text)
+- `description` (string)
+- `hashtags` (string)
+- `status` (enum('draft', 'published'))
 - `created_at` (timestamp)
+- `updated_at` (timestamp)
+- `published_at` (timestamp)
 
 ### `StoryMedia`
 - `id` (PK)
