@@ -1,41 +1,41 @@
 @use '@/styles/base' as base;
 
 .textGreen{
-  color: base.$primary-color;
+  color: base.$primary-600;
 }
 .textGreen-dark{
-  color: base.$primary-dark;
+  color: base.$primary-700;
 }
 .textGreen-light{
-  color: base.$primary-light;
+  color: base.$primary-500;
 }
 .textYellow{
-  color: base.$secondary-color;
+  color: base.$secondary-300;
 }
 .textYellow-dark{
-  color: base.$secondary-dark;
+  color: base.$secondary-400;
 }
 .textYellow-light{
-  color: base.$secondary-light;
+  color: base.$secondary-200;
 }
 
 .bgGreen{
-  background-color: base.$primary-color;
+  background-color: base.$primary-600;
 }
 .bgGreen-dark{
-  background-color: base.$primary-dark;
+  background-color: base.$primary-700;
 }
 .bgGreen-light{
-  background-color: base.$primary-light;
+  background-color: base.$primary-500;
 }
 .bgYellow{
-  background-color: base.$secondary-color;
+  background-color: base.$secondary-300;
 }
 .bgYellow-dark{
-  background-color: base.$secondary-dark;
+  background-color: base.$secondary-400;
 }
 .bgYellow-light{
-  background-color: base.$secondary-light;
+  background-color: base.$secondary-200;
 }
 
 [data-ros^=fade],
@@ -166,10 +166,10 @@
   container: res-row / inline-size;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--gap, 30px);
+  gap: var(--gap, 40px);
 
   & > * {
-    flex: 1 1 calc((100% / var(--cols, 3)) - var(--gap, 30px));
+    flex: 1 1 calc((100% / var(--cols, 3)) - var(--gap, 40px));
   }
 
   @container res-row (max-width: 1200px) {

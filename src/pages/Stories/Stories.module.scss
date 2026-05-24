@@ -3,8 +3,16 @@
 
 .container{
   display: grid;
-  grid-template-columns: 1fr 640px 0.75fr;
+  grid-template-columns: 1fr 680px 0.625fr;
   gap: 30px;
+
+  @media (max-width: 1200px){
+    grid-template-columns: 1fr 2.25fr;
+  }
+
+  @media (max-width: 780px){
+    grid-template-columns: 1fr;
+  }
 }
 
 .aside{
@@ -27,15 +35,15 @@
         border-color: base.$gs-b-80;
       }
       &.selected{
-        color: base.$primary-light;
-        border-color: base.$primary-light;
+        color: base.$primary-500;
+        border-color: base.$primary-500;
       }
     }
   }
 }
 .categoryLabel{
   background-color: base.$primary-bg;
-  color: base.$primary-light;
+  color: base.$primary-500;
   width: fit-content;
   padding: 0.125em 0.5em;
   border-radius: 3px;
@@ -45,6 +53,13 @@
   border-radius: 6px;
   background: base.$gs-w-100;
   box-shadow: base.$shadow;
+
+  .txt{
+    background-image: linear-gradient(65deg,
+      color.scale(base.$gs-w-90) 30%,
+      color.scale(base.$gs-w-100) 100%
+    );
+  }
 }
 
 .date{
@@ -61,13 +76,13 @@
 
 .descriptionClamped {
   display: -webkit-box;
-  -webkit-line-clamp: 3;   /* adjust number of lines */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.showMoreBtn {
-  color: base.$secondary-color;
+.showMoreBtn{
+  color: base.$secondary-300;
   align-self: end;
 }
 
@@ -115,11 +130,11 @@
   width: fit-content;
   
   &:hover{
-    color: base.$secondary-color;
+    color: base.$secondary-300;
     text-decoration: underline;
 
     svg{
-      fill: base.$secondary-color;
+      fill: base.$secondary-300;
     }
   }
   svg{
@@ -141,7 +156,7 @@
     object-fit: cover;
     height: 280px;
     width: 100%;
-    
+
     @media (max-width: 780px){
       height: unset;
     }

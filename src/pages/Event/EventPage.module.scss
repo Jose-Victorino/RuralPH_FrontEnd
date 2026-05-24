@@ -7,11 +7,11 @@
   width: fit-content;
   
   &:hover{
-    color: base.$secondary-color;
+    color: base.$secondary-300;
     text-decoration: underline;
 
     svg{
-      fill: base.$secondary-color;
+      fill: base.$secondary-300;
     }
   }
   svg{
@@ -26,7 +26,7 @@
 }
 
 .info{
-  background: color.change(base.$primary-color, $alpha: 0.9);
+  background: color.change(base.$primary-600, $alpha: 0.9);
   color: base.$gs-w-100;
   display: flex;
   flex-direction: column;

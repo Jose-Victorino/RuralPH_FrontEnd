@@ -20,12 +20,13 @@ Our journey (admin)	| `Done`    	|
 
 Rural Rising is a React + Vite web application focused on storytelling, events, and community-facing content for rural development initiatives.
 
+**Added Revisions**
+- [ ] Replace certain pics of Ace and Andie Estrada relative to content associated
 
 **Font Style & Typography**
 - [x] They want a font style similar to Monotype Montserrat mas bold, bigger, and easier to read.
 - [x] Adjust the overall font sizes para mas readable especially sa mobile and tablet view.
 - [x] Capitalize each word properly sa headings/titles.
-- [ ] Ang peg nila is parang magazine/blog style na may emphasized or highlighted words para mas engaging basahin.
 - [x] Improve spacing between texts and sections para hindi dikit-dikit tingnan.
 
 **Navigation**
@@ -52,21 +53,21 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 
 **Layout & Design**
 - [x] Adjust the size of pictures and text para mas readable and mas balanced tingnan.
-- [ ] Apply gradient backgrounds.
-- [ ] Adjust the color palette/theme para mas modern and visually appealing.
+- [x] Apply gradient backgrounds.
+- [x] Adjust the color palette/theme para mas modern and visually appealing.
 - [ ] As much as possible avoid plain white-heavy layouts.
 - [ ] Do not use a plain white and orange combination only.
-- [ ] Adjust the color/design of the menu bar para bagay sa overall theme.
-- [ ] Make sure readable yung text and hindi masakit sa eyes.
+- [x] Adjust the color/design of the menu bar para bagay sa overall theme.
+- [x] Make sure readable yung text and hindi masakit sa eyes.
 - [x] Add proper spacing sa sections and components.
 
 **About Us / Our Journey**
 - [x] Remove categories in `Our Journey`.
 - [x] Merge `Our Journey` & `About Us`.
-- [ ] Make the section cleaner and more organized.
+- [x] Make the section cleaner and more organized.
 
 **Stories / Blog Section**
-- [ ] Highlight the Stories section since isa siya sa main features ng website.
+- [x] Highlight the Stories section since isa siya sa main features ng website.
 - [ ] They want it to feel more like a modern blog or magazine style.
 - Add a sidebar with:
   - [ ] Date filter (prio)

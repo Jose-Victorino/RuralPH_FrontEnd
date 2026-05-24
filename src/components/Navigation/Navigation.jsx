@@ -4,9 +4,9 @@ import { UserAuth } from '@/context/AuthContext'
 import cn from 'classnames'
 
 import { scrollReset } from '@/library/Util'
+import useIsMobile from '@/hooks/useMobile'
 
 import s from './Navigation.module.scss'
-import useIsMobile from '@/hooks/useMobile'
 
 const facebookIcon = <svg xmlns="http://www.w3.org/2000/svg" fill="" viewBox="0 0 512 512"><path d="M512 256C512 114.6 397.4 0 256 0S0 114.6 0 256C0 376 82.7 476.8 194.2 504.5V334.2H141.4V256h52.8V222.3c0-87.1 39.4-127.5 125-127.5c16.2 0 44.2 3.2 55.7 6.4V172c-6-.6-16.5-1-29.6-1c-42 0-58.2 15.9-58.2 57.2V256h83.6l-14.4 78.2H287V510.1C413.8 494.8 512 386.9 512 256h0z"/></svg>
 const xIcon = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M453.2 112L523.8 112L369.6 288.2L551 528L409 528L297.7 382.6L170.5 528L99.8 528L264.7 339.5L90.8 112L236.4 112L336.9 244.9L453.2 112zM428.4 485.8L467.5 485.8L215.1 152L173.1 152L428.4 485.8z"/></svg>
@@ -58,9 +58,9 @@ function Navigation() {
     const handleScroll = () => setAtTop(window.scrollY === 0)
 
     handleScroll()
-    window.addEventListener("scroll", handleScroll)
+    window.addEventListener('scroll', handleScroll)
 
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [pathname])
 
   const closeMenu = () => setMenuVisible(false)
@@ -87,6 +87,8 @@ function Navigation() {
 
       if(currentScrollY > lastScrollY){
         setCollapsed(true)
+        
+        if(isMobile) setMenuVisible(false)
       }
 
       if(currentScrollY < lastScrollY){
@@ -128,7 +130,9 @@ function Navigation() {
     return () => {
       window.removeEventListener('resize', syncNavHeight)
     }
-  }, [pathname, atTop, menuVisible, subnavOpen])
+  }, [])
+  
+  const fullName = `${session?.user.user_metadata.first_name} ${session?.user.user_metadata.last_name}`
 
   return (
     <>
@@ -145,6 +149,7 @@ function Navigation() {
             <div className='flex gap-20'>
               <a href="tel:+639175017787">+63 9175017787</a>
               <a href="mailto:hello@ruralrisingph.com">hello@ruralrisingph.com</a>
+              <Socmed />
             </div>
           </div>
         </section>
@@ -198,11 +203,11 @@ function Navigation() {
               </ul>
             </nav>
             <div className='flex gap-15'>
-              <Socmed />
               <Link className={s.userLink} to='/auth/login'>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path d="M399 384.2C376.9 345.8 335.4 320 288 320l-64 0c-47.4 0-88.9 25.8-111 64.2c35.2 39.2 86.2 63.8 143 63.8s107.8-24.7 143-63.8zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 16a72 72 0 1 0 0-144 72 72 0 1 0 0 144z"/>
                 </svg>
+                <p>{fullName}</p>
               </Link>
             </div>
           </div>

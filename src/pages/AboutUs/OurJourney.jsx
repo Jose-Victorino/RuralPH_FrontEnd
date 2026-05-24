@@ -18,7 +18,7 @@ function Post({ posts }) {
   return (
     <>
       <h3 data-ros='fade-right'>Our Journey</h3>
-      <div className={cn('flex gap-30 w-100', s.journeyPosts)}>
+      <div className={cn('flex gap-40 w-100', s.journeyPosts)}>
         <div data-ros='fade-right' className={s.mainPost}>
           <Link to={`/our-journey/p/${firstJourney.id}`} onClick={() => scrollReset()}>
             <div className={s.imageCont}>

@@ -15,13 +15,13 @@
   gap: 10px;
   
   svg{
-    fill: base.$secondary-color;
+    fill: base.$secondary-300;
     height: 1em;
     width: 1em;
   }
   a{
     width: fit-content;
-    color: base.$secondary-color;
+    color: base.$secondary-300;
 
     &:hover{
       text-decoration: underline;
@@ -36,8 +36,8 @@
 
   &:hover{
     color: white;
-    background: base.$primary-light;
-    border-color: base.$primary-light;
+    background: base.$primary-500;
+    border-color: base.$primary-500;
 
     svg{
       fill: white;

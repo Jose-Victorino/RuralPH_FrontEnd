@@ -1,21 +1,18 @@
 @use '@/styles/base' as base;
 
 .navigation{
-  background: base.$primary-dark;
+  background-color: base.$primary-700;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 1;
   width: 100%;
-  box-shadow: 0px 0px 20px hsla(0, 0%, 0%, 0.2);
+  box-shadow: 0px 0px 20px hsla(0, 0%, 0%, 0.3);
   transition: transform 0.2s ease-in-out;
 
   &.atTop{
+    background: none;
     box-shadow: none;
-    
-    .top, .bottom{
-      background: none;
-    }
   }
   &.collapsed{
     transform: translateY(-100%);
@@ -26,15 +23,18 @@
     display: flex;
 
     &:hover, &.active{
-      color: base.$secondary-color;
+      color: base.$secondary-300;
     }
   }
 }
 
 .top{
+  display: flex;
+  align-items: center;
+  height: 28px;
+
   a{
     font-size: base.$sz-12-14;
-    padding-block: 0.25em;
   }
 }
 
@@ -68,20 +68,23 @@
     fill: base.$gs-w-100;
 
     &:hover{
-      fill: base.$secondary-color;
+      fill: base.$secondary-300;
     }
   }
 }
 
 .userLink{
   display: flex;
+  gap: 10px;
   
   svg{
     height: 1.5em;
     fill: base.$gs-w-100;
 
-    &:hover{
-      fill: base.$secondary-color;
+  }
+  &:hover{
+    svg{
+      fill: base.$secondary-300;
     }
   }
 }
@@ -124,7 +127,7 @@
 }
 
 .subNav{
-  background: base.$primary-light;
+  background: base.$primary-600;
   position: absolute;
   top: 100%;
   z-index: 1;
@@ -154,7 +157,7 @@
 }
 
 .mobileNav{
-  background: base.$primary-light;
+  background: base.$primary-700;
   position: fixed;
   top: 0;
   left: 0;
@@ -194,7 +197,7 @@
       width: 100%;
 
       &.active{
-        color: base.$secondary-color;
+        color: base.$secondary-300;
       }
     }
   }

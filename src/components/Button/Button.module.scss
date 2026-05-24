@@ -9,8 +9,8 @@ $toggleBg: base.$gs-w-80;
 
 $colors: (
   "blue": hsl(211, 100%, 45%),
-  "green": base.$primary-color,
-  "yellow": base.$secondary-color,
+  "green": base.$primary-600,
+  "yellow": base.$secondary-300,
   "red": hsl(0, 52%, 56%),
   "light": hsl(214, 6%, 13%),
   "dark": hsl(214, 12%, 92%),
@@ -42,7 +42,7 @@ $size: (
 
 @mixin btn-base{
   font-size: var(--btn-size);
-  padding: 0.625em 1em;
+  padding: 0.5em 1.25em;
   gap: 4px;
   text-align: center;
 

@@ -92,7 +92,7 @@ const StoryFeed = ({ storyData, count, isFetching, page, setPage }) => {
           return (
             <div data-ros='fade-up' key={story.id} className={cn('flex-col', s.storyItem)}>
               <Link to={`/story/${story.id}`} onClick={() => scrollReset()}>
-                <div className='flex-col gap-10 pad-15'>
+                <div className={cn('flex-col gap-10 pad-15', s.txt)}>
                   <div>
                     <h5>{story.title}</h5>
                     <p className={s.date}>{formatDate(story.published_at)}</p>
@@ -188,8 +188,8 @@ function Stories() {
   }
 
   return isLoading ? <div className='container pad-block-40' style={{height: '90vh'}}><Loader /></div> : (
-    <div className={cn('container', s.container)}>
-      <aside className={cn('flex-col gap-20 pad-block-40', s.aside)}>
+    <div className={cn('container pad-block-40', s.container)}>
+      <aside className={cn('flex-col gap-20', s.aside)}>
         <form  onSubmit={handleSubmit}>
           <Input type='text' name='search' value={values.search} onChange={onChange} placeholder='Search...' />
         </form>
@@ -226,7 +226,7 @@ function Stories() {
           </ul>
         </div>
       </aside>
-      <section className='flex-col gap-20 pad-block-40'>
+      <section className='flex-col gap-20'>
         {isError ?
           <div className={cn('flex-col a-center gap-10', s.errorState)}>
             <p>{isError}</p>

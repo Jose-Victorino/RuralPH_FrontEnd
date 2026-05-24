@@ -99,7 +99,7 @@
 
 @mixin refetch-btn{
   width: fit-content;
-  color: base.$secondary-color;
+  color: base.$secondary-300;
 
   &:hover{
     text-decoration: underline;

@@ -53,15 +53,12 @@
   
     h2{
       font-size: base.$sz-20-24;
-      color: base.$secondary-color;
+      color: base.$secondary-300;
     }
   }
 }
 
 
-// .stats{
-//   background: base.$primary-color;
-// }
 .statsList{
   display: flex;
   flex-wrap: wrap;
@@ -73,6 +70,14 @@
     display: flex;
     flex-direction: column;
     text-align: center;
+  }
+
+  p{
+    background-color: base.$primary-bg;
+    color: base.$primary-600;
+    padding: 0.25em 0.75em;
+    border-radius: 3px;
+    box-shadow: inset 0 0 0 1px base.$primary-border;
   }
 }
 .approachesList{
@@ -104,7 +109,7 @@
     color: white;
   }
   a{
-    color: base.$secondary-color;
+    color: base.$secondary-300;
   }
 
   .approachesInner{
@@ -117,7 +122,7 @@
 }
 
 .section2{
-  background-image: linear-gradient(60deg, base.$primary-light 30%, base.$primary-dark 100%);
+  background-image: linear-gradient(60deg, base.$primary-700 30%, base.$primary-800 100%);
   position: relative;
   color: base.$gs-w-100;
   padding-block: 140px;
