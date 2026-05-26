@@ -9,8 +9,10 @@
   @include c.form;
 }
 
-.dataTable{
+.tableCont{
   @include c.table;
+}
+.dataTable{
 
   thead th{
     &:nth-child(1){

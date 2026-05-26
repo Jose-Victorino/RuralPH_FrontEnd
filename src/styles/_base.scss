@@ -119,7 +119,7 @@ $link-color: hsl(211, 100%, 50%);
   }
 }
 
-@mixin grid-repeat-column($repeat, $width) {    
+@mixin grid-repeat-column($repeat, $width, $mobile-view: 1fr){    
   @if not(meta.type-of($repeat) == number or $repeat == auto-fit or $repeat == auto-fill){
     @error "Invalid value for $repeat. Use a number, auto-fit, or auto-fill.";
   }
@@ -128,7 +128,7 @@ $link-color: hsl(211, 100%, 50%);
   grid-template-columns: repeat(#{$repeat}, minmax($width, 1fr));
 
   @media(max-width: 560px){
-    grid-template-columns: 1fr;
+    grid-template-columns: $mobile-view;
   }
 }
 

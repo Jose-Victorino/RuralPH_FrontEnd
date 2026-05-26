@@ -9,7 +9,7 @@ export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 /**
  * @typedef {{
  *  defaultSelect?: String
- *  extend?: (base: import('@supabase/supabase-js').PostgrestQueryBuilder) => ({})
+ *  extend?: (base: import('@supabase/supabase-js').PostgrestQueryBuilder, crud: any) => ({})
  * }} Options
  */
 /**
@@ -20,12 +20,12 @@ export const createCRUD = (
   tableName,
   {
     defaultSelect = '*',
-    extend = (_base) => ({}),
+    extend = (_base, _crud) => ({}),
   } = {}
 ) => {
   const base = supabase.from(tableName)
 
-  return {
+  const crud = {
     getAll: async ({ select = defaultSelect, filters = {}, search = { query: '', columns: [] }, order = { column: 'id', ascending: false }, page = null, pageSize = 10 } = {}) => {
       let req = base
         .select(select, page ? { count: 'exact' } : undefined)
@@ -49,13 +49,14 @@ export const createCRUD = (
       if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
       return result
     },
-    getById: async (id, { select = defaultSelect } = {}) => {
+    getById: async ({column = 'id', id}, { select = defaultSelect, filters = {} } = {}) => {
       const result = await base
         .select(select)
-        .eq('id', id)
+        .eq(column, id)
+        .match(filters)
         .maybeSingle()
   
-      if(result.error) console.error(`Error getting on ${tableName}:`, result.error.message)
+      if(result.error) console.error(`Error getting ${tableName}:`, result.error.message)
       return result
     },
     putData: async (payload) => {
@@ -63,7 +64,7 @@ export const createCRUD = (
         .insert(payload)
         .select()
   
-      if(result.error) console.error(`Error insert on ${tableName}:`, result.error.message)
+      if(result.error) console.error(`Error insert ${tableName}:`, result.error.message)
       return result
     },
     updateData: async (payload, id) => {
@@ -72,7 +73,7 @@ export const createCRUD = (
         .eq('id', id)
         .select()
   
-      if(result.error) console.error(`Error update on ${tableName}:`, result.error.message)
+      if(result.error) console.error(`Error update ${tableName}:`, result.error.message)
       return result
     },
     deleteData: async ({ column = 'id', value }) => {
@@ -80,7 +81,7 @@ export const createCRUD = (
         .delete()
         .eq(column, value)
   
-      if(result.error) console.error(`Error delete on ${tableName}:`, result.error.message)
+      if(result.error) console.error(`Error delete ${tableName}:`, result.error.message)
       return result
     },
     subscribe: (getData, extraTables = []) => {
@@ -106,11 +107,10 @@ export const createCRUD = (
       
       return () => channels.forEach(ch => supabase.removeChannel(ch))
     },
-    ...extend(base)
   }
+  return Object.assign(crud, extend(base, crud))
 }
 
-// TODO: only select what is needed then refractor select on dashboard
 export const eventService = createCRUD('event')
 export const eventHooks = createCRUDHooks(eventService, 'event')
 
@@ -120,8 +120,8 @@ export const newsHooks = createCRUDHooks(newsService, 'news')
 export const storyService = createCRUD('story', {
   defaultSelect: '*, story_media(id, media_path), category(name, slug)',
   extend: (base) => ({
-    getStories: async ({ filters = {}, category = null, hashtags = null, searchQuery = null, page = null, pageSize = 10 } = {}) => {
-      const baseSelect = 'id, title, description, published_at, story_media(id, media_path),'
+    getStories: async ({ filters = {}, category = null, hashtags = null, searchQuery = null, date = null, page = null, pageSize = 10 } = {}) => {
+      const baseSelect = 'id, public_id, title, description, published_at, story_media(id, media_path),'
 
       const categorySelect = category
         ? 'category!inner(name)'
@@ -129,12 +129,21 @@ export const storyService = createCRUD('story', {
 
       let req = base
         .select(`${baseSelect}${categorySelect}`, page ? { count: 'exact' } : undefined)
-        .order('id', { ascending: false })
+        .order('published_at', { ascending: false })
 
       req = req.match(filters)
 
       if(category)
         req = req.eq('category.slug', category)
+      
+      if(date){
+        const dayStart = `${date}T00:00:00Z`
+        const dayEnd = `${date}T23:59:59Z`
+
+        req = req
+          .gte('published_at', dayStart)
+          .lte('published_at', dayEnd)
+      }
 
       if(hashtags)
         req = req.ilike('hashtags', `%${hashtags}%`)
@@ -153,6 +162,25 @@ export const storyService = createCRUD('story', {
       const result = await req
 
       if(result.error) console.error(`Error getting on stories:`, result.error.message)
+      return result
+    },
+    getStory: async (id) => {
+      const result = await base
+        .select('title, description, published_at, story_media(id, media_path), category(name, slug)')
+        .eq('public_id', id)
+        .match({status: 'published'})
+        .filter('visibility', 'in', '("public","unlisted")')
+        .maybeSingle()
+  
+      if(result.error) console.error(`Error getting story:`, result.error.message)
+      return result
+    },
+    getPublicIds: async (id) => {
+      const result = await base
+        .select('id')
+        .eq('public_id', id)
+        .maybeSingle()
+
       return result
     }
   })

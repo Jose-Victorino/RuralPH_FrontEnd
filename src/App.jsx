@@ -1,8 +1,8 @@
 import { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 
-import LandingApp from './LandingApp'
-import DashboardApp from './DashboardApp'
+const LandingApp = lazy(() => import('./LandingApp'))
+const DashboardApp = lazy(() => import('./DashboardApp'))
 const AuthLayout = lazy(() => import('@/pages/Auth/AuthLayout'))
 const Login = lazy(() => import('@/pages/Auth/Login'))
 const ForgotPassword = lazy(() => import('@/pages/Auth/ForgotPassword'))

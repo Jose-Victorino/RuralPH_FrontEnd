@@ -3,6 +3,8 @@ import { formatDateTime, formatDate, formatTime } from '@/library/Util'
 
 import s from './InformationModal.module.scss'
 
+const appURL = import.meta.env.VITE_APP_URL
+
 function formatValue(path, val) {
   if(!val) return val
   if(Array.isArray(val)){
@@ -20,6 +22,9 @@ function formatValue(path, val) {
   if(path === 'profiles'){
     return `${val?.first_name} ${val?.last_name}`
   }
+  if(path === 'public_id'){
+    return `${appURL}/story/${val}`
+  }
 
   return val
 }
@@ -32,7 +37,7 @@ function InformationModal({ setInfoModal, selectedRecord, dir }) {
   return (
     <Modal
       onClose={() => setInfoModal(false)}
-      width='480px'
+      width='520px'
       height='620px'
     >
       <ul className={s.infoGrid}>

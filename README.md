@@ -70,7 +70,7 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 - [x] Highlight the Stories section since isa siya sa main features ng website.
 - [ ] They want it to feel more like a modern blog or magazine style.
 - Add a sidebar with:
-  - [ ] Date filter (prio)
+  - [x] Date filter (prio)
   - [x] Search filter
 - [x] Important texts/words sa stories should have highlights/emphasis.
 - [x] Add preview-style buttons/features for stories.
@@ -78,11 +78,11 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 **Story Creation / CMS Features**
 - Bigger and more spacious yung story creation/editor area.
 - Add Feature:
-  - [ ] Unlisted visibility option for selected groups of people only
+  - [x] Unlisted visibility option for selected groups of people only
   - [x] Add "Save as draft" feature
   - [x] Add tags (e.g. #capecod #atcaperod)
   - [x] Add types/categories to the posts
-  - [ ] Add archiving/hiding feature
+  - [x] Add archiving/hiding feature
 
 
 ## Features
@@ -185,10 +185,12 @@ src/
 - `id` (PK)
 - `author_id` (FK -> Profiles)
 - `category_id` (FK -> Category)
+- `public_id` (string unique)
 - `title` (string)
 - `description` (string)
 - `hashtags` (string)
 - `status` (enum('draft', 'published'))
+- `visibility` (enum('public', 'unlisted'))
 - `created_at` (timestamp)
 - `updated_at` (timestamp)
 - `published_at` (timestamp)

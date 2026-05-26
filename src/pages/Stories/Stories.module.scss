@@ -1,6 +1,10 @@
 @use '@/styles/base' as base;
 @use 'sass:color';
 
+html:has(.container){
+  scrollbar-gutter: stable;
+}
+
 .container{
   display: grid;
   grid-template-columns: 1fr 680px 0.625fr;
@@ -20,17 +24,16 @@
 }
 .filterOptionList{
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
 
-  li{
-    display: flex;
+  &[data-filter-type='category']{
+    flex-wrap: wrap;
+    gap: 10px;
 
     button{
-      padding: 0.25em 0.5em;
-      border: 1px solid base.$gs-w-40;
-      border-radius: 3px;
-      
+      padding: 0.25em 0.75em;
+      border: 1px solid base.$gs-w-60;
+      border-radius: 0.875em;
+
       &:hover{
         border-color: base.$gs-b-80;
       }
@@ -40,13 +43,28 @@
       }
     }
   }
+
+  &[data-filter-type='tag']{
+    flex-direction: column;
+    gap: 5px;
+
+    button{
+      &:hover{
+        color: base.$link-color;
+        text-decoration: underline;
+      }
+      &.selected{
+        color: base.$primary-500;
+      }
+    }
+  }
 }
 .categoryLabel{
   background-color: base.$primary-bg;
   color: base.$primary-500;
   width: fit-content;
-  padding: 0.125em 0.5em;
-  border-radius: 3px;
+  padding: 0.125em 0.75em;
+  border-radius: 0.375em;
   border: 1px solid base.$primary-border;
 }
 .storyItem{

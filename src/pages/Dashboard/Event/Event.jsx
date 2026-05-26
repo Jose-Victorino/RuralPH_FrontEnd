@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
@@ -28,6 +28,7 @@ const PER_PAGE = 10
 
 const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   const [dropdown, setDropdown] = useState(false)
+  const buttonRef = useRef(null)
 
   return (
     <tr>
@@ -36,22 +37,23 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
       <td>{row.location}</td>
       <td className='text-right'>{`${formatDate(row.date)} ${formatTime(row.time_start)}${row.time_end ? ` - ${formatTime(row.time_end)}`: ''}`}</td>
       <td>
-        <div className='pos-r flex j-center a-center'>
+        <div className='flex j-center a-center'>
           <button
+            ref={buttonRef}
             className='flex'
             title='actions menu'
             onClick={() => setDropdown(true)}
           >
             <MoreHorizIcon />
           </button>
-          {dropdown &&
-            <ActionDropdown
-              onInfo={() => openInfoModal(row)}
-              onEdit={() => openEditModal(row)}
-              onDelete={() => handleDelete(row.id)}
-              onClose={() => setDropdown(false)}
-            />
-          }
+          <ActionDropdown
+            anchorEl={buttonRef.current}
+            open={dropdown}
+            onInfo={() => openInfoModal(row)}
+            onEdit={() => openEditModal(row)}
+            onDelete={() => handleDelete(row.id)}
+            onClose={() => setDropdown(false)}
+          />
         </div>
       </td>
     </tr>
@@ -139,27 +141,29 @@ function Event() {
             />
           </section>
           <section className='flex-col gap-20'>
-            {isLoading ? <Loader /> : (
-              <table className={s.dataTable}>
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Location</th>
-                    <th style={{textAlign: 'end'}}>Date & Time</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {eventData.length === 0 ?
+            {isLoading ? <Loader /> :
+              <div className={s.tableCont}>
+                <table className={s.dataTable}>
+                  <thead>
                     <tr>
-                      <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Location</th>
+                      <th style={{textAlign: 'end'}}>Date & Time</th>
+                      <th></th>
                     </tr>
-                  : eventData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
-                  }
-                </tbody>
-              </table>
-            )}
+                  </thead>
+                  <tbody>
+                    {eventData.length === 0 ?
+                      <tr>
+                        <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                      </tr>
+                    : eventData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
             <div className={s.pagination}>
               <button
                 onClick={() => setPage(prev => Math.max(prev - 1, 1))}

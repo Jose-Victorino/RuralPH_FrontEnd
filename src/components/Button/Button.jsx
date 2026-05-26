@@ -5,12 +5,12 @@ import s from './Button.module.scss'
 
 const Button = ({
   btnType = 'primary',  // 'primary', 'secondary', 'tertiary'
-  size = 'md',       // 'sm', 'md', 'lg'
+  size = 'md',          // 'sm', 'md', 'lg'
   text = '',
-  type = null,          // 'button', 'submit', 'reset'
+  type = 'button',      // 'button', 'submit', 'reset'
   icon = null,
   iconPos = 'left',     // 'left', 'right'
-  color = 'green',       // 'blue', 'red', 'yellow', 'green', 'light', 'dark'
+  color = 'green',      // 'blue', 'red', 'yellow', 'green', 'light', 'dark'
   corners = 'curved',   // 'curved', 'sharp', 'rounded'
   title = null,
   disabled = false,
@@ -19,7 +19,8 @@ const Button = ({
   to = '',
   classNames = {},
   style={},
-  onClick = () => {},
+  onClick = (e) => {},
+  form = '',
 }) => {
   if(!['primary', 'secondary', 'tertiary'].includes(btnType.toLowerCase()))
     throw new Error("btnType must only be: 'primary', 'secondary', 'tertiary'")
@@ -53,13 +54,14 @@ const Button = ({
         borderRadius: corners.toLowerCase() === 'curved' ? '5px' : corners.toLowerCase() === 'rounded' && '1.25em',
       }}
       title={title}
-      type={['button', 'submit', 'reset'].includes(type) ? type : 'button'}
+      type={(type === 'button' || type === 'submit' || type === 'reset') ? type : 'button'}
       disabled={disabled}
-      onClick={() => onClick()}
+      onClick={(e) => onClick(e)}
       aria-label={title || text}
       aria-disabled={disabled}
       role={role}
-      to={isLink ? to : ''}
+      form={form ? form : undefined}
+      to={isLink ? to : undefined}
     >
       {icon}
       {text}

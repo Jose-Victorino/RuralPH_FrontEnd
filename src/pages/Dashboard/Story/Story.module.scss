@@ -1,20 +1,27 @@
 @use '@/styles/base' as base;
 @use '../generalStyles' as c;
 
+$blue: hsl(211, 84%, 49%);
+
 .container{
   @include c.container;
 }
 
 .form{
   @include c.form;
+  justify-content: unset;
+  min-height: unset;
 }
 
 .errorMsg{
   color: base.$error-color;
 }
 
-.dataTable{
+.tableCont{
   @include c.table;
+}
+
+.dataTable{
 
   thead th{
     &:nth-child(1){
@@ -24,21 +31,38 @@
       width: 10%;
     }
     &:nth-child(3){
-      width: 40%;
+      width: 30%;
     }
     &:nth-child(4){
       width: 10%;
     }
     &:nth-child(5){
+      width: 10%;
+    }
+    &:nth-child(6){
       width: 15%;
     }
   }
 }
 
+.publicSVG, .unlistedSVG, .privateSVG{
+  height: 1.25em;
+  width: 1.25em;
+}
+.publicSVG{
+  stroke: base.$primary-500;
+}
+.unlistedSVG{
+  stroke: $blue;
+}
+.privateSVG{
+  stroke: black;
+}
+
 :global(.ql-override):global(.ql-snow){
   overflow: hidden;
 
-  .descriptionPreview {
+  .descriptionPreview{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -109,7 +133,6 @@
     height: 0.75em;
     width: 0.75em;
   }
-
 }
 
 .tryAgainBtn{
@@ -167,6 +190,62 @@
   }
 }
 
+.stepList{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  li{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+
+    &:has(~ .selected) .dot{
+      background-color: base.$primary-600;
+      border-width: 0px;
+    }
+    &:has(~ .selected),
+    &.selected{
+      .dot{
+        border-color: base.$primary-600;
+      }
+      .divider{
+        background-color: base.$primary-600;
+      }
+    }
+    &.selected{
+      p{
+        color: base.$primary-600;
+      }
+    }
+  }
+
+  button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.375em 1em;
+  }
+  .dot{
+    background-color: white;
+    height: 1em;
+    width: 1em;
+    border-radius: 0.5em;
+    z-index: 1;
+    border: 4px solid base.$gs-w-60;
+  }
+  .divider{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: base.$gs-w-60;
+    height: 0.125em;
+    width: 100%;
+    transform: translate(-50%, calc(50% - 0.375em - 0.5em));
+  }
+}
+
 .selectCont{
   display: flex;
   flex-direction: column;
@@ -182,22 +261,69 @@
 }
 
 .draftTable{
-  @include c.table;
+
   thead th{
     &:nth-child(1){
-      width: 20%;
+      width: 25%;
     }
     &:nth-child(2){
-      width: 15%;
+      width: 20%;
     }
     &:nth-child(3){
-      width: 50%;
+      width: 35%;
     }
     &:nth-child(4){
-      width: 15%;
+      width: 10%;
     }
     &:nth-child(5){
+      width: 10%;
+    }
+    &:nth-child(6){
       min-width: 50px;
+    }
+  }
+}
+
+.visibility{
+  svg{
+    stroke: black;
+    height: 1.5em;
+    width: 1.5em;
+  }
+}
+.postLink{
+  color: base.$link-color;
+  overflow-wrap: break-word; 
+  word-break: break-all;
+  width: fit-content;
+}
+.visibilityOptions{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li{
+    display: flex;
+    border-radius: 6px;
+  }
+  button{
+    text-align: left;
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-radius: 6px;
+    width: 100%;
+    box-shadow: inset 0 0 0 1px black;
+
+    &.selected{
+      box-shadow: inset 0 0 0 2px $blue;
+
+      .title{
+        color: $blue;
+      }
+      svg{
+        stroke: $blue;
+      }
     }
   }
 }

@@ -33,6 +33,14 @@
   text-decoration: underline;
 }
 
+.ql-undo::before {
+  content: '↶';
+}
+
+.ql-redo::before {
+  content: '↷';
+}
+
 $ql-fonts: (
   "lato": ("label": "Lato", "family": ("Lato", sans-serif)),
   "serif": ("label": "Serif", "family": (serif)),

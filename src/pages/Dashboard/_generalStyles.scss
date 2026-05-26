@@ -21,6 +21,11 @@
 
 @mixin table{
   width: 100%;
+  overflow: auto hidden;
+
+  .dataTable{
+    width: 100%;
+  }
 
   th, td{
     padding: 6px 10px;
@@ -65,15 +70,13 @@
 
     svg{
       fill: base.$gs-b-70;
-      height: 20px;
-      width: 20px;
+      height: 1.25em;
+      width: 1.25em;
     }
   }
   .deleteBtn, .editBtn, .infoBtn{
     svg{
       fill: base.$gs-b-70;
-      height: 16px;
-      width: 16px;
     }
   }
 }

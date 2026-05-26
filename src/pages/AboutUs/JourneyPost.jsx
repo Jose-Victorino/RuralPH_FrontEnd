@@ -14,7 +14,7 @@ function JourneyPost() {
 
   useDocumentTitle(`${PAGE_NAME} | Rural Rising PH`)
   
-  const { data: { data: journeyData } = {}, isLoading, isError, error } = journeyHooks.getById(postId)
+  const { data: { data: journeyData } = {}, isLoading, isError, error } = journeyHooks.getById({id: postId})
   const { data: { data: recentPosts = [] } = {} } = journeyHooks.getRecent(postId)
 
   if(isLoading) return (

@@ -14,10 +14,19 @@ export const createCRUDHooks = (service, tableName) => {
       queryFn: () => service.getAll(params),
       ...options,
     })
+
   const useGetStories = (params = {}, options = {}) =>
     useQuery({
       queryKey: keys.lists(params),
       queryFn: () => service.getStories(params),
+      ...options,
+    })
+
+  const useGetStory = (id, options = {}) =>
+    useQuery({
+      queryKey: keys.record(id),
+      queryFn: () => service.getStory(id),
+      enabled: !!id,
       ...options,
     })
 
@@ -122,6 +131,7 @@ export const createCRUDHooks = (service, tableName) => {
   return {
     getAll: useGetAll,
     getStories: useGetStories,
+    getStory: useGetStory,
     getById: useGetById,
     getRecent: useGetRecent,
     put: usePutData,

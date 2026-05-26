@@ -96,7 +96,7 @@ const EventModal = ({ mainModal, onClose, selectedRecord }) => {
   })
 
   return (
-    <Modal onClose={onClose} width='480px' height='620px'>
+    <Modal onClose={onClose} width='600px' height='680px'>
       <form className={s.form} onSubmit={handleSubmit}>
         <div className='flex-col gap-10'>
           <Input

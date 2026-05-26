@@ -1,8 +1,8 @@
+import { useEffect, useRef } from 'react'
 import ReactQuill, { Quill } from 'react-quill-new'
 import { MentionBlot, Mention } from 'quill-mention'
 
 import 'quill-mention/dist/quill.mention.css'
-import { useEffect, useRef } from 'react'
 
 class HashtagBlot extends MentionBlot {
   static render(data) {
@@ -23,15 +23,33 @@ Font.whitelist = FONTS
 // @ts-ignore
 Quill.register(Font, true)
 
-// TODO: Add undo & redo
+const undo = function () {
+  this.quill.history.undo()
+}
+
+const redo = function () {
+  this.quill.history.redo()
+}
+
 const modules = {
-  toolbar: [
-    // ['undo', 'redo'],
-    [{ font: FONTS }],
-    ['bold', 'italic', 'underline', { script: 'sub' }, { script: 'super' }],
-    [{ color: [] }, { background: [] }],
-    [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-  ],
+  toolbar: {
+    container: [
+      ['undo', 'redo'],
+      [{ font: FONTS }],
+      ['bold', 'italic', 'underline', { script: 'sub' }, { script: 'super' }],
+      [{ color: [] }, { background: [] }],
+      [{ align: [] }, { list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+    ],
+    handlers: {
+      undo,
+      redo,
+    },
+  },
+  history: {
+    delay: 1000,
+    maxStack: 100,
+    userOnly: true,
+  },
   mention: {
     allowedChars: /^[a-zA-Z0-9_]*$/,
     mentionDenotationChars: ['#'],
@@ -50,6 +68,25 @@ const modules = {
     },
     renderItem: ({ value }) => `#${value}`,
     showDenotationChar: false,
+  },
+  keyboard: {
+    bindings: {
+      undo: {
+        key: 'z',
+        shortKey: true,
+        handler: function () {
+          this.quill.history.undo()
+        },
+      },
+      redo: {
+        key: 'z',
+        shortKey: true,
+        shiftKey: true,
+        handler: function () {
+          this.quill.history.redo()
+        },
+      },
+    },
   },
 }
 
@@ -80,7 +117,7 @@ function RichTextEditor({ value, onChange, editorKey }) {
 
   useEffect(() => {
     const editor = quillRef.current?.getEditor()
-    if (!editor) return
+    if(!editor) return
     editor.clipboard.dangerouslyPasteHTML(value.html ?? '')
   }, [editorKey])
 
@@ -95,7 +132,6 @@ function RichTextEditor({ value, onChange, editorKey }) {
     <ReactQuill
       ref={quillRef}
       theme='snow'
-      defaultValue={value.html}
       onChange={handleChange}
       modules={modules}
       formats={formats}

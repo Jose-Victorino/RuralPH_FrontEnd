@@ -1,20 +1,20 @@
 import { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 
-import MainLayout from '@/layouts/MainLayout'
-import Home from '@/pages/Home/Home'
-import AboutUs from '@/pages/AboutUs/AboutUs'
-import Faq from '@/pages/Faq/Faq'
+const MainLayout = lazy(() => import('@/layouts/MainLayout'))
+const Home = lazy(() => import('@/pages/Home/Home'))
+const AboutUs = lazy(() => import('@/pages/AboutUs/AboutUs'))
+const Faq = lazy(() => import('@/pages/Faq/Faq'))
 const News = lazy(() => import('@/pages/News/News'))
 const JourneyPost = lazy(() => import('@/pages/AboutUs/JourneyPost'))
 const Events = lazy(() => import('@/pages/Event/Events'))
 const EventPage = lazy(() => import('@/pages/Event/EventPage'))
 const Stories = lazy(() => import('@/pages/Stories/Stories'))
 const StoryPost = lazy(() => import('@/pages/Stories/StoryPost'))
-import StoreLocations from '@/pages/StoreLocations/StoreLocations'
-import ContactUs from '@/pages/ContactUs/ContactUs'
-import PrivacyPolicy from '@/pages/PrivacyPolicy/PrivacyPolicy'
-import TermsAndConditions from '@/pages/TermsAndConditions/TermsAndConditions'
+const StoreLocations = lazy(() => import('@/pages/StoreLocations/StoreLocations'))
+const ContactUs = lazy(() => import('@/pages/ContactUs/ContactUs'))
+const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy/PrivacyPolicy'))
+const TermsAndConditions = lazy(() => import('@/pages/TermsAndConditions/TermsAndConditions'))
 
 function LandingApp() {
   return (
@@ -34,7 +34,7 @@ function LandingApp() {
         <Route path='privacy-policy' element={<PrivacyPolicy />}/>
         <Route path='terms-and-conditions' element={<TermsAndConditions />}/>
         <Route path='story' element={<Stories />}/>
-        <Route path='story/:storyId' element={<StoryPost />}/>
+        <Route path='story/:publicId' element={<StoryPost />}/>
       </Route>
     </Routes>
   )

@@ -10,11 +10,12 @@
 
 .modalContainer{
   background: hsl(214, 12%, 96%);
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 280px;
   max-height: calc(100% - 30px);
-  min-width: 240px;
+  min-width: min(480px, calc(100% - 30px));
   max-width: calc(100% - 30px);
   box-shadow: 0 0 10px 1px hsla(0, 0%, 0%, 0.1);
   border-radius: 6px;
@@ -24,36 +25,44 @@
   overflow-y: auto;
   height: 100%;
   padding: 15px;
+  scrollbar-gutter: stable;
   
   &::-webkit-scrollbar {
     width: 10px;
   }
+  &::-webkit-scrollbar-track{
+    margin-block: 10px;
+  }
   &::-webkit-scrollbar-thumb{
-    background: hsl(240, 5%, 73%);
+    background-color: hsl(240, 5%, 73%);
     height: 5px;
-    border-radius: 4px;
   }
   &::-webkit-scrollbar-thumb:hover{
-    background: hsl(240, 5%, 65%);
+    background-color: hsl(240, 5%, 65%);
   }
 }
 
-.header{
-  background: hsl(214, 8%, 72%);
+.header, .setHeader{
   display: flex;
-  align-items: center;
-  min-height: 40px;
-  padding: 0 15px;
-  border-radius: 6px 6px 0 0;
+  padding: 15px 15px 0;
+}
+.header{
+  justify-content: space-between;
+}
+.setHeader{
+  justify-content: end;
+  min-height: 42px;
+}
+.footer{
+  padding: 10px 15px 15px;
+}
 
-  .closeButton{
-    display: flex;
+.closeButton{
+  display: flex;
+  height: fit-content;
+  
+  svg{
     height: 18px;
     width: 18px;
-    
-    svg{
-      height: 18px;
-      width: 18px;
-    }
   }
 }

@@ -2,7 +2,9 @@ import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import cn from 'classnames'
 
+import { VISIBILITY_MAP } from './Story'
 import { storyHooks } from '@/service/crudService'
+import { wordCap } from '@/library/Util'
 
 import Modal from '@/components/Modal/Modal'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -49,39 +51,43 @@ const DraftModal = ({onClose, onSubmit, drafts}) => {
       height='90%'
       width='900px'
     >
-      <table className={s.draftTable}>
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th style={{textAlign: 'end'}}>Media</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          {drafts.map((row) =>
-            <tr key={row.id} onClick={() => handleSubmit(row)}>
-              <td>{row.title}</td>
-              <td>{row.category?.name}</td>
-              <td>
-                <div className='ql-override ql-snow'>
-                  <div
-                    className={cn('ql-editor', s.descriptionPreview)}
-                    dangerouslySetInnerHTML={{__html: row.description}}
-                  />
-                </div>
-              </td>
-              <td className='text-right'>{row?.story_media?.length}</td>
-              <td>
-                <button className='flex' onClick={(e) => {e.stopPropagation(); handleDelete(row.id)}}>
-                  <DeleteIcon fontSize="medium" />
-                </button>
-              </td>
+      <div className={s.tableCont}>
+        <table className={s.draftTable}>
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th style={{textAlign: 'center'}}>Media</th>
+              <th style={{textAlign: 'center'}}>Visibility</th>
+              <th></th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {drafts.map((row) =>
+              <tr key={row.id} onClick={() => handleSubmit(row)}>
+                <td>{row.title}</td>
+                <td>{row.category?.name}</td>
+                <td>
+                  <div className='ql-override ql-snow'>
+                    <div
+                      className={cn('ql-editor', s.descriptionPreview)}
+                      dangerouslySetInnerHTML={{__html: row.description}}
+                    />
+                  </div>
+                </td>
+                <td className='text-center'>{row?.story_media?.length}</td>
+                <td className='text-center' title={wordCap(row.visibility)}>{VISIBILITY_MAP[row.visibility]}</td>
+                <td>
+                  <button className='flex' onClick={(e) => {e.stopPropagation(); handleDelete(row.id)}}>
+                    <DeleteIcon fontSize="medium" />
+                  </button>
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </Modal>
   )
 }

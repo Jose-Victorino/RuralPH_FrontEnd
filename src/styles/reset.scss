@@ -118,9 +118,9 @@ textarea{
 
   padding: var(--padding);
   padding-inline: calc(var(--padding) + calc((1lh - 2ex) / 2));
-  height: calc(4lh + 2 * (var(--padding) + 2px));
-  min-height: calc(2lh + 2 * (var(--padding) + 2px));
-  max-height: calc(8lh + 2 * (var(--padding) + 2px));
+  height: calc(6lh + 2 * (var(--padding) + 2px));
+  min-height: calc(4lh + 2 * (var(--padding) + 2px));
+  max-height: calc(10lh + 2 * (var(--padding) + 2px));
   width: 100%;
   resize: vertical;
   border: 1px solid base.$gs-w-50;

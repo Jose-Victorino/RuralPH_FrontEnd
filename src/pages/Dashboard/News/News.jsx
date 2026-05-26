@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { toast } from 'react-toastify'
 import Swal from 'sweetalert2'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
@@ -27,6 +27,7 @@ const PER_PAGE = 10
 
 const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
   const [dropdown, setDropdown] = useState(false)
+  const buttonRef = useRef(null)
 
   return (
     <tr>
@@ -34,22 +35,23 @@ const DataRow = ({ row, openInfoModal, openEditModal, handleDelete }) => {
       <td>{row.description}</td>
       <td className={s.checkmarkData}>{row.video_id && checkSVG}</td>
       <td>
-        <div className='pos-r flex j-center a-center'>
+        <div className='flex j-center a-center'>
           <button
+            ref={buttonRef}
             className='flex'
             title='actions menu'
             onClick={() => setDropdown(true)}
           >
             <MoreHorizIcon />
           </button>
-          {dropdown &&
-            <ActionDropdown
-              onInfo={() => openInfoModal(row)}
-              onEdit={() => openEditModal(row)}
-              onDelete={() => handleDelete(row.id)}
-              onClose={() => setDropdown(false)}
-            />
-          }
+          <ActionDropdown
+            anchorEl={buttonRef.current}
+            open={dropdown}
+            onInfo={() => openInfoModal(row)}
+            onEdit={() => openEditModal(row)}
+            onDelete={() => handleDelete(row.id)}
+            onClose={() => setDropdown(false)}
+          />
         </div>
       </td>
     </tr>
@@ -137,26 +139,28 @@ function News() {
             />
           </section>
           <section className='flex-col gap-20'>
-            {isLoading ? <Loader /> : (
-              <table className={s.dataTable}>
-                <thead>
-                  <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th className={s.checkmarkColumn}>Video Attached</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {newsData.length === 0 ?
+            {isLoading ? <Loader /> :
+              <div className={s.tableCont}>
+                <table className={s.dataTable}>
+                  <thead>
                     <tr>
-                      <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th className={s.checkmarkColumn}>Video Attached</th>
+                      <th></th>
                     </tr>
-                  : newsData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
-                  }
-                </tbody>
-              </table>
-            )}
+                  </thead>
+                  <tbody>
+                    {newsData.length === 0 ?
+                      <tr>
+                        <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
+                      </tr>
+                    : newsData.map((row) => <DataRow key={row.id} row={row} openInfoModal={openInfoModal} openEditModal={openEditModal} handleDelete={handleDelete}/>)
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
             <div className={s.pagination}>
               <button
                 onClick={() => setPage(prev => Math.max(prev - 1, 1))}

@@ -10,9 +10,9 @@ import Loader from '@/components/Loader/Loader'
 import s from './Stories.module.scss'
 
 function StoryPost() {
-  const { storyId } = useParams()
+  const { publicId } = useParams()
   
-  const { data: { data: storyData = {} } = {}, isLoading, isError, error } = storyHooks.getById(storyId)
+  const { data: { data: storyData = {} } = {}, isLoading, isError, error } = storyHooks.getStory(publicId)
 
   useDocumentTitle(`${storyData ? `${storyData.title} | ` : ''}Rural Rising PH`)
 
@@ -21,13 +21,13 @@ function StoryPost() {
 
     if(isError) return <p>{error.message}</p>
 
-    if(!Object.keys(storyData).length) return <p className='text-center'>Story not found</p>
+    if(!Object.keys(storyData ?? {}).length) return <p className='text-center'>Story not found</p>
 
     return (
       <div className='flex-col gap-20'>
         <div className='flex-col a-center'>
           <h2>{storyData.title}</h2>
-          <p className={s.date}>{formatDate(storyData.created_at)}</p>
+          <p className={s.date}>{formatDate(storyData.published_at)}</p>
           {storyData.category && <p className={s.categoryLabel}>{storyData.category.name}</p>}
         </div>
         <div className='ql-override ql-snow'>

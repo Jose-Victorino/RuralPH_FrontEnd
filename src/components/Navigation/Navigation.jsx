@@ -132,7 +132,7 @@ function Navigation() {
     }
   }, [])
   
-  const fullName = `${session?.user.user_metadata.first_name} ${session?.user.user_metadata.last_name}`
+  const fullName = session?.user?.user_metadata ? `${session.user.user_metadata?.first_name} ${session.user.user_metadata?.last_name}` : ''
 
   return (
     <>
@@ -187,12 +187,12 @@ function Navigation() {
                       <NavLink to='/events' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Events</NavLink>
                     </li>
                     <li>
-                      <NavLink to='/location' onClick={() => scrollReset()} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
+                      <NavLink to='/location' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Location</NavLink>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <NavLink to='/story' onClick={() => {scrollReset(); closeSubnav()}} className={({ isActive }) => cn({ [s.active]: isActive })}>Story</NavLink>
+                  <NavLink to='/story' onClick={() => scrollReset()} className={({ isActive }) => cn({ [s.active]: isActive })}>Story</NavLink>
                 </li>
                 <li>
                   <NavLink to='/contact-us' onClick={() => scrollReset()} className={({ isActive }) => cn({ [s.active]: isActive })}>Contact us</NavLink>

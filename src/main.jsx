@@ -1,13 +1,13 @@
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { AuthContextProvider } from './context/AuthContext.jsx'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ToastContainer } from 'react-toastify'
 
 import Aos from '@/library/Aos'
 
 import App from './App.jsx'
-import { AuthContextProvider } from './context/AuthContext.jsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {

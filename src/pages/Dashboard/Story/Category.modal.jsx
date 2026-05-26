@@ -79,9 +79,10 @@ const CategoryModal = ({ onClose, categoryData }) => {
   const handleDelete = (id) => {
     Swal.fire({
       title: 'Do you want to delete this category?',
+      text: 'Posts with this category will not be deleted.',
       showDenyButton: true,
+      confirmButtonText: 'Delete Category',
       denyButtonText: 'Cancel',
-      confirmButtonText: 'Delete',
     }).then(async (result) => {
       if(!result.isConfirmed) return
 
@@ -102,7 +103,7 @@ const CategoryModal = ({ onClose, categoryData }) => {
   }
 
   return (
-    <Modal onClose={onClose} width='480px' height='620px'>
+    <Modal onClose={onClose} width='600px' height='680px'>
       <div className='flex-col gap-15'>
         <div className='flex gap-10'>
           <Input

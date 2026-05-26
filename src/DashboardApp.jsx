@@ -1,8 +1,8 @@
 import { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 
-import DashboardLayout from '@/pages/Dashboard/DashboardLayout'
-import Dashboard from '@/pages/Dashboard/Dashboard'
+const DashboardLayout = lazy(() => import('@/pages/Dashboard/DashboardLayout'))
+const Dashboard = lazy(() => import('@/pages/Dashboard/Dashboard'))
 const DashboardEvent = lazy(() => import('@/pages/Dashboard/Event/Event'))
 const DashboardNews = lazy(() => import('@/pages/Dashboard/News/News'))
 const DashboardJourney = lazy(() => import('@/pages/Dashboard/Journey/Journey'))
