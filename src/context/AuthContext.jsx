@@ -3,7 +3,7 @@ import { Navigate, useSearchParams } from 'react-router'
 import { supabase } from '@/service/crudService'
 
 const AuthContext = createContext(null)
-const appURL = import.meta.env.VITE_APP_URL
+const appURL = window.location.origin
 
 // Supabase recovery links use URL hash fragments by default; PKCE uses ?code=
 function parseHashParams() {

@@ -3,7 +3,7 @@ import { formatDateTime, formatDate, formatTime } from '@/library/Util'
 
 import s from './InformationModal.module.scss'
 
-const appURL = import.meta.env.VITE_APP_URL
+const appURL = window.location.origin
 
 function formatValue(path, val) {
   if(!val) return val
