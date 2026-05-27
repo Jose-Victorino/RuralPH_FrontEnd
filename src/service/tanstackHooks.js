@@ -87,7 +87,7 @@ export const createCRUDHooks = (service, tableName) => {
         return { previous }
       },
       onError: (err, _, context) => {
-        context.previous.forEach(([key, value]) => queryClient.setQueryData(key, value))
+        context?.previous?.forEach(([key, value]) => queryClient.setQueryData(key, value))
       },
       onSettled: () => queryClient.invalidateQueries({ queryKey: [tableName] }),
       ...options,

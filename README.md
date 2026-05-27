@@ -21,7 +21,7 @@ Our journey (admin)	| `Done`    	|
 Rural Rising is a React + Vite web application focused on storytelling, events, and community-facing content for rural development initiatives.
 
 **Added Revisions**
-- [ ] Replace certain pics of Ace and Andie Estrada relative to content associated
+- [x] Replace certain pics of Ace and Andie Estrada relative to content associated
 
 **Font Style & Typography**
 - [x] They want a font style similar to Monotype Montserrat mas bold, bigger, and easier to read.
@@ -40,7 +40,7 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 - [x] Add the complete address sa footer section.
 
 **Mobile Responsiveness**
-- [ ] The website should be responsive and optimized for:
+- [x] The website should be responsive and optimized for:
   - Android
   - iOS
   - Tablets
@@ -55,8 +55,8 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 - [x] Adjust the size of pictures and text para mas readable and mas balanced tingnan.
 - [x] Apply gradient backgrounds.
 - [x] Adjust the color palette/theme para mas modern and visually appealing.
-- [ ] As much as possible avoid plain white-heavy layouts.
-- [ ] Do not use a plain white and orange combination only.
+- [x] As much as possible avoid plain white-heavy layouts.
+- [x] Do not use a plain white and orange combination only.
 - [x] Adjust the color/design of the menu bar para bagay sa overall theme.
 - [x] Make sure readable yung text and hindi masakit sa eyes.
 - [x] Add proper spacing sa sections and components.
@@ -66,17 +66,17 @@ Rural Rising is a React + Vite web application focused on storytelling, events, 
 - [x] Merge `Our Journey` & `About Us`.
 - [x] Make the section cleaner and more organized.
 
-**Stories / Blog Section**
+**Stories / Blog Section**  
+They want it to feel more like a modern blog or magazine style.
 - [x] Highlight the Stories section since isa siya sa main features ng website.
-- [ ] They want it to feel more like a modern blog or magazine style.
 - Add a sidebar with:
   - [x] Date filter (prio)
   - [x] Search filter
 - [x] Important texts/words sa stories should have highlights/emphasis.
 - [x] Add preview-style buttons/features for stories.
 
-**Story Creation / CMS Features**
-- Bigger and more spacious yung story creation/editor area.
+**Story Creation / CMS Features**  
+Bigger and more spacious yung story creation/editor area.
 - Add Feature:
   - [x] Unlisted visibility option for selected groups of people only
   - [x] Add "Save as draft" feature

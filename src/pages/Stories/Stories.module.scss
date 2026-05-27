@@ -1,5 +1,4 @@
 @use '@/styles/base' as base;
-@use 'sass:color';
 
 html:has(.container){
   scrollbar-gutter: stable;
@@ -10,18 +9,15 @@ html:has(.container){
   grid-template-columns: 1fr 680px 0.625fr;
   gap: 30px;
 
-  @media (max-width: 1200px){
+  @media(max-width: 1200px){
     grid-template-columns: 1fr 2.25fr;
   }
 
-  @media (max-width: 780px){
+  @media(max-width: 780px){
     grid-template-columns: 1fr;
   }
 }
 
-.aside{
-  
-}
 .filterOptionList{
   display: flex;
 
@@ -59,8 +55,15 @@ html:has(.container){
     }
   }
 }
+
+.date{
+  font-size: base.$sz-12-14;
+  color: base.$gs-w-40;
+  margin-bottom: 5px;
+}
 .categoryLabel{
   background-color: base.$primary-bg;
+  font-size: base.$sz-12-14;
   color: base.$primary-500;
   width: fit-content;
   padding: 0.125em 0.75em;
@@ -69,21 +72,11 @@ html:has(.container){
 }
 .storyItem{
   border-radius: 6px;
-  background: base.$gs-w-100;
+  background-image: linear-gradient(45deg,
+    base.$gs-w-100 0%,
+    base.$gs-w-90 100%,
+  );
   box-shadow: base.$shadow;
-
-  .txt{
-    background-image: linear-gradient(65deg,
-      color.scale(base.$gs-w-90) 30%,
-      color.scale(base.$gs-w-100) 100%
-    );
-  }
-}
-
-.date{
-  font-size: base.$sz-12-14;
-  color: base.$gs-w-40;
-  margin-bottom: 5px;
 }
 
 .imgCont{
@@ -95,6 +88,7 @@ html:has(.container){
 .descriptionClamped {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -175,7 +169,7 @@ html:has(.container){
     height: 280px;
     width: 100%;
 
-    @media (max-width: 780px){
+    @media(max-width: 780px){
       height: unset;
     }
   }

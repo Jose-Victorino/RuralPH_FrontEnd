@@ -23,7 +23,7 @@ function News() {
         {isLoading ? <Loader /> :
           isError ?
             <p className='text-center'>{error.message}</p> :
-          !newsData.length ?
+          !newsData?.length ?
             <p className='text-center'>No news available</p> :
             <ul className={s.gridList}>
               {newsData.map((news) => (

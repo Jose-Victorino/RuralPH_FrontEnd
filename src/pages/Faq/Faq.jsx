@@ -100,7 +100,7 @@ const faqs = [
   }
 ]
 
-const size = Math.ceil(faqs.length / 3);
+const size = Math.ceil(faqs?.length / 3);
 const col1 = faqs.slice(0, size);
 const col2 = faqs.slice(size, size * 2);
 const col3 = faqs.slice(size * 2);

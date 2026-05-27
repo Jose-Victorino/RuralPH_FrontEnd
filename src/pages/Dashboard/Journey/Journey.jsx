@@ -154,7 +154,7 @@ function Journey() {
                     </tr>
                   </thead>
                   <tbody>
-                    {journeyData.length === 0 ?
+                    {journeyData?.length ?
                       <tr>
                         <td colSpan={4} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                       </tr>

@@ -21,11 +21,12 @@ const PAGE_SIZE = 10
 const TAG_LIST = ['capecod', 'atcaperod']
 
 const StoryMedia = ({media}) => {
+  if(media?.length) return
+
   const moreMedia = Math.max(media.length - 4, 0)
   const imgContainerStyles = media.length === 1 ? {
     gridColumn: 'span 2',
     minHeight: 360,
-    maxHeight: 430,
   } : {
     aspectRatio: 1,
   }
@@ -51,7 +52,7 @@ const StoryFeed = ({ feedData, count, isFetching, page, setPage }) => {
   const [expandedIds, setExpandedIds] = useState(new Set())
   const observerRef = useRef(null)
 
-  const hasMore = feedData.length < (count ?? 0)
+  const hasMore = feedData?.length < (count ?? 0)
 
   const sentinelRef = (node) => {
     if(observerRef.current) observerRef.current.disconnect()
@@ -85,19 +86,20 @@ const StoryFeed = ({ feedData, count, isFetching, page, setPage }) => {
 
   return (
     <>
-      {!feedData.length ? <p className='text-center'>No stories found</p> :
+      {!feedData?.length ? <p className='text-center'>No stories found</p> :
         feedData.map((story) => {
           const isExpanded = expandedIds.has(story.id)
 
           return (
             <div data-ros='fade-up' key={story.id} className={cn('flex-col', s.storyItem)}>
               <Link to={`/story/${story.public_id}`} onClick={() => scrollReset()}>
-                <div className={cn('flex-col gap-10 pad-15', s.txt)}>
+                <div className='flex-col gap-10 pad-15'>
                   <div>
                     <h5>{story.title}</h5>
                     <p className={s.date}>{formatDate(story.published_at)}</p>
                     {story.category && <p className={s.categoryLabel}>{story.category.name}</p>}
                   </div>
+                  <hr />
                   <div className='ql-override ql-snow flex-col'>
                     <div ref={descriptionRef} className={cn('ql-editor', !isExpanded && s.descriptionClamped)} dangerouslySetInnerHTML={{__html: story.description}} />
                     <button
@@ -120,7 +122,7 @@ const StoryFeed = ({ feedData, count, isFetching, page, setPage }) => {
       )}
       {loadingMore && <Loader />}
       {hasMore && <div ref={sentinelRef} style={{height: '40vh'}} />}
-      {!hasMore && feedData.length > 0 &&
+      {!hasMore && feedData?.length > 0 &&
         <p className='text-center' style={{height: 160}}>No more stories</p>
       }
     </>
@@ -262,9 +264,7 @@ function Stories() {
               <p>{error.message}</p>
               <Button text='Try Again' onClick={handleRetry} />
             </div>
-            : <>
-              <StoryFeed {...{feedData, count, isFetching, page, setPage}}/>
-            </>
+            : <StoryFeed {...{feedData, count, isFetching, page, setPage}}/>
           }
         </section>
       }

@@ -46,7 +46,7 @@ function Post({ posts }) {
           ))}
         </ul>
       </div>
-      {remaining.length > 0 &&
+      {remaining?.length ?
         <div>
           <ul className={s.postList}>
             {remaining.map((row) =>
@@ -63,7 +63,7 @@ function Post({ posts }) {
               </li>
             )}
           </ul>
-        </div>
+        </div> : null
       }
     </>
   )
@@ -81,7 +81,7 @@ function OurJourney() {
           {isLoading ? <Loader /> :
             isError ?
               <p className='text-center'>{error.message}</p> :
-            !journeyData.length ?
+            !journeyData?.length ?
               <p className='text-center'>No post available</p> :
               <Post posts={journeyData}/>
           }

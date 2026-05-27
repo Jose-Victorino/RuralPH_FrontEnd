@@ -89,7 +89,8 @@ button{
 ol, ul{ list-style: none; }
 
 hr{
-  border: 1px solid base.$gs-b-50;
+  border: none;
+  border-bottom: 1px solid base.$gs-w-60;
 }
 
 // table

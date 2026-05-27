@@ -42,7 +42,7 @@ function Event() {
   
   const renderEventList = (events, emptyMessage) => (
     <ul className='flex-col gap-30'>
-      {events.length > 0
+      {events?.length > 0
         ? events.map((e) => <EventCard key={e.id} {...e} />)
         : <p>{emptyMessage}</p>
       }

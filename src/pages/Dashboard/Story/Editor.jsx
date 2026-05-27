@@ -59,7 +59,7 @@ const modules = {
         .filter(tag => tag.toLowerCase().includes(term))
         .map(tag => ({ value: tag }))
 
-      if(searchTerm.trim().length > 0){
+      if(searchTerm.trim()?.length > 0){
         const alreadyExists = matches.some(h => h.value.toLowerCase() === term)
         if(!alreadyExists) matches.push({ value: searchTerm })
       }

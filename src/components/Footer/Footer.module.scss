@@ -3,8 +3,9 @@
 
 .footer{
   background-image: linear-gradient(135deg,
-    base.$primary-700 0%,
-    base.$primary-800 40%
+    base.$primary-600 0%,
+    base.$primary-700 40%,
+    base.$primary-800 100%
   );
   color: white;
 }

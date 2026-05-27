@@ -154,7 +154,7 @@ function Event() {
                     </tr>
                   </thead>
                   <tbody>
-                    {eventData.length === 0 ?
+                    {eventData?.length ?
                       <tr>
                         <td colSpan={5} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                       </tr>

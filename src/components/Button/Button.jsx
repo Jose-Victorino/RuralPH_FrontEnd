@@ -23,13 +23,13 @@ const Button = ({
   form = '',
 }) => {
   if(!['primary', 'secondary', 'tertiary'].includes(btnType.toLowerCase()))
-    throw new Error("btnType must only be: 'primary', 'secondary', 'tertiary'")
+    console.warn("btnType must only be: 'primary', 'secondary', 'tertiary'")
   if(!['sm', 'md', 'lg'].includes(size.toLowerCase()))
-    throw new Error("btnType must only be: 'sm', 'md', 'lg'")
+    console.warn("btnType must only be: 'sm', 'md', 'lg'")
   if(!['left', 'right'].includes(iconPos.toLowerCase()))
-    throw new Error("iconPos must only be: 'left', 'right'")
+    console.warn("iconPos must only be: 'left', 'right'")
   if(!['curved', 'sharp', 'rounded'].includes(corners.toLowerCase()))
-    throw new Error("corners must only be: 'curved', 'sharp', 'rounded'")
+    console.warn("corners must only be: 'curved', 'sharp', 'rounded'")
 
   const isLink = role === 'link'
   const Component = isLink ? Link : 'button'

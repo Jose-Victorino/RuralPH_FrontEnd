@@ -68,7 +68,7 @@ function JourneyPost() {
           </div>
         </div>
       </section>
-      {recentPosts.length > 0 &&
+      {recentPosts?.length ?
         <section>
           <div className="container flex-col gap-10 pad-block-50">
             <h3>Recent Posts</h3>
@@ -88,7 +88,7 @@ function JourneyPost() {
               ))}
             </ul>
           </div>
-        </section>
+        </section> : null
       }
     </>
   )

@@ -26,7 +26,7 @@ function PrivacyPolicy() {
           <div className='flex-col gap-10'>
             <h5>Information Collection And Use</h5>
             <p>While using our Service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you. Personally identifiable information (“Personal Information”) may include, but is not limited to:</p>
-            <ul className='list-disc'>
+            <ul className='list-unordered'>
               <li>Name</li>
               <li>Email Address</li>
               <li>Telephone number</li>

@@ -202,7 +202,7 @@ function Story() {
                     </tr>
                   </thead>
                   <tbody>
-                    {storyData.length === 0 ?
+                    {storyData?.length ?
                       <tr>
                         <td colSpan={6} className='text-center'>{`No ${TABLE_NAME} found`}</td>
                       </tr>

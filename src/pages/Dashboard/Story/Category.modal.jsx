@@ -121,7 +121,7 @@ const CategoryModal = ({ onClose, categoryData }) => {
             onClick={handleAdd}
           />
         </div>
-        {!categoryData.length ? <p className='text-center'>No categories found.</p> :
+        {!categoryData?.length ? <p className='text-center'>No categories found.</p> :
           <ul className={s.categoryList}>
             {categoryData.map((cat) => (
               <li key={cat.id}>

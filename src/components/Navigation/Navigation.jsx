@@ -146,9 +146,11 @@ function Navigation() {
         </div>
         <section className={s.top}>
           <div className='container flex j-end'>
-            <div className='flex gap-20'>
-              <a href="tel:+639175017787">+63 9175017787</a>
-              <a href="mailto:hello@ruralrisingph.com">hello@ruralrisingph.com</a>
+            <div className='flex gap-30'>
+              <div className='flex gap-15'>
+                <a href="tel:+639175017787">+63 9175017787</a>
+                <a href="mailto:hello@ruralrisingph.com">hello@ruralrisingph.com</a>
+              </div>
               <Socmed />
             </div>
           </div>

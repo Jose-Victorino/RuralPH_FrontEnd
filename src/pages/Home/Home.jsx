@@ -10,12 +10,12 @@ import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
 import s from './Home.module.scss'
 
 import headerVideo from 'uploads/video-banner.mp4'
-import spousesImg from 'uploads/rural-philippines-e1682368256444.png'
+import farmer from 'uploads/669074974_1493148422370303_8141796021255482297_n.jpg'
 import campMingan from 'uploads/campmingan.jpg'
-import Marketplace from 'uploads/Marketplace.jpg'
+import Marketplace from 'uploads/705102646_1526560329029112_8204264287533158976_n.jpg'
 import resources from 'uploads/resources.jpg'
 import capacityBuilding from 'uploads/capacity-building.jpg'
-import tourism from 'uploads/Tourism.jpg'
+import tourism from 'uploads/700004885_1519757673042711_7599355791074444986_n.jpg'
 
 const VIDEOS = [
   {
@@ -71,6 +71,7 @@ function Home() {
               color='yellow'
               role='link'
               to='https://ruriclub.com/pages/membership'
+              corners='rounded'
             />
           </div>
         </div>
@@ -110,29 +111,29 @@ function Home() {
       </section>
       <section className='pad-block-100'>
         <div className='container res-flex-row'>
-          <div data-ros='fade-right' className='flex-col gap-15'>
+          <button data-ros='fade-right' className={s.thumbnailCont} onClick={() => setOpen('625271895')}>
+            <img className={s.img} src='https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1267606957-40b5df88edba9975eedd7d56c8789b18c573e355fb95c2ba9_295x166%3Fregion%3Dus&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png' alt='thumbnail' />
+          </button>
+          <div data-ros='fade-left' className='flex-col gap-15'>
             <h3>Mutual Accountability</h3>
             <p>In low-income countries such as the Philippines, investment in agriculture has been proven to have a greater impact on poverty reduction than in any other sector. This is because it offers the most direct way for rural workers to benefit from their main assets: land and labor.</p>
             <p>Development cooperation focusing on rural development is a very important component for poverty reduction for the following reasons:</p>
-            <ul className='list-disc'>
+            <ul className='list-unordered'>
               <li>Over a third of the rural inhabitants in the Philippines are poverty-stricken.</li>
               <li>Urban poor are mainly migrant workers and farmers who came from rural areas.</li>
               <li>Improved rural areas present a safety net against the lack of job opportunities in cities.</li>
             </ul>
           </div>
-          <button data-ros='fade-left' className={s.thumbnailCont} onClick={() => setOpen('625271895')}>
-            <img className={s.img} src='https://i.vimeocdn.com/filter/overlay?src0=https%3A%2F%2Fi.vimeocdn.com%2Fvideo%2F1267606957-40b5df88edba9975eedd7d56c8789b18c573e355fb95c2ba9_295x166%3Fregion%3Dus&src1=http%3A%2F%2Ff.vimeocdn.com%2Fp%2Fimages%2Fcrawler_play.png' alt='thumbnail' />
-          </button>
         </div>
       </section>
-      <section className='pad-block-100'>
-        <div className='container res-flex-row'>
-          <div data-ros='fade-right' className={s.thumbnailCont}>
-            <img className={s.img} loading="lazy" src={spousesImg} alt='img'/>
-          </div>
-          <div data-ros='fade-left' className='flex-col gap-15'>
+      <section className={cn('pad-block-100', s.farmerSection)}>
+        <div className='container'>
+          <div data-ros='fade-right' className={cn('flex-col gap-15', s.txtContent)}>
             <p>Farmers have to contend with a general dearth of resources or knowledge to invest in the land, inability to effectively cope with conflicts and climate change, reluctance to embrace new technologies that would unlock new markets that would boost their productivity and income.</p>
             <p>To achieve a realistic and sustainable country-wide development, the agriculture sector must build on the efforts of the government and strengthen its programs simultaneously deliver food security, environmental sustainability, and economic opportunity through a coordinated effort by all stakeholders.</p>
+          </div>
+          <div data-ros='fade-left' className={s.thumbnailCont} style={{overflow: 'hidden'}}>
+            <img className={s.img} width='100%' loading="lazy" src={farmer} alt='img'/>
           </div>
         </div>
       </section>

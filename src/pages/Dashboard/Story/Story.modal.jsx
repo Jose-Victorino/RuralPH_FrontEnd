@@ -47,11 +47,9 @@ const ContentTab = () => {
         <p>Category</p>
         <select name='category_id' id='category' value={values.category_id} onChange={handleChange}>
           <option value=''></option>
-          {categoryData.length &&
-            categoryData.map(c =>
-              <option key={c.id} value={c.id}>{c.name}</option>
-            )
-          }
+          {categoryData?.map(c =>
+            <option key={c.id} value={c.id}>{c.name}</option>
+          )}
         </select>
       </div>
       <div>
@@ -74,7 +72,7 @@ const MediaTab = () => {
       <p>A maximum of 10 images can be attached.</p>
       {errors.media && typeof errors.media === 'string' && <span className={s.errorMsg}>{errors.media}</span>}
       <ul className={s.mediaList}>
-        {values.media.length ?
+        {values.media?.length ?
           values.media.map((m, i) =>
             <li key={m} className='pos-r'>
               <button
@@ -89,14 +87,14 @@ const MediaTab = () => {
             </li>
           ) : null
         }
-        {values.media.length < 10 &&
+        {values.media?.length < 10 &&
           <li>
             <button
               type='button'
               role='button'
               className={s.AddMedia}
               onClick={() => setMediaModal(true)}
-              disabled={values.media.length >= 10}
+              disabled={values.media?.length >= 10}
             >
               {addSVG}
             </button>
@@ -246,7 +244,7 @@ const StoryModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
             // @ts-ignore
             const { error: deleteError } = await deleteMediaData.mutateAsync({ column: 'story_id', value: targetId })
 
-            if(!deleteError && mediaPaths.length > 0){
+            if(!deleteError && mediaPaths?.length > 0){
               const mediaPayload = mediaPaths.map(media_path => ({
                 story_id: targetId,
                 media_path,
@@ -265,7 +263,7 @@ const StoryModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
         } else{
           // @ts-ignore
           const { data: story, error: storyError } = await putData.mutateAsync(storyPayload)
-          if(!storyError && mediaPaths.length > 0){
+          if(!storyError && mediaPaths?.length > 0){
             const mediaPayload = mediaPaths.map(media_path => ({
               story_id: story[0].id,
               media_path,

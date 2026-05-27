@@ -1,7 +1,7 @@
 @use '@/styles/base' as base;
 
 .qnaBlock{
-  background-color: white;
+  background-color: base.$gs-w-100;
   display: flex;
   flex-direction: column;
   overflow: hidden;

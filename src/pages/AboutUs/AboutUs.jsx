@@ -58,7 +58,7 @@ function AboutUs() {
           <div className='res-flex-row'>
             <div data-ros='fade-right' className='flex-col gap-15'>
               <p>The conversations at RuRi are led by spouses Ace and Andie Estrada of Baguio City.</p>
-              <ul className='list-disc'>
+              <ul className='list-unordered'>
                 <li>+40k Members</li>
                 <li>175,000 Followers on our Facebook page</li>
               </ul>
