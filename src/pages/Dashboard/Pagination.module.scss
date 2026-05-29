@@ -1,0 +1,18 @@
+.pagination{
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+  
+  select{
+    text-align: center;
+  }
+  button{
+    height: 1em;
+    width: 1em;
+    
+    &:disabled{
+      opacity: 0.4;
+    }
+  }
+}

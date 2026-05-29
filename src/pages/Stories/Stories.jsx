@@ -21,7 +21,7 @@ const PAGE_SIZE = 10
 const TAG_LIST = ['capecod', 'atcaperod']
 
 const StoryMedia = ({media}) => {
-  if(media?.length) return
+  if(!media?.length) return
 
   const moreMedia = Math.max(media.length - 4, 0)
   const imgContainerStyles = media.length === 1 ? {
@@ -92,7 +92,7 @@ const StoryFeed = ({ feedData, count, isFetching, page, setPage }) => {
 
           return (
             <div data-ros='fade-up' key={story.id} className={cn('flex-col', s.storyItem)}>
-              <Link to={`/story/${story.public_id}`} onClick={() => scrollReset()}>
+              <Link to={`/story/${story.public_id}`} onClick={(e) => {scrollReset()}}>
                 <div className='flex-col gap-10 pad-15'>
                   <div>
                     <h5>{story.title}</h5>
@@ -101,7 +101,18 @@ const StoryFeed = ({ feedData, count, isFetching, page, setPage }) => {
                   </div>
                   <hr />
                   <div className='ql-override ql-snow flex-col'>
-                    <div ref={descriptionRef} className={cn('ql-editor', !isExpanded && s.descriptionClamped)} dangerouslySetInnerHTML={{__html: story.description}} />
+                    <div
+                      ref={descriptionRef}
+                      className={cn('ql-editor', {[s.descriptionClamped]: !isExpanded})}
+                      dangerouslySetInnerHTML={{__html: story.description}}
+                      onClick={(e) => {
+                        const target = e.target
+                        if(target instanceof Element){
+                          const interactive = target.closest('a, button')
+                          if(interactive) e.stopPropagation()
+                        }
+                      }}
+                    />
                     <button
                       className={s.showMoreBtn}
                       onClick={(e) => {
@@ -160,7 +171,7 @@ function Stories() {
   })
 
   const { data: { data: categoryData = [] } = {}, isLoading: categoryLoading } = categoryHooks.getAll({
-    order: { column: 'id', ascending: true }
+    order: { column: 'name', ascending: true }
   })
 
   const { values, handleChange, handleSubmit } = useFormik({

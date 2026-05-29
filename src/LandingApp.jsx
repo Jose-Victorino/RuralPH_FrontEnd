@@ -1,5 +1,6 @@
 import { lazy } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
+import { categoryHooks } from './service/crudService'
 
 const MainLayout = lazy(() => import('@/layouts/MainLayout'))
 const Home = lazy(() => import('@/pages/Home/Home'))
@@ -17,6 +18,8 @@ const PrivacyPolicy = lazy(() => import('@/pages/PrivacyPolicy/PrivacyPolicy'))
 const TermsAndConditions = lazy(() => import('@/pages/TermsAndConditions/TermsAndConditions'))
 
 function LandingApp() {
+  categoryHooks.prefetchAll({ order: { column: 'name', ascending: true } })
+
   return (
     <Routes>
       <Route path='/' element={<MainLayout />}>

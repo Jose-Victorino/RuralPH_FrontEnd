@@ -5,9 +5,10 @@ import { toast } from 'react-toastify'
 import { nanoid } from 'nanoid'
 import cn from 'classnames'
 
-import { storyHooks, storyMediaHooks, storyService } from '@/service/crudService'
+import { categoryHooks, storyHooks, storyMediaHooks, storyService } from '@/service/crudService'
 import { TABLE_NAME } from './Story'
 
+import { formatDateTime } from '@/library/Util'
 import CircularLoader from '@/components/Loader/CircularLoader'
 import Button from '@/components/Button/Button'
 import Modal from '@/components/Modal/Modal'
@@ -156,7 +157,7 @@ const VisibilityTab = () => {
   )
 }
 
-const StoryModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
+const StoryModal = ({ mainModal, onClose, selectedRecord }) => {
   const { session } = UserAuth()
   const [submitMode, setSubmitMode] = useState('published')
   const [draftModal, setDraftModal] = useState(false)
@@ -168,6 +169,8 @@ const StoryModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
   const updateData = storyHooks.update()
   const putMediaData = storyMediaHooks.put()
   const deleteMediaData = storyMediaHooks.delete()
+
+  const { data: { data: categoryData = [] } = {} } = categoryHooks.getAll()
 
   const author_id = session.user.id
   
@@ -341,14 +344,14 @@ const StoryModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
         </ul>
       </Modal.Header>
       <FormContext.Provider value={{categoryData, editorKey, values, setFieldValue, errors, handleChange}}>
-        <form className={cn(s.form, 'flex-col gap-10')} id='story-form' onSubmit={handleSubmit}>
+        <form className='flex-col gap-10' id='story-form' onSubmit={handleSubmit}>
           {tab === 0 && <ContentTab />}
           {tab === 1 && <MediaTab />}
           {tab === 2 && <VisibilityTab />}
         </form>
       </FormContext.Provider>
       <Modal.Footer>
-        <div className='flex gap-10 j-space-between'>
+        <div className='flex gap-10 j-space-between a-center'>
           <div className='flex gap-10'>
             {tab === 2 ?
               <Button
@@ -392,7 +395,8 @@ const StoryModal = ({ mainModal, onClose, selectedRecord, categoryData }) => {
               text='Drafts'
               onClick={() => setDraftModal(true)}
               disabled={isSubmitting}
-            /> : null
+            /> : !selectedRecord?.published_at ? null :
+            <p>{`Published at ${formatDateTime(selectedRecord.published_at)}`}</p>
           }
         </div>
       </Modal.Footer>

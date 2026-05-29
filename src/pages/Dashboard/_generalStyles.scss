@@ -14,9 +14,7 @@
 @mixin form{
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 15px;
-  min-height: 100%;
+  gap: 10px;
 }
 
 @mixin table{
@@ -77,25 +75,6 @@
   .deleteBtn, .editBtn, .infoBtn{
     svg{
       fill: base.$gs-b-70;
-    }
-  }
-}
-
-@mixin pagination{
-  display: flex;
-  align-items: center;
-  justify-content: end;
-  gap: 8px;
-  
-  select{
-    text-align: center;
-  }
-  button{
-    height: 1em;
-    width: 1em;
-    
-    &:disabled{
-      opacity: 0.4;
     }
   }
 }

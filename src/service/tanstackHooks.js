@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useMutation, useQueryClient, usePrefetchQuery } from '@tanstack/react-query'
 
 export const createCRUDHooks = (service, tableName) => {
   const keys = {
@@ -10,6 +10,13 @@ export const createCRUDHooks = (service, tableName) => {
 
   const useGetAll = (params = {}, options = {}) =>
     useQuery({
+      queryKey: keys.lists(params),
+      queryFn: () => service.getAll(params),
+      ...options,
+    })
+
+  const usePrefetchAll = (params = {}, options = {}) =>
+    usePrefetchQuery({
       queryKey: keys.lists(params),
       queryFn: () => service.getAll(params),
       ...options,
@@ -130,6 +137,7 @@ export const createCRUDHooks = (service, tableName) => {
 
   return {
     getAll: useGetAll,
+    prefetchAll: usePrefetchAll,
     getStories: useGetStories,
     getStory: useGetStory,
     getById: useGetById,

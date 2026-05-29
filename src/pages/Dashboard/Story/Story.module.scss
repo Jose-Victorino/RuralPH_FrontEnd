@@ -7,12 +7,6 @@ $blue: hsl(211, 84%, 49%);
   @include c.container;
 }
 
-.form{
-  @include c.form;
-  justify-content: unset;
-  min-height: unset;
-}
-
 .errorMsg{
   color: base.$error-color;
 }
@@ -137,10 +131,6 @@ $blue: hsl(211, 84%, 49%);
 
 .tryAgainBtn{
   @include c.refetch-btn;
-}
-
-.pagination{
-  @include c.pagination;
 }
 
 .categoryList{

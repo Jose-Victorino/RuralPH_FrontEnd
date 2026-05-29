@@ -5,10 +5,6 @@
   @include c.container;
 }
 
-.form{
-  @include c.form;
-}
-
 .tableCont{
   @include c.table;
 }
@@ -32,8 +28,4 @@
 
 .tryAgainBtn{
   @include c.refetch-btn;
-}
-
-.pagination{
-  @include c.pagination;
 }

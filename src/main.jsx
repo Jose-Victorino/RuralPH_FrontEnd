@@ -33,7 +33,7 @@ createRoot(document.getElementById('root')).render(
         />
         <Aos />
         <App />
-        {/* <ReactQueryDevtools /> */}
+        <ReactQueryDevtools />
       </AuthContextProvider>
     </QueryClientProvider>
   </BrowserRouter>,

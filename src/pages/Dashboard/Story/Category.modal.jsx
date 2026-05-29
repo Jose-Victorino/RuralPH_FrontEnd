@@ -16,7 +16,7 @@ const editSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><p
 const deleteSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32 32 32C14.3 32 0 46.3 0 64S14.3 96 32 96l384 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-96 0-7.2-14.3C307.4 6.8 296.3 0 284.2 0L163.8 0c-12.1 0-23.2 6.8-28.6 17.7zM416 128L32 128 53.2 467c1.6 25.3 22.6 45 47.9 45l245.8 0c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>
 const xSVG = <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><path d="M504.6 148.5C515.9 134.9 514.1 114.7 500.5 103.4C486.9 92.1 466.7 93.9 455.4 107.5L320 270L184.6 107.5C173.3 93.9 153.1 92.1 139.5 103.4C125.9 114.7 124.1 134.9 135.4 148.5L278.3 320L135.4 491.5C124.1 505.1 125.9 525.3 139.5 536.6C153.1 547.9 173.3 546.1 184.6 532.5L320 370L455.4 532.5C466.7 546.1 486.9 547.9 500.5 536.6C514.1 525.3 515.9 505.1 504.6 491.5L361.7 320L504.6 148.5z"/></svg>
 
-const CategoryModal = ({ onClose, categoryData }) => {
+const CategoryModal = ({ onClose }) => {
   const putData = categoryHooks.put()
   const updateData = categoryHooks.update()
   const deleteData = categoryHooks.delete()
@@ -27,6 +27,10 @@ const CategoryModal = ({ onClose, categoryData }) => {
   const [isAdding, setIsAdding] = useState(false)
 
   categoryHooks.subscribe()
+
+  const { data: { data: categoryData = [] } = {} } = categoryHooks.getAll({
+    order: { column: 'name', ascending: true }
+  })
 
   const handleAdd = async () => {
     const trimmed = newName.trim()

@@ -89,24 +89,32 @@ const JourneyModal = ({ mainModal, onClose, selectedRecord }) => {
   })
 
   return (
-    <Modal onClose={onClose} width='600px' height='680px'>
-      <form className={s.form} onSubmit={handleSubmit}>
-        <div className='flex-col gap-10'>
-          <Input
-            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur}
-            displayName='Title' error={errors.title} touched={touched.title}
-          />
-          <Input
-            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Description' error={errors.description} touched={touched.description}
-          />
-          <Input
-            type='text' name='image_path' value={values.image_path} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Image Link' error={errors.image_path} touched={touched.image_path}
-          />
-        </div>
-        <Button color='blue' type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} span />
+    <Modal onClose={onClose} width='600px' height='700px'>
+      <form className='flex-col gap-10' id='journey-form' onSubmit={handleSubmit}>
+        <Input
+          type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur}
+          displayName='Title' error={errors.title} touched={touched.title}
+        />
+        <Input
+          type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Description' error={errors.description} touched={touched.description}
+        />
+        <Input
+          type='text' name='image_path' value={values.image_path} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Image Link' error={errors.image_path} touched={touched.image_path}
+        />
       </form>
+      <Modal.Footer>
+        <Button
+          type='submit'
+          form='journey-form'
+          text='Submit'
+          icon={isSubmitting && <CircularLoader />}
+          color='blue'
+          span
+          disabled={isSubmitting}
+        />
+      </Modal.Footer>
     </Modal>
   )
 }

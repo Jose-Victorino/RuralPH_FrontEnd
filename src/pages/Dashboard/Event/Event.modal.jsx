@@ -96,36 +96,44 @@ const EventModal = ({ mainModal, onClose, selectedRecord }) => {
   })
 
   return (
-    <Modal onClose={onClose} width='600px' height='680px'>
-      <form className={s.form} onSubmit={handleSubmit}>
-        <div className='flex-col gap-10'>
-          <Input
-            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Title' error={errors.title} touched={touched.title}
-          />
-          <Input
-            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur}
-            displayName='Description' error={errors.description} touched={touched.description}
-          />
-          <Input
-            type='text' name='location' value={values.location} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Location' error={errors.location} touched={touched.location}
-          />
-          <Input
-            type='date' name='date' value={values.date} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Date' error={errors.date} touched={touched.date}
-          />
-          <Input
-            type='time' name='time_start' value={values.time_start} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Time  Start'error={errors.time_start} touched={touched.time_start}
-          />
-          <Input
-            type='time' name='time_end' value={values.time_end} onChange={handleChange} onBlur={handleBlur}
-            displayName='Time End' error={errors.time_end} touched={touched.time_end}
-          />
-        </div>
-        <Button color='blue' type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} />
+    <Modal onClose={onClose} width='600px' height='700px'>
+      <form className='flex-col gap-10' id='event-form' onSubmit={handleSubmit}>
+        <Input
+          type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Title' error={errors.title} touched={touched.title}
+        />
+        <Input
+          type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur}
+          displayName='Description' error={errors.description} touched={touched.description}
+        />
+        <Input
+          type='text' name='location' value={values.location} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Location' error={errors.location} touched={touched.location}
+        />
+        <Input
+          type='date' name='date' value={values.date} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Date' error={errors.date} touched={touched.date}
+        />
+        <Input
+          type='time' name='time_start' value={values.time_start} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Time  Start'error={errors.time_start} touched={touched.time_start}
+        />
+        <Input
+          type='time' name='time_end' value={values.time_end} onChange={handleChange} onBlur={handleBlur}
+          displayName='Time End' error={errors.time_end} touched={touched.time_end}
+        />
       </form>
+      <Modal.Footer>
+        <Button
+          type='submit'
+          form='event-form'
+          text='Submit'
+          icon={isSubmitting && <CircularLoader />}
+          color='blue'
+          span
+          disabled={isSubmitting}
+        />
+      </Modal.Footer>
     </Modal>
   )
 }

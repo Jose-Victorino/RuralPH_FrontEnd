@@ -162,33 +162,41 @@ const NewsModal = ({ mainModal, onClose, selectedRecord }) => {
   }, [debouncedVideoUrl, setFieldValue, setFieldError, setFieldTouched])
   
   return (
-    <Modal onClose={onClose} width='480px' height='665px'>
-      <form className={s.form} onSubmit={handleSubmit}>
-        <div className='flex-col gap-10'>
-          <Input
-            type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Title' error={errors.title} touched={touched.title}
-          />
-          <Input
-            type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Description' error={errors.description} touched={touched.description}
-          />
-          <Input
-            type='text' name='video_url' placeholder='vimeo.com/xxxxxxxxx' value={values.video_url} onChange={handleChange} onBlur={handleBlur} required
-            displayName='Video Link' error={errors.video_url} touched={touched.video_url}
-          />
-          {isFetchingThumbnail ? <Loader />
-          : values.thumbnail_url ? (
-            // <button className={s.thumbnailCont} onClick={() => setPlayerState(values.video_id)}>
-            <button>
-              <img className={s.img} src={values.thumbnail_url} alt="thumbnail" />
-            </button>
-          ) : null}
-          <input type="hidden" name="video_id" value={values.video_id} />
-          <input type="hidden" name="thumbnail_url" value={values.thumbnail_url} />
-        </div>
-        <Button color='blue' type='submit' icon={isSubmitting && <CircularLoader />} text='Submit' disabled={isSubmitting} span />
+    <Modal onClose={onClose} width='600px' height='700px'>
+      <form className='flex-col gap-10' onSubmit={handleSubmit}>
+        <Input
+          type='text' name='title' value={values.title} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Title' error={errors.title} touched={touched.title}
+        />
+        <Input
+          type='textarea' name='description' value={values.description} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Description' error={errors.description} touched={touched.description}
+        />
+        <Input
+          type='text' name='video_url' placeholder='vimeo.com/xxxxxxxxx' value={values.video_url} onChange={handleChange} onBlur={handleBlur} required
+          displayName='Video Link' error={errors.video_url} touched={touched.video_url}
+        />
+        {isFetchingThumbnail ? <Loader />
+        : values.thumbnail_url ? (
+          // <button type='button' className={s.thumbnailCont} onClick={() => setPlayerState(values.video_id)}>
+          <button type='button'>
+            <img className={s.img} src={values.thumbnail_url} alt="thumbnail" />
+          </button>
+        ) : null}
+        <input type="hidden" name="video_id" value={values.video_id} />
+        <input type="hidden" name="thumbnail_url" value={values.thumbnail_url} />
       </form>
+      <Modal.Footer>
+        <Button
+          type='submit'
+          form='news-form'
+          text='Submit'
+          icon={isSubmitting && <CircularLoader />}
+          color='blue'
+          span
+          disabled={isSubmitting}
+        />
+      </Modal.Footer>
       {/* {playerState && <VideoPlayer onClose={() => setPlayerState(false)} videoId={playerState}/>} */}
     </Modal>
   )
