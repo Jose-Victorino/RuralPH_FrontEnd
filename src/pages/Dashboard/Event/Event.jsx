@@ -12,7 +12,7 @@ import Button from '@/components/Button/Button'
 import Breadcrumbs from '../Breadcrumbs'
 import InformationModal from '../InformationModal'
 import ActionDropdown from '../ActionDropdown'
-import Pagination from '../pagination'
+import Pagination from '../Pagination'
 import EventModal from './Event.modal'
 
 import s from './Event.module.scss'
