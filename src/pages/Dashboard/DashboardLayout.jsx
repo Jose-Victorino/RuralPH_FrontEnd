@@ -21,7 +21,10 @@ function DashboardLayout() {
     if(!error) navigate('/')
   }
 
-  const fullName = `${session?.user.user_metadata.first_name} ${session?.user.user_metadata.last_name}`
+  const firstName = session?.user?.user_metadata?.first_name ?? ''
+  const lastName = session?.user?.user_metadata?.last_name ?? ''
+
+  const fullName = `${firstName} ${lastName}`.trim()
 
   return (
     <PrivateRoute>
