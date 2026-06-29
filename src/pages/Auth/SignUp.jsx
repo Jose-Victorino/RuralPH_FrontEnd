@@ -30,13 +30,17 @@ const validationSchema = Yup.object().shape({
     .matches(/[A-Z]/, 'Password requires an uppercase letter'),
     // .matches(/[0-9]/, 'Password requires a number')
     // .matches(/[^a-zA-Z0-9]/, 'Password requires a symbol')
+  confirm_password: Yup.string()
+    .required('Please confirm your password')
+    .oneOf([Yup.ref('password')], 'Passwords do not match'),
 })
 
 function SignUp() {
   useDocumentTitle('Signup | Rural Rising PH')
   const navigate = useNavigate()
   const [error, setError] = useState('')
-  const [showPassword, setShowPassword] = useState(false) 
+  const [showPassword, setShowPassword] = useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const { signUpNewUser } = UserAuth()
 
   const { values, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = useFormik({
@@ -45,6 +49,7 @@ function SignUp() {
       last_name: '',
       email: '',
       password: '',
+      confirm_password: '',
     },
     validationSchema,
     onSubmit: async (value, { setSubmitting }) => {
@@ -89,6 +94,13 @@ function SignUp() {
             </button>
           </div>
           {errors.password && <span className={s.errorMsg}>{errors.password}</span>}
+          <div className='pos-r'>
+            <input className={s.txtField} type={showConfirmPassword ? 'text' : 'password'} name='confirm_password' placeholder='Confirm Password' value={values.confirm_password} onChange={handleChange} onBlur={handleBlur} required/>
+            <button type='button' className={s.showPass} onClick={() => setShowConfirmPassword((prev) => !prev)}>
+              <img src={showConfirmPassword ? eyeIcon : eyeSlashIcon} loading="lazy" alt="eye" />
+            </button>
+          </div>
+          {errors.confirm_password && <span className={s.errorMsg}>{errors.confirm_password}</span>}
           {error && <span className={s.errorMsg}>{error}</span>}
         </div>
         <Button

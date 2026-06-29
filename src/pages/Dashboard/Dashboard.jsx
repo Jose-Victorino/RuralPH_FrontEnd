@@ -1,10 +1,12 @@
 import { Link } from 'react-router'
 import useDocumentTitle from '@/hooks/useDocumentTitle'
 
-import s from './Dashboard.module.scss'
 import { scrollReset } from '@/library/Util'
+
 import { useCurrentProfile } from '@/hooks/useCurrentProfile'
 import Loader from '@/components/Loader/Loader'
+
+import s from './Dashboard.module.scss'
 
 function Dashboard() {
   useDocumentTitle('Dashboard | Rural Rising PH')

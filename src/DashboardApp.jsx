@@ -7,6 +7,7 @@ const DashboardEvent = lazy(() => import('@/pages/Dashboard/Event/Event'))
 const DashboardNews = lazy(() => import('@/pages/Dashboard/News/News'))
 const DashboardJourney = lazy(() => import('@/pages/Dashboard/Journey/Journey'))
 const DashboardStory = lazy(() => import('@/pages/Dashboard/Story/Story'))
+const DashboardUsers = lazy(() => import('@/pages/Dashboard/Users/Users'))
 
 function DashboardApp() {
   return (
@@ -18,6 +19,7 @@ function DashboardApp() {
         <Route path='news' element={<DashboardNews />}/>
         <Route path='journey' element={<DashboardJourney />}/>
         <Route path='story' element={<DashboardStory />}/>
+        <Route path='users' element={<DashboardUsers />}/>
       </Route>
     </Routes>
   )
