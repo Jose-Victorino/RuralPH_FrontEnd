@@ -208,3 +208,6 @@ export const journeyService = createCRUD('journey', {
   })
 })
 export const journeyHooks = createCRUDHooks(journeyService, 'journey')
+
+export const profilesService = createCRUD('profiles')
+export const profilesHooks = createCRUDHooks(profilesService, 'profiles')

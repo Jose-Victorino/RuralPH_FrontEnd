@@ -1,0 +1,35 @@
+@use '@/styles/base' as base;
+@use '../generalStyles' as c;
+
+.img{
+  background: base.$temp-color-fill;
+  object-fit: cover;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.container{
+  @include c.container;
+}
+
+.tableCont{
+  @include c.table;
+}
+.dataTable{
+
+  thead th{
+    &:nth-child(1){
+      width: 20%;
+    }
+    &:nth-child(2){
+      width: 65%;
+    }
+    &:nth-child(3){
+      width: 15%;
+    }
+  }
+}
+
+.tryAgainBtn{
+  @include c.refetch-btn;
+}
